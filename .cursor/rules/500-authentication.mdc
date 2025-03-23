@@ -1,0 +1,247 @@
+---
+description: Authentication: Guidelines for implementing Better-Auth in Next.js applications
+globs: **/auth/**/*.ts, **/auth/**/*.tsx, **/pages/api/auth/**/*
+alwaysApply: false
+---
+
+# Better-Auth Implementation Guidelines
+
+## Core Principles
+
+- Better-Auth is a framework-agnostic authentication and authorization framework for TypeScript
+- Prioritize type safety and security in all authentication implementations
+- Follow the principle of least privilege for authorization
+- Implement proper error handling and user feedback
+
+## Setup and Configuration
+
+### Installation
+
+```bash
+npm install better-auth
+# or
+yarn add better-auth
+```
+
+### Basic Configuration
+
+```typescript
+import { BetterAuth } from 'better-auth';
+
+const auth = new BetterAuth({
+  // Required configuration
+  secret: process.env.AUTH_SECRET,
+  database: {
+    type: 'postgres', // or your preferred database
+    url: process.env.DATABASE_URL
+  },
+  
+  // Optional but recommended
+  rateLimiter: {
+    enabled: true,
+    maxAttempts: 5,
+    windowMs: 15 * 60 * 1000 // 15 minutes
+  }
+});
+```
+
+## Security Best Practices
+
+### Password Management
+
+- Always hash passwords using the built-in password hashing
+- Never store plain-text passwords
+- Implement password strength requirements
+- Use secure password reset flows
+
+### Session Management
+
+- Use secure session tokens
+- Implement proper session expiration
+- Allow multiple device sessions when required
+- Implement session revocation capabilities
+
+### Rate Limiting
+
+- Enable built-in rate limiting for all authentication endpoints
+- Configure appropriate rate limit windows
+- Implement IP-based and user-based rate limiting
+- Add rate limit headers to responses
+
+## Feature Implementation Guidelines
+
+### Email & Password Authentication
+
+```typescript
+// Implementation example
+const authConfig = {
+  email: {
+    required: true,
+    verification: {
+      required: true,
+      expiresIn: '24h'
+    }
+  },
+  password: {
+    minLength: 8,
+    requireSpecialChar: true,
+    requireNumber: true
+  }
+};
+```
+
+### Two-Factor Authentication (2FA)
+
+- Always use time-based one-time passwords (TOTP)
+- Provide backup codes for account recovery
+- Make 2FA optional but strongly encouraged
+- Store 2FA secrets securely
+
+### Social Sign-On
+
+- Implement multiple providers when possible
+- Handle user data merging properly
+- Provide fallback authentication methods
+- Secure OAuth callback endpoints
+
+### Organization & Access Control
+
+- Define clear role hierarchies
+- Implement RBAC (Role-Based Access Control)
+- Support multi-tenancy when needed
+- Use organization-specific permissions
+
+## API Security
+
+### Endpoint Protection
+
+```typescript
+// Example of protected API route
+import { withAuth } from 'better-auth/next';
+
+export default withAuth(async function handler(req, res) {
+  // Your protected route logic
+}, {
+  roles: ['user', 'admin'],
+  methods: ['GET', 'POST']
+});
+```
+
+### Error Handling
+
+- Implement consistent error responses
+- Use proper HTTP status codes
+- Provide meaningful error messages
+- Log security events appropriately
+
+## Testing
+
+### Authentication Tests
+
+- Test all authentication flows
+- Verify rate limiting behavior
+- Test session management
+- Validate 2FA implementation
+
+### Security Tests
+
+- Implement security headers testing
+- Test against common vulnerabilities
+- Verify password policies
+- Test account recovery flows
+
+## Monitoring and Logging
+
+### Security Logging
+
+- Log all authentication attempts
+- Track failed login attempts
+- Monitor session activities
+- Log security-critical events
+
+### Performance Monitoring
+
+- Monitor authentication response times
+- Track rate limit hits
+- Monitor session counts
+- Track social auth provider status
+
+## Environment Configuration
+
+### Required Environment Variables
+
+```env
+AUTH_SECRET=your-secure-secret
+DATABASE_URL=your-database-url
+SMTP_CONFIG=your-smtp-settings
+```
+
+### Optional Environment Variables
+
+```env
+AUTH_DEBUG=false
+RATE_LIMIT_MAX=5
+SESSION_DURATION=86400
+```
+
+## Production Deployment
+
+### Checklist
+
+1. Verify all environment variables
+2. Enable rate limiting
+3. Configure proper CORS settings
+4. Set up monitoring and logging
+5. Enable SSL/TLS
+6. Configure session management
+7. Set up backup authentication methods
+
+### Security Headers
+
+```typescript
+// Example security headers configuration
+const securityHeaders = {
+  'X-Frame-Options': 'DENY',
+  'X-Content-Type-Options': 'nosniff',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'Content-Security-Policy': "default-src 'self'"
+};
+```
+
+## Troubleshooting
+
+### Common Issues
+
+- Rate limiting configuration
+- Session persistence problems
+- Social auth callback issues
+- Database connection errors
+
+### Debug Mode
+
+Enable debug mode for development:
+
+```typescript
+const auth = new BetterAuth({
+  debug: process.env.NODE_ENV === 'development'
+});
+```
+
+## Plugin Integration
+
+### Available Plugins
+
+- Multi-tenant support
+- Advanced session management
+- Custom authentication providers
+- Enhanced security features
+
+### Plugin Configuration
+
+```typescript
+import { MultiTenancy } from 'better-auth/plugins';
+
+auth.use(new MultiTenancy({
+  // Plugin-specific configuration
+}));
+``` 

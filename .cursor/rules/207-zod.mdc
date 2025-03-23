@@ -1,0 +1,234 @@
+---
+description: Zod: Guidelines and best practices for schema validation and type safety in TypeScript applications
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+# Zod Guidelines and Best Practices
+
+## Overview
+Zod is a TypeScript-first schema declaration and validation library designed to enhance type safety and runtime validation in TypeScript applications.
+
+## Project Structure
+
+### Directory Organization
+```typescript
+src/
+  schemas/
+    shared/      # Common schemas used across multiple features
+    users/       # User-related schemas
+    products/    # Product-related schemas
+    index.ts     # Export all schemas
+```
+
+### Naming Conventions
+- Use PascalCase for schema names
+- Suffix schema objects with `Schema`
+- Use descriptive names that reflect the data structure
+
+```typescript
+const UserSchema = z.object({...})
+const ProductSchema = z.object({...})
+```
+
+## Core Concepts
+
+### Type Inference
+```typescript
+import { z } from 'zod';
+
+const UserSchema = z.object({
+  id: z.string().uuid(),
+  email: z.string().email(),
+  age: z.number().min(0).max(120),
+});
+
+// Infer the type from the schema
+type User = z.infer<typeof UserSchema>;
+```
+
+### Schema Composition
+```typescript
+const BasePersonSchema = z.object({
+  name: z.string(),
+  age: z.number(),
+});
+
+const EmployeeSchema = BasePersonSchema.extend({
+  role: z.string(),
+  department: z.string(),
+});
+```
+
+## Implementation Guidelines
+
+### Input Validation
+```typescript
+// API Route Input Validation
+const inputSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+// Usage
+try {
+  const validatedData = inputSchema.parse(rawData);
+  // Process validated data
+} catch (error) {
+  if (error instanceof z.ZodError) {
+    // Handle validation errors
+  }
+}
+```
+
+### Form Validation
+```typescript
+const formSchema = z.object({
+  username: z.string().min(3).max(20),
+  email: z.string().email(),
+  age: z.number().min(18),
+  website: z.string().url().optional(),
+});
+```
+
+### Custom Validations
+```typescript
+const CustomStringSchema = z.string().refine(
+  (val) => validateCustomLogic(val),
+  {
+    message: "Custom validation failed"
+  }
+);
+```
+
+### Transformations
+```typescript
+const DateStringSchema = z.string().transform((str) => new Date(str));
+```
+
+## Error Handling
+
+### Best Practices
+- Always wrap Zod validation in try-catch blocks
+- Use custom error messages for better user experience
+- Implement consistent error handling patterns
+
+```typescript
+const handleZodError = (error: z.ZodError) => {
+  return error.issues.map((issue) => ({
+    path: issue.path.join('.'),
+    message: issue.message,
+  }));
+};
+```
+
+## Integration
+
+### tRPC Integration
+```typescript
+import { router, procedure } from '../trpc';
+
+export const userRouter = router({
+  create: procedure
+    .input(UserSchema)
+    .mutation(async ({ input }) => {
+      // Input is fully typed and validated
+      return createUser(input);
+    }),
+});
+```
+
+## Testing and Quality Assurance
+
+### Schema Testing
+```typescript
+describe('UserSchema', () => {
+  it('should validate correct user data', () => {
+    const validUser = {
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      email: 'test@example.com',
+      age: 25,
+    };
+    
+    expect(() => UserSchema.parse(validUser)).not.toThrow();
+  });
+
+  it('should reject invalid data', () => {
+    const invalidUser = {
+      email: 'not-an-email',
+      age: -1,
+    };
+    
+    expect(() => UserSchema.parse(invalidUser)).toThrow();
+  });
+});
+```
+
+## Performance and Security
+
+### Performance Best Practices
+- Define schemas once and reuse them
+- Avoid creating new schema instances in render functions
+- Use `.extend()` for schema variations instead of creating new ones
+
+```typescript
+// Good: Define outside component
+const formSchema = z.object({...});
+
+// Component
+const MyComponent = () => {
+  // Use predefined schema
+  const form = useForm({
+    resolver: zodResolver(formSchema)
+  });
+};
+```
+
+### Security Guidelines
+- Always validate and sanitize user input
+- Use appropriate string validation methods
+- Implement maximum length constraints
+- Consider using `.trim()` for string inputs
+
+```typescript
+const UserInputSchema = z.object({
+  password: z.string()
+    .min(8)
+    .max(100)
+    .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+  creditCard: z.string()
+    .regex(/^\d{16}$/)
+    .transform((cc) => `****-****-****-${cc.slice(-4)}`),
+});
+```
+
+## Common Patterns and Examples
+
+### Optional Fields
+```typescript
+const Schema = z.object({
+  required: z.string(),
+  optional: z.string().optional(),
+  nullish: z.string().nullish(),
+  withDefault: z.string().default("default value"),
+});
+```
+
+### Union Types
+```typescript
+const StatusSchema = z.union([
+  z.literal("pending"),
+  z.literal("processing"),
+  z.literal("completed"),
+]);
+```
+
+### Array Validation
+```typescript
+const ListSchema = z.array(z.string()).nonempty();
+const TuppleSchema = z.tuple([
+  z.string(),
+  z.number(),
+  z.boolean()
+]);
+```

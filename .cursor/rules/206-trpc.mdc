@@ -1,0 +1,317 @@
+---
+description: tRPC: Guidelines and best practices for implementing tRPC with T3 Stack
+globs: **/api/trpc/**/*.ts, **/server/**/*.ts, **/utils/api.ts
+alwaysApply: false
+---
+
+# tRPC Implementation Guidelines
+
+## Overview
+
+tRPC enables end-to-end typesafe APIs in TypeScript applications. This guide covers best practices and implementation details for using tRPC with the T3 Stack.
+
+## Key Concepts
+
+### Type Safety
+- tRPC provides full static type safety from your API to your client
+- No code generation or build pipeline required
+- Automatic type inference for your entire API
+
+### Core Components
+- **Router**: Define your API endpoints and procedures
+- **Procedures**: Three main types:
+  - `query`: For fetching data
+  - `mutation`: For modifying data
+  - `subscription`: For real-time data (WebSocket)
+- **Context**: Shared context between procedures
+- **Middleware**: Functions that run before procedures
+
+## Project Structure
+
+```typescript
+src/
+├── server/
+│   ├── api/
+│   │   ├── routers/
+│   │   │   ├── user.ts
+│   │   │   ├── post.ts
+│   │   │   └── index.ts
+│   │   ├── trpc.ts
+│   │   └── root.ts
+│   └── db.ts
+└── utils/
+    └── api.ts
+```
+
+## Implementation Guide
+
+### 1. Server-Side Setup
+
+#### Create tRPC Instance (server/api/trpc.ts)
+```typescript
+import { initTRPC, TRPCError } from '@trpc/server';
+import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
+import superjson from 'superjson';
+import { ZodError } from 'zod';
+import { prisma } from '../db';
+
+export const createTRPCContext = async (opts: CreateNextContextOptions) => {
+  const { req, res } = opts;
+  return {
+    prisma,
+    req,
+    res,
+  };
+};
+
+const t = initTRPC.context<typeof createTRPCContext>().create({
+  transformer: superjson,
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    };
+  },
+});
+
+export const createTRPCRouter = t.router;
+export const publicProcedure = t.procedure;
+```
+
+### 2. Router Setup
+
+#### Example Router (server/api/routers/user.ts)
+```typescript
+import { z } from 'zod';
+import { createTRPCRouter, publicProcedure } from '../trpc';
+
+export const userRouter = createTRPCRouter({
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.prisma.user.findUnique({
+        where: { id: input.id },
+      });
+    }),
+  create: publicProcedure
+    .input(z.object({
+      name: z.string(),
+      email: z.string().email(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.user.create({
+        data: input,
+      });
+    }),
+});
+```
+
+### 3. Client-Side Setup
+
+#### API Utils (utils/api.ts)
+```typescript
+import { createTRPCNext } from '@trpc/next';
+import { httpBatchLink, loggerLink } from '@trpc/client';
+import superjson from 'superjson';
+import { type AppRouter } from '~/server/api/root';
+
+export const api = createTRPCNext<AppRouter>({
+  config() {
+    return {
+      transformer: superjson,
+      links: [
+        loggerLink({
+          enabled: (opts) =>
+            process.env.NODE_ENV === 'development' ||
+            (opts.direction === 'down' && opts.result instanceof Error),
+        }),
+        httpBatchLink({
+          url: '/api/trpc',
+        }),
+      ],
+    };
+  },
+  ssr: false,
+});
+```
+
+## Best Practices
+
+### 1. Input Validation
+- Always use Zod for input validation
+- Define strict schemas for all procedure inputs
+- Handle validation errors gracefully
+
+```typescript
+import { z } from 'zod';
+
+const userSchema = z.object({
+  name: z.string().min(2).max(50),
+  email: z.string().email(),
+  age: z.number().min(0).max(120).optional(),
+});
+```
+
+### 2. Error Handling
+- Use `TRPCError` for consistent error responses
+- Implement proper error boundaries in React components
+- Provide meaningful error messages
+
+```typescript
+import { TRPCError } from '@trpc/server';
+
+if (!user) {
+  throw new TRPCError({
+    code: 'NOT_FOUND',
+    message: 'User not found',
+  });
+}
+```
+
+### 3. Performance Optimization
+- Use query invalidation strategically
+- Implement proper caching
+- Use batching for multiple queries
+
+```typescript
+// Client-side query invalidation
+const utils = api.useContext();
+await utils.users.invalidate();
+```
+
+### 4. Security
+- Implement proper authentication middleware
+- Validate user permissions
+- Sanitize inputs and outputs
+
+```typescript
+const protectedProcedure = publicProcedure.use(({ ctx, next }) => {
+  if (!ctx.session?.user) {
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
+  }
+  return next({
+    ctx: {
+      ...ctx,
+      user: ctx.session.user,
+    },
+  });
+});
+```
+
+## Usage Examples
+
+### 1. React Query Integration
+```typescript
+const UserProfile = () => {
+  const { data, isLoading } = api.users.getById.useQuery({ id: '123' });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (!data) return <div>User not found</div>;
+
+  return <div>{data.name}</div>;
+};
+```
+
+### 2. Mutations
+```typescript
+const CreateUser = () => {
+  const mutation = api.users.create.useMutation({
+    onSuccess: () => {
+      // Handle success
+    },
+  });
+
+  return (
+    <button onClick={() => mutation.mutate({
+      name: 'John Doe',
+      email: 'john@example.com',
+    })}>
+      Create User
+    </button>
+  );
+};
+```
+
+## Common Patterns
+
+### 1. Middleware Composition
+```typescript
+const loggedProcedure = publicProcedure
+  .use(authMiddleware)
+  .use(loggerMiddleware);
+```
+
+### 2. Router Composition
+```typescript
+export const appRouter = createTRPCRouter({
+  users: userRouter,
+  posts: postRouter,
+  comments: commentRouter,
+});
+```
+
+### 3. Context Sharing
+```typescript
+export type Context = inferAsyncReturnType<typeof createContext>;
+
+const createContext = async (opts: CreateNextContextOptions) => {
+  const session = await getSession(opts);
+  return {
+    session,
+    prisma,
+  };
+};
+```
+
+## Testing
+
+### 1. Unit Testing Procedures
+```typescript
+import { inferProcedureInput } from '@trpc/server';
+import { createInnerTRPCContext } from '~/server/api/trpc';
+import { appRouter } from '~/server/api/root';
+
+describe('userRouter', () => {
+  it('creates a user', async () => {
+    const ctx = await createInnerTRPCContext({ session: null });
+    const caller = appRouter.createCaller(ctx);
+
+    const input: inferProcedureInput<typeof appRouter.users.create> = {
+      name: 'Test User',
+      email: 'test@example.com',
+    };
+
+    const user = await caller.users.create(input);
+    expect(user.name).toBe(input.name);
+  });
+});
+```
+
+## Troubleshooting
+
+### Common Issues
+1. Type Inference Not Working
+   - Ensure proper TypeScript configuration
+   - Check for circular dependencies
+   - Verify proper exports/imports
+
+2. Performance Issues
+   - Implement proper caching strategies
+   - Use query batching
+   - Optimize database queries
+
+3. Authentication Problems
+   - Verify middleware chain
+   - Check session handling
+   - Validate token expiration
+
+## Resources
+
+- [Official tRPC Documentation](https://trpc.io/docs)
+- [Create T3 App Documentation](https://create.t3.gg)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs) 
