@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+
+      - name: Extract changelog
+        run: |
+          { awk '/^## [0-9]+\.[0-9]+\.[0-9]+/{ if (p) exit; p = 1; } !p' CHANGELOG.md; 
+            awk '/^## [0-9]+\.[0-9]+\.[0-9]+/{ p++; if (p>1) exit } { if (p==1) print $0}' CHANGELOG.md; } > RELEASE.md
+
+      - name: Create draft release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: true
+          bodyFile: "RELEASE.md"
+          commit: main
+          tag: v${{ steps.extract_version.outputs.version }}
