@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LatestPost } from "~/components/post";
 import { api, HydrateClient } from "~/trpc/server";
 
-const Home = async () => {
+export const Home = async () => {
   const hello = await api.post.hello({ text: "from tRPC" });
 
   void api.post.getLatest.prefetch();

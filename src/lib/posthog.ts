@@ -1,5 +1,8 @@
+import "server-only";
+
 import { PostHog } from "posthog-node";
 
+import { type VALID_ANALYTIC_EVENTS } from "~/types";
 import { env } from "~/env";
 
 export const PostHogClient = () => {
@@ -9,6 +12,23 @@ export const PostHogClient = () => {
     flushInterval: 0,
   });
   return posthogClient;
+};
+
+const analyticsServerClient = PostHogClient();
+
+export const trackServerEvent = <TEventKey extends keyof VALID_ANALYTIC_EVENTS>(
+  event: TEventKey,
+  payload: {
+    distinctId: string;
+    properties: VALID_ANALYTIC_EVENTS[TEventKey];
+  },
+) => {
+  const { distinctId, properties } = payload;
+  analyticsServerClient.capture({
+    distinctId,
+    event,
+    properties,
+  });
 };
 
 export default PostHogClient;
