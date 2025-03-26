@@ -13,6 +13,10 @@ type Routes = {
       redirect_url?: string;
     };
   };
+  onboarding: {
+    params?: null;
+    query?: null;
+  };
   start: {
     params?: null;
     query?: null;
@@ -71,6 +75,9 @@ export const getInternalRoute = <TRouteKey extends keyof Routes>(
       break;
     case "sign_in":
       path = "/sign-in";
+      break;
+    case "onboarding":
+      path = "/onboarding";
       break;
     case "dashboard":
       path = "/dashboard";

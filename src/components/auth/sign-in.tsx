@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -20,6 +22,7 @@ export const SignIn = ({
     await signIn.social({
       provider: "github",
       callbackURL: getInternalRoute("dashboard", null),
+      newUserCallbackURL: getInternalRoute("onboarding", null),
     });
   };
 

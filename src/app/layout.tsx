@@ -26,11 +26,11 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="en" className={`${inter.variable} light h-full`}>
       <body className="h-full w-full">
-        <PostHogProvider>
-          <TRPCReactProvider>
+        <TRPCReactProvider>
+          <PostHogProvider>
             <div className="flex min-h-screen w-full flex-col">{children}</div>
-          </TRPCReactProvider>
-        </PostHogProvider>
+          </PostHogProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );

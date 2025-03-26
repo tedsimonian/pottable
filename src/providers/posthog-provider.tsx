@@ -6,12 +6,15 @@ import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { env } from "~/env";
+import { useSession } from "~/lib/auth-client";
 
 type PostHogProviderProps = {
   children: React.ReactNode;
 };
 
 export const PostHogProvider = ({ children }: PostHogProviderProps) => {
+  const { data: session } = useSession();
+
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
       api_host: "/ingest",
@@ -20,6 +23,19 @@ export const PostHogProvider = ({ children }: PostHogProviderProps) => {
       capture_pageleave: true, // Enable pageleave capture
     });
   }, []);
+
+  useEffect(() => {
+    if (session?.user.id) {
+      console.log("Identifying user", session.user.id);
+      posthog.identify(session.user.id, {
+        email: session.user.email,
+        name: session.user.name,
+      });
+    } else {
+      console.log("Resetting posthog - no user session");
+      posthog.reset();
+    }
+  }, [session?.user]);
 
   return (
     <PHProvider client={posthog}>

@@ -23,11 +23,12 @@ export const trackServerEvent = <TEventKey extends keyof VALID_ANALYTIC_EVENTS>(
     properties: VALID_ANALYTIC_EVENTS[TEventKey];
   },
 ) => {
+  console.log("Tracking server event", event, payload);
   const { distinctId, properties } = payload;
   analyticsServerClient.capture({
     distinctId,
     event,
-    properties,
+    properties: properties ?? {},
   });
 };
 
