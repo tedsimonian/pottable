@@ -11,23 +11,25 @@ import {
 import Github from "~/components/icon/github";
 
 import { signIn } from "~/lib/auth-client";
-import { cn } from "~/lib/utils";
 import { getInternalRoute } from "~/lib/internal-routes";
 
-export const SignIn = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+type SignInCardProps = {
+  redirectTo?: string;
+};
+
+export const SignInCard = (props: SignInCardProps) => {
+  const { redirectTo } = props;
+
   const handleGithubLogin = async () => {
     await signIn.social({
       provider: "github",
-      callbackURL: getInternalRoute("dashboard", null),
+      callbackURL: redirectTo ?? getInternalRoute("home", null),
       newUserCallbackURL: getInternalRoute("onboarding", null),
     });
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className="flex flex-col gap-6">
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome back</CardTitle>
@@ -56,4 +58,4 @@ export const SignIn = ({
   );
 };
 
-export default SignIn;
+export default SignInCard;

@@ -45,7 +45,8 @@ type TRPCReactProviderProps = {
   children: React.ReactNode;
 };
 
-export const TRPCReactProvider = ({ children }: TRPCReactProviderProps) => {
+export const TRPCReactProvider = (props: TRPCReactProviderProps) => {
+  const { children } = props;
   const queryClient = getQueryClient();
 
   const [trpcClient] = useState(() =>

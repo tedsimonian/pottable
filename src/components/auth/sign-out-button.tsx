@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import { useAnalytics } from "~/hooks";
 import { signOut, useSession } from "~/lib/auth-client";
 import { getInternalRoute } from "~/lib/internal-routes";
+import { Button } from "../ui/button";
 
-export const SignOut = () => {
+export const SignOutButton = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -26,12 +27,5 @@ export const SignOut = () => {
     });
   };
 
-  return (
-    <button
-      className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-      onClick={handleSignOut}
-    >
-      Sign Out
-    </button>
-  );
+  return <Button onClick={handleSignOut}>Sign Out</Button>;
 };

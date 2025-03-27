@@ -3,6 +3,12 @@ import { usePostHog } from "posthog-js/react";
 
 import { type VALID_ANALYTIC_EVENTS } from "~/types";
 
+/**
+ * A hook to capture events with PostHog
+ * @example const { captureEvent } = useAnalytics();
+ * @example captureEvent("User Signed In", { distinctId: "123", properties: { name: "John Doe" } });
+ * @returns The analytics hook
+ */
 export const useAnalytics = () => {
   const posthog = usePostHog();
 

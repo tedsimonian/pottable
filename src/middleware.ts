@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { type Session } from "~/server/auth";
 import { betterFetch } from "@better-fetch/fetch";
+import { getInternalRoute } from "./lib/internal-routes";
 
 export async function middleware(request: NextRequest) {
   const { data: session } = await betterFetch<Session>(
@@ -14,7 +15,8 @@ export async function middleware(request: NextRequest) {
   );
 
   if (!session) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+    const path = getInternalRoute("sign_in", null);
+    return NextResponse.redirect(new URL(path, request.url));
   }
 
   return NextResponse.next();

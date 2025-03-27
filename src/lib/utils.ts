@@ -94,6 +94,10 @@ export const printLocalDateString = (
 export const formatNumber = (number: number) =>
   Intl.NumberFormat("en-US").format(number);
 
+/**
+ * Get the base URL
+ * @returns The base URL
+ */
 export const getBaseUrl = () => {
   if (typeof window !== "undefined") return window.location.origin;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;

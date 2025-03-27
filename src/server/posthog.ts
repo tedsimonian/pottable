@@ -6,8 +6,8 @@ import { type VALID_ANALYTIC_EVENTS } from "~/types";
 import { env } from "~/env";
 
 export const PostHogClient = () => {
-  const posthogClient = new PostHog(env.NEXT_PUBLIC_POSTHOG_KEY as string, {
-    host: env.NEXT_PUBLIC_POSTHOG_HOST as string,
+  const posthogClient = new PostHog(env.NEXT_PUBLIC_POSTHOG_KEY, {
+    host: env.NEXT_PUBLIC_POSTHOG_HOST,
     flushAt: 1,
     flushInterval: 0,
   });
@@ -16,6 +16,13 @@ export const PostHogClient = () => {
 
 const analyticsServerClient = PostHogClient();
 
+/**
+ * Track a server event
+ * @param event - The event to track
+ * @param payload - The payload for the event
+ * @example trackServerEvent("User Signed In", { distinctId: "123", properties: { name: "John Doe" } })
+ * @returns void
+ */
 export const trackServerEvent = <TEventKey extends keyof VALID_ANALYTIC_EVENTS>(
   event: TEventKey,
   payload: {
@@ -23,7 +30,7 @@ export const trackServerEvent = <TEventKey extends keyof VALID_ANALYTIC_EVENTS>(
     properties: VALID_ANALYTIC_EVENTS[TEventKey];
   },
 ) => {
-  console.log("Tracking server event", event, payload);
+  console.debug("Tracking server event", event, payload);
   const { distinctId, properties } = payload;
   analyticsServerClient.capture({
     distinctId,

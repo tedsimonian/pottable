@@ -15,12 +15,12 @@ export const authConfig = {
   database: prismaAdapter(db, {
     provider: "postgresql",
   }),
-  secret: env.BETTER_AUTH_SECRET as string,
+  secret: env.BETTER_AUTH_SECRET,
   plugins: [admin()],
   socialProviders: {
     github: {
-      clientId: env.AUTH_GITHUB_ID as string,
-      clientSecret: env.AUTH_GITHUB_SECRET as string,
+      clientId: env.AUTH_GITHUB_ID,
+      clientSecret: env.AUTH_GITHUB_SECRET,
     },
   },
   hooks: {

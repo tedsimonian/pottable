@@ -17,46 +17,30 @@ type Routes = {
     params?: null;
     query?: null;
   };
-  start: {
-    params?: null;
-    query?: null;
-  };
-  dashboard: {
-    params?: null;
-    query?: null;
-  };
-  dashboard_projects: {
-    params?: null;
-    query?: null;
-  };
-  dashboard_backed: {
-    params?: null;
-    query?: null;
-  };
-  dashboard_votes: {
-    params?: null;
-    query?: null;
-  };
-  dashboard_settings: {
-    params?: null;
-    query?: null;
-  };
-  view_project: {
+  view_garden: {
     params: {
       id: string;
-      slug: string;
     };
     query?: null;
   };
-  edit_project: {
+  edit_garden: {
     params: {
       id: string;
-      slug: string;
     };
     query?: null;
   };
 };
 
+/**
+ * Get the internal route for the given route name and parameters
+ *
+ * @param routeName - The name of the route
+ * @param params - The parameters for the route
+ * @param query - The query parameters for the route
+ * @example getInternalRoute("home", null) -> "/"
+ * @example getInternalRoute("view_garden", { id: "1" }) -> "/gardens/1"
+ * @returns The internal route
+ */
 export const getInternalRoute = <TRouteKey extends keyof Routes>(
   routeName: TRouteKey,
   params: Routes[TRouteKey]["params"],
@@ -67,9 +51,6 @@ export const getInternalRoute = <TRouteKey extends keyof Routes>(
     case "home":
       path = "/";
       break;
-    case "start":
-      path = "/start";
-      break;
     case "not_found":
       path = "/not-found";
       break;
@@ -79,31 +60,15 @@ export const getInternalRoute = <TRouteKey extends keyof Routes>(
     case "onboarding":
       path = "/onboarding";
       break;
-    case "dashboard":
-      path = "/dashboard";
+    case "view_garden":
+      const { id } = params as { id: string };
+      path = `/gardens/${id}`;
       break;
-    case "dashboard_projects":
-      path = "/dashboard/projects";
-      break;
-    case "dashboard_backed":
-      path = "/dashboard/backed";
-      break;
-    case "dashboard_votes":
-      path = "/dashboard/votes";
-      break;
-    case "dashboard_settings":
-      path = "/dashboard/settings";
-      break;
-    case "view_project":
-      const { id, slug } = params as { id: string; slug: string };
-      path = `/projects/${id}/${slug}`;
-      break;
-    case "edit_project":
-      const { id: editId, slug: editSlug } = params as {
+    case "edit_garden":
+      const { id: editId } = params as {
         id: string;
-        slug: string;
       };
-      path = `/dashboard/projects/${editId}/${editSlug}/edit`;
+      path = `/gardens/${editId}/edit`;
       break;
     default:
       path = "/";

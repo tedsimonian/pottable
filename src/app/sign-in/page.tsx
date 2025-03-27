@@ -1,6 +1,6 @@
 import { GalleryVerticalEnd } from "lucide-react";
 
-import { SignIn } from "~/components/auth/sign-in";
+import { SignInCard } from "~/components/auth/sign-in-card";
 import { companyName } from "~/constants";
 
 export const SignInPage = () => {
@@ -13,7 +13,7 @@ export const SignInPage = () => {
           </div>
           {companyName}
         </a>
-        <SignIn />
+        <SignInCard />
       </div>
     </div>
   );

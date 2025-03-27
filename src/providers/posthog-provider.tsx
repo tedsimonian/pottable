@@ -12,13 +12,14 @@ type PostHogProviderProps = {
   children: React.ReactNode;
 };
 
-export const PostHogProvider = ({ children }: PostHogProviderProps) => {
+export const PostHogProvider = (props: PostHogProviderProps) => {
+  const { children } = props;
   const { data: session } = useSession();
 
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
       api_host: "/ingest",
-      ui_host: env.NEXT_PUBLIC_POSTHOG_HOST as string,
+      ui_host: env.NEXT_PUBLIC_POSTHOG_HOST,
       capture_pageview: false, // We capture pageviews manually
       capture_pageleave: true, // Enable pageleave capture
     });
