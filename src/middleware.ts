@@ -1,9 +1,25 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { type Session } from "~/server/auth";
 import { betterFetch } from "@better-fetch/fetch";
-import { getInternalRoute } from "./lib/internal-routes";
+import {
+  getInternalRoute,
+  ROUTES,
+  type RoutePaths,
+} from "./lib/internal-routes";
+import { ROLES } from "./permissions";
 
-export async function middleware(request: NextRequest) {
+// Type-safe route paths
+const authRoutes: Array<RoutePaths> = [ROUTES.sign_in, ROUTES.sign_up];
+
+const adminRoutes: Array<RoutePaths> = [ROUTES.admin];
+
+export default async function authMiddleware(request: NextRequest) {
+  const pathName = request.nextUrl.pathname;
+  const homePath = getInternalRoute("home", null);
+
+  const isAuthRoute = authRoutes.includes(pathName as RoutePaths);
+  const isAdminRoute = adminRoutes.includes(pathName as RoutePaths);
+
   const { data: session } = await betterFetch<Session>(
     "/api/auth/get-session",
     {
@@ -15,8 +31,35 @@ export async function middleware(request: NextRequest) {
   );
 
   if (!session) {
-    const path = getInternalRoute("sign_in", null);
-    return NextResponse.redirect(new URL(path, request.url));
+    if (isAuthRoute) {
+      return NextResponse.next();
+    }
+
+    const signInPath = getInternalRoute("sign_in", null, {
+      redirect_url: encodeURIComponent(pathName),
+    });
+    return NextResponse.redirect(new URL(signInPath, request.url));
+  }
+
+  if (isAuthRoute) {
+    const searchParams = new URLSearchParams(request.nextUrl.search);
+    const redirectUrl = searchParams.get("redirect_url");
+
+    if (redirectUrl) {
+      return NextResponse.redirect(
+        new URL(decodeURIComponent(redirectUrl), request.url),
+      );
+    }
+
+    return NextResponse.redirect(new URL(homePath, request.url));
+  }
+
+  if (isAdminRoute) {
+    const isAdmin = session.user.role === ROLES.ADMIN;
+
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL(homePath, request.url));
+    }
   }
 
   return NextResponse.next();
@@ -24,13 +67,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all paths except:
-     * 1. /sign-in
-     * 2. /api/auth (to allow auth endpoints to work)
-     * 3. /_next (to allow static files)
-     * 4. /favicon.ico, /sitemap.xml, /robots.txt (common public files)
-     */
-    "/((?!sign-in|api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|$).*)",
   ],
 };

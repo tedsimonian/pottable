@@ -12,6 +12,7 @@ import { ZodError } from "zod";
 
 import { db } from "~/server/db";
 import { auth } from "../auth";
+import { ROLES } from "~/permissions";
 
 /**
  * 1. CONTEXT
@@ -132,3 +133,30 @@ export const protectedProcedure = t.procedure
       },
     });
   });
+
+/**
+ * Admin (authenticated + admin role) procedure
+ *
+ * This procedure ensures the user is not only authenticated but also has the ADMIN role
+ */
+export const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (!ctx.session?.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  const role = ctx.session?.user.role;
+  const isAdmin = role === ROLES.ADMIN || role === ROLES.SUPER_ADMIN;
+
+  if (!isAdmin) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "This action requires admin privileges",
+    });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable and user as admin
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});

@@ -14,7 +14,7 @@ import { signIn } from "~/lib/auth-client";
 import { getInternalRoute } from "~/lib/internal-routes";
 
 type SignInCardProps = {
-  redirectTo?: string;
+  redirectTo?: string | null;
 };
 
 export const SignInCard = (props: SignInCardProps) => {

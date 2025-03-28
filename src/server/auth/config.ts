@@ -6,6 +6,12 @@ import { db } from "~/server/db";
 import { env } from "~/env";
 import { trackServerEvent } from "../posthog";
 import { SOCIAL_PROVIDERS } from "~/constants";
+import {
+  accessControl,
+  adminRole,
+  superAdminRole,
+  userRole,
+} from "~/permissions";
 
 /**
  * Options for Better-Auth.js used to configure adapters, providers, callbacks, etc.
@@ -16,7 +22,16 @@ export const authConfig = {
     provider: "postgresql",
   }),
   secret: env.BETTER_AUTH_SECRET,
-  plugins: [admin()],
+  plugins: [
+    admin({
+      ac: accessControl,
+      roles: {
+        admin: adminRole,
+        user: userRole,
+        superAdmin: superAdminRole,
+      },
+    }),
+  ],
   socialProviders: {
     github: {
       clientId: env.AUTH_GITHUB_ID,
