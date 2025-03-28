@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { SignInCard } from "~/components/auth/sign-in-card";
 import { companyName } from "~/constants";
 
-export const SignInPage = () => {
+export default function SignInPage() {
   const searchParams = useSearchParams();
   const encodedRedirectUrl = searchParams.get("redirect_url");
   const redirectUrl = encodedRedirectUrl
@@ -26,6 +26,4 @@ export const SignInPage = () => {
       </div>
     </div>
   );
-};
-
-export default SignInPage;
+}

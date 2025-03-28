@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 
-const AdminPage = () => {
+export default function AdminPage() {
   const [page, setPage] = useState(0);
   const [limit] = useState(10);
 
@@ -75,6 +75,4 @@ const AdminPage = () => {
       </div>
     </div>
   );
-};
-
-export default AdminPage;
+}

@@ -22,7 +22,9 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-const RootLayout = ({ children }: RootLayoutProps) => {
+export default function RootLayout(props: RootLayoutProps) {
+  const { children } = props;
+
   return (
     <html lang="en" className={`${inter.variable} light h-full`}>
       <body className="h-full w-full">
@@ -34,6 +36,4 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}
