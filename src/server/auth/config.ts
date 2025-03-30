@@ -1,6 +1,7 @@
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import type { BetterAuthOptions } from "better-auth";
 import { admin, createAuthMiddleware } from "better-auth/plugins";
+import { nextCookies } from "better-auth/next-js";
 
 import { db } from "~/server/db";
 import { env } from "~/env";
@@ -22,6 +23,14 @@ export const authConfig = {
     provider: "postgresql",
   }),
   secret: env.BETTER_AUTH_SECRET,
+  logger: {
+    level: "debug",
+  },
+  session: {
+    cookieCache: {
+      enabled: true,
+    },
+  },
   plugins: [
     admin({
       ac: accessControl,
@@ -31,6 +40,7 @@ export const authConfig = {
         superAdmin: superAdminRole,
       },
     }),
+    nextCookies(),
   ],
   socialProviders: {
     github: {
@@ -40,32 +50,45 @@ export const authConfig = {
   },
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
-      if (ctx.path.startsWith("/sign-in")) {
-        const newSession = ctx.context.newSession;
-        if (newSession) {
-          console.log("After hook: User Registered");
-          trackServerEvent("User Registered", {
-            distinctId: newSession.user.id,
-            properties: {
-              name: newSession.user.name,
-              email: newSession.user.email,
-              provider: SOCIAL_PROVIDERS.GITHUB,
-            },
-          });
-        } else {
-          const session = ctx.context.session;
-          if (session) {
-            console.log("After hook: User Signed In");
-            trackServerEvent("User Signed In", {
-              distinctId: session.user.id,
-              properties: {
-                name: session.user.name,
-                email: session.user.email,
-                provider: SOCIAL_PROVIDERS.GITHUB,
-              },
-            });
-          }
-        }
+      if (!ctx.path.includes("callback")) return;
+
+      const { newSession } = ctx.context;
+
+      if (!newSession) {
+        console.log("No session data available");
+        return;
+      }
+
+      // Get the user's creation time from the database
+      const dbUser = await db.user.findUnique({
+        where: { id: newSession.user.id },
+        select: { createdAt: true },
+      });
+
+      // If createdAt is within the last few seconds, it's a new user
+      const isNewUser =
+        dbUser && Date.now() - dbUser.createdAt.getTime() < 5000; // Within last 5 seconds
+
+      if (isNewUser) {
+        trackServerEvent("user registered", {
+          distinctId: newSession.user.id,
+          properties: {
+            name: newSession.user.name,
+            email: newSession.user.email,
+            provider: SOCIAL_PROVIDERS.GITHUB,
+            login_type: "social",
+          },
+        });
+      } else {
+        trackServerEvent("user signed in", {
+          distinctId: newSession.user.id,
+          properties: {
+            name: newSession.user.name,
+            email: newSession.user.email,
+            provider: SOCIAL_PROVIDERS.GITHUB,
+            login_type: "social",
+          },
+        });
       }
     }),
   },

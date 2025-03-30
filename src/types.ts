@@ -1,17 +1,19 @@
 export type VALID_ANALYTIC_EVENTS = {
-  "Image Uploaded": {
+  "image uploaded": {
     url: string;
     userId: string;
   };
-  "User Registered": {
+  "user registered": {
     name: string;
     email: string;
+    login_type: "social";
     provider: string;
   };
-  "User Signed In": {
+  "user signed in": {
     name: string;
     email: string;
+    login_type: "social";
     provider: string;
   };
-  "User Signed Out": null | undefined;
+  "user signed out": null | undefined;
 };

@@ -10,7 +10,7 @@ import {
 } from "~/components/ui/card";
 import Github from "~/components/icon/github";
 
-import { signIn } from "~/lib/auth-client";
+import { authClient } from "~/lib/auth-client";
 import { getInternalRoute } from "~/lib/internal-routes";
 
 type SignInCardProps = {
@@ -21,7 +21,7 @@ export const SignInCard = (props: SignInCardProps) => {
   const { redirectTo } = props;
 
   const handleGithubLogin = async () => {
-    await signIn.social({
+    await authClient.signIn.social({
       provider: "github",
       callbackURL: redirectTo ?? getInternalRoute("home", null),
       newUserCallbackURL: getInternalRoute("onboarding", null),

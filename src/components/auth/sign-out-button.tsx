@@ -1,31 +1,41 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAnalytics } from "~/hooks";
-import { signOut, useSession } from "~/lib/auth-client";
-import { getInternalRoute } from "~/lib/internal-routes";
+
 import { Button } from "../ui/button";
+
+import { useAnalytics } from "~/hooks";
+import { authClient } from "~/lib/auth-client";
+import { getInternalRoute } from "~/lib/internal-routes";
 
 export const SignOutButton = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, isPending } = authClient.useSession();
 
   const { captureEvent } = useAnalytics();
 
   const handleSignOut = async () => {
-    await signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          console.log("User Signed Out");
-          captureEvent("User Signed Out", {
-            distinctId: session?.user.id ?? "",
-            properties: null,
-          });
-          router.push(getInternalRoute("sign_in", null));
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            captureEvent("user signed out", {
+              distinctId: session?.user.id ?? "",
+              properties: null,
+            });
+            const signInPath = getInternalRoute("sign_in", null);
+            router.push(signInPath);
+          },
         },
-      },
-    });
+      });
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+    }
   };
 
-  return <Button onClick={handleSignOut}>Sign Out</Button>;
+  return (
+    <Button disabled={isPending} onClick={handleSignOut}>
+      Sign Out
+    </Button>
+  );
 };

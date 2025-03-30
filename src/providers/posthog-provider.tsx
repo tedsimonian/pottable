@@ -6,7 +6,7 @@ import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { env } from "~/env";
-import { useSession } from "~/lib/auth-client";
+import { authClient } from "~/lib/auth-client";
 
 type PostHogProviderProps = {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ type PostHogProviderProps = {
 
 export const PostHogProvider = (props: PostHogProviderProps) => {
   const { children } = props;
-  const { data: session } = useSession();
+  const { data: session, isPending } = authClient.useSession();
 
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
@@ -26,6 +26,8 @@ export const PostHogProvider = (props: PostHogProviderProps) => {
   }, []);
 
   useEffect(() => {
+    if (isPending) return;
+
     if (session?.user.id) {
       console.log("Identifying user", session.user.id);
       posthog.identify(session.user.id, {
@@ -36,7 +38,7 @@ export const PostHogProvider = (props: PostHogProviderProps) => {
       console.log("Resetting posthog - no user session");
       posthog.reset();
     }
-  }, [session?.user]);
+  }, [session?.user, isPending]);
 
   return (
     <PHProvider client={posthog}>

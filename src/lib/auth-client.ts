@@ -1,5 +1,6 @@
 import { createAuthClient } from "better-auth/react";
 import { adminClient } from "better-auth/client/plugins";
+import { nextCookies } from "better-auth/next-js";
 import {
   accessControl,
   adminRole,
@@ -19,7 +20,6 @@ export const authClient = createAuthClient({
         superAdmin: superAdminRole,
       },
     }),
+    nextCookies(),
   ],
 });
-
-export const { signIn, signOut, signUp, useSession } = authClient;
