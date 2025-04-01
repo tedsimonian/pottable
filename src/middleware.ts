@@ -12,13 +12,13 @@ const authRoutes: Array<RoutePaths> = [ROUTES.sign_in, ROUTES.sign_up];
 export default async function middleware(request: NextRequest) {
   const pathName = request.nextUrl.pathname;
 
+  const isAuthRoute = authRoutes.includes(pathName as RoutePaths);
+
   const sessionCookie = getSessionCookie(request, {
     // Optionally pass config if cookie name or prefix is customized in auth config.
     cookieName: "session_token",
     cookiePrefix: "better-auth",
   });
-
-  const isAuthRoute = authRoutes.includes(pathName as RoutePaths);
 
   if (!sessionCookie && !isAuthRoute) {
     const signInPath = getInternalRoute("sign_in", null, {

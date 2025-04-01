@@ -2,6 +2,8 @@ import type React from "react";
 import { Inter } from "next/font/google";
 import { type Metadata } from "next";
 
+import { Toaster } from "~/components/ui/sonner";
+
 import { TRPCReactProvider } from "~/trpc/react";
 import { PostHogProvider } from "~/providers/posthog-provider";
 
@@ -30,7 +32,10 @@ export default function RootLayout(props: RootLayoutProps) {
       <body className="h-full w-full">
         <TRPCReactProvider>
           <PostHogProvider>
-            <div className="flex min-h-screen w-full flex-col">{children}</div>
+            <main className="flex min-h-screen w-full flex-col">
+              {children}
+            </main>
+            <Toaster />
           </PostHogProvider>
         </TRPCReactProvider>
       </body>

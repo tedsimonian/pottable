@@ -1,18 +1,12 @@
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import type { BetterAuthOptions } from "better-auth";
-import { admin, createAuthMiddleware } from "better-auth/plugins";
+import { createAuthMiddleware } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
 
 import { db } from "~/server/db";
 import { env } from "~/env";
 import { trackServerEvent } from "../posthog";
-import { SOCIAL_PROVIDERS } from "~/constants";
-import {
-  accessControl,
-  adminRole,
-  superAdminRole,
-  userRole,
-} from "~/permissions";
+import { SOCIAL_PROVIDERS } from "~/lib/constants";
 
 /**
  * Options for Better-Auth.js used to configure adapters, providers, callbacks, etc.
@@ -31,17 +25,7 @@ export const authConfig = {
       enabled: true,
     },
   },
-  plugins: [
-    admin({
-      ac: accessControl,
-      roles: {
-        admin: adminRole,
-        user: userRole,
-        superAdmin: superAdminRole,
-      },
-    }),
-    nextCookies(),
-  ],
+  plugins: [nextCookies()],
   socialProviders: {
     github: {
       clientId: env.AUTH_GITHUB_ID,

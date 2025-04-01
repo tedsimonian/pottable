@@ -4,7 +4,7 @@ import { GalleryVerticalEnd } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 import { SignInCard } from "~/components/auth/sign-in-card";
-import { companyName } from "~/constants";
+import { companyName } from "~/lib/constants";
 
 export default function SignInPage() {
   const searchParams = useSearchParams();

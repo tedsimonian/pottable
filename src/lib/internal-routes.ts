@@ -4,8 +4,6 @@ export const ROUTES = {
   not_found: "/not-found",
   sign_in: "/sign-in",
   sign_up: "/sign-up",
-  admin: "/admin",
-  onboarding: "/onboarding",
   view_garden: "/gardens/:id",
   edit_garden: "/gardens/:id/edit",
 } as const;
@@ -24,8 +22,6 @@ type RouteParams = EnsureAllRoutes<{
   not_found: null;
   sign_in: null;
   sign_up: null;
-  admin: null;
-  onboarding: null;
   view_garden: { id: string };
   edit_garden: { id: string };
 }>;
@@ -35,8 +31,6 @@ type RouteQueries = EnsureAllRoutes<{
   not_found: null;
   sign_in: { redirect_url?: string };
   sign_up: null;
-  admin: null;
-  onboarding: null;
   view_garden: null;
   edit_garden: null;
 }>;

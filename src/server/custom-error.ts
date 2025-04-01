@@ -1,99 +1,55 @@
 import "server-only";
+import { TRPCError } from "@trpc/server";
+import type { TRPC_ERROR_CODE_KEY } from "@trpc/server/rpc";
 
-export const ERROR_TYPES = {
-  NOT_FOUND: "NOT_FOUND",
-  UNAUTHORIZED: "UNAUTHORIZED",
-  FORBIDDEN: "FORBIDDEN",
-  INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
-  BAD_REQUEST: "BAD_REQUEST",
-  SIGN_IN_REQUIRED: "SIGN_IN_REQUIRED",
-  GARDEN_CREATION_FAILED: "GARDEN_CREATION_FAILED",
-  GARDEN_DELETION_FAILED: "GARDEN_DELETION_FAILED",
-  GARDEN_NOT_FOUND: "GARDEN_NOT_FOUND",
-} as const;
-
-export type ErrorType = (typeof ERROR_TYPES)[keyof typeof ERROR_TYPES];
-
-export type ErrorDetails = {
-  type: ErrorType;
+type ErrorDetails = {
+  code: TRPC_ERROR_CODE_KEY;
   message: string;
-  statusCode: number;
 };
 
-export const ERRORS: Record<ErrorType, ErrorDetails> = {
-  [ERROR_TYPES.NOT_FOUND]: {
-    type: ERROR_TYPES.NOT_FOUND,
-    message: "The requested resource was not found.",
-    statusCode: 404,
-  },
-  [ERROR_TYPES.UNAUTHORIZED]: {
-    type: ERROR_TYPES.UNAUTHORIZED,
-    message: "You are not authorized to access this resource.",
-    statusCode: 401,
-  },
-  [ERROR_TYPES.FORBIDDEN]: {
-    type: ERROR_TYPES.FORBIDDEN,
-    message: "You do not have permission to access this resource.",
-    statusCode: 403,
-  },
-  [ERROR_TYPES.INTERNAL_SERVER_ERROR]: {
-    type: ERROR_TYPES.INTERNAL_SERVER_ERROR,
-    message: "An internal server error occurred.",
-    statusCode: 500,
-  },
-  [ERROR_TYPES.BAD_REQUEST]: {
-    type: ERROR_TYPES.BAD_REQUEST,
-    message: "The request was invalid or cannot be served.",
-    statusCode: 400,
-  },
-  [ERROR_TYPES.SIGN_IN_REQUIRED]: {
-    type: ERROR_TYPES.SIGN_IN_REQUIRED,
-    message: "You must be signed in.",
-    statusCode: 401,
-  },
-  [ERROR_TYPES.GARDEN_CREATION_FAILED]: {
-    type: ERROR_TYPES.GARDEN_CREATION_FAILED,
+export const ERROR_CONFIG = {
+  GARDEN_CREATION_FAILED: {
+    code: "INTERNAL_SERVER_ERROR",
     message: "Failed to create garden. Please try again.",
-    statusCode: 500,
   },
-  [ERROR_TYPES.GARDEN_DELETION_FAILED]: {
-    type: ERROR_TYPES.GARDEN_DELETION_FAILED,
+  GARDEN_DELETION_FAILED: {
+    code: "INTERNAL_SERVER_ERROR",
     message: "Failed to delete garden. Double check the garden status.",
-    statusCode: 500,
   },
-  [ERROR_TYPES.GARDEN_NOT_FOUND]: {
-    type: ERROR_TYPES.GARDEN_NOT_FOUND,
+  GARDEN_NOT_FOUND: {
+    code: "NOT_FOUND",
     message: "Garden not found.",
-    statusCode: 504,
   },
-};
+} satisfies Record<string, ErrorDetails>;
 
-export class CustomError extends Error {
-  type: ErrorType;
-  statusCode: number;
-
-  constructor(details: ErrorDetails) {
-    super(details.message);
-    this.type = details.type;
-    this.statusCode = details.statusCode;
-    this.name = "CustomError";
-  }
-}
+// Derive types from the config
+export type CustomErrorType = keyof typeof ERROR_CONFIG;
 
 /**
- * Throw a custom error
- * @param type - The type of error to throw
- * @param customMessage - The custom message to throw
- * @example throwCustomError("NOT_FOUND") -> CustomError: The requested resource was not found.
- * @returns The custom error
+ * Throw a TRPC error
+ * @param typeOrCode - Either a custom error type or a direct TRPC error code
+ * @param customMessage - Optional custom message to override default message
+ * @example
+ * throwTRPCError("GARDEN_NOT_FOUND") -> TRPCError: Garden not found.
+ * throwTRPCError("BAD_REQUEST", "Invalid garden parameters provided")
+ * @returns never - This function always throws
  */
-export const throwCustomError = (
-  type: ErrorType,
+export const throwTRPCError = (
+  typeOrCode: CustomErrorType | TRPC_ERROR_CODE_KEY,
   customMessage?: string,
 ): never => {
-  const errorDetails = ERRORS[type];
-  throw new CustomError({
-    ...errorDetails,
-    message: customMessage ?? errorDetails.message,
+  // Check if the type is a custom error type
+  if (typeOrCode in ERROR_CONFIG) {
+    const errorConfig = ERROR_CONFIG[typeOrCode as CustomErrorType];
+    throw new TRPCError({
+      code: errorConfig.code,
+      message: customMessage ?? errorConfig.message,
+    });
+  }
+
+  // Handle direct TRPC error code
+  throw new TRPCError({
+    code: typeOrCode as TRPC_ERROR_CODE_KEY,
+    message: customMessage ?? "An error occurred",
   });
 };

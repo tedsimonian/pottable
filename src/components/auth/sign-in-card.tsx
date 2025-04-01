@@ -24,7 +24,6 @@ export const SignInCard = (props: SignInCardProps) => {
     await authClient.signIn.social({
       provider: "github",
       callbackURL: redirectTo ?? getInternalRoute("home", null),
-      newUserCallbackURL: getInternalRoute("onboarding", null),
     });
   };
 
