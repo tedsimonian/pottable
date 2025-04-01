@@ -1,6 +1,7 @@
 // Define the route paths separately
 export const ROUTES = {
   home: "/",
+  dashboard: "/dashboard",
   not_found: "/not-found",
   sign_in: "/sign-in",
   sign_up: "/sign-up",
@@ -19,6 +20,7 @@ type EnsureAllRoutes<T> = {
 
 type RouteParams = EnsureAllRoutes<{
   home: null;
+  dashboard: null;
   not_found: null;
   sign_in: null;
   sign_up: null;
@@ -28,6 +30,7 @@ type RouteParams = EnsureAllRoutes<{
 
 type RouteQueries = EnsureAllRoutes<{
   home: null;
+  dashboard: null;
   not_found: null;
   sign_in: { redirect_url?: string };
   sign_up: null;

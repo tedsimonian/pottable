@@ -28,8 +28,8 @@ export default async function middleware(request: NextRequest) {
   }
 
   if (sessionCookie && isAuthRoute) {
-    const homePath = getInternalRoute("home", null);
-    return NextResponse.redirect(new URL(homePath, request.url));
+    const dashboardPath = getInternalRoute("dashboard", null);
+    return NextResponse.redirect(new URL(dashboardPath, request.url));
   }
 
   return NextResponse.next();

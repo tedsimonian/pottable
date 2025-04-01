@@ -23,7 +23,7 @@ export const SignInCard = (props: SignInCardProps) => {
   const handleGithubLogin = async () => {
     await authClient.signIn.social({
       provider: "github",
-      callbackURL: redirectTo ?? getInternalRoute("home", null),
+      callbackURL: redirectTo ?? getInternalRoute("dashboard", null),
     });
   };
 
