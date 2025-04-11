@@ -245,3 +245,7 @@ auth.use(new MultiTenancy({
   // Plugin-specific configuration
 }));
 ``` 
+
+## Resources
+
+- [Official Better-Auth Documentation](https://www.better-auth.com/docs/introduction)

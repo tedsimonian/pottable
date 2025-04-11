@@ -1,0 +1,42 @@
+---
+description: Learnings from Container and Crop Management Implementation
+alwaysApply: false
+---
+
+# Cursor Rule: Learnings from Container and Crop Management Implementation
+
+## Overview
+This document captures the key learnings and best practices identified during the implementation of container and crop management features using tRPC, React, and TypeScript.
+
+## Project Structure
+- Place components in the `components` directory, organized by feature (e.g., `components/container`).
+- Use kebab-case for directory and file names.
+- Reserve the `ui` directory for Shadcn components only.
+
+## Component Development
+- Use functional components and hooks for managing state and side effects.
+- Define types using TypeScript to ensure type safety and clarity.
+- Access nested data structures correctly to avoid runtime errors.
+
+## API Integration
+- Use tRPC's built-in hooks for data fetching and mutations.
+- Ensure API methods are correctly defined and accessible in the client.
+- Handle loading and error states appropriately in UI components.
+
+## Error Handling
+- Implement proper error handling in components to provide user feedback.
+- Use conditional rendering to manage loading and error states.
+
+## Best Practices
+- Keep components small and focused on a single responsibility.
+- Use TypeScript's type inference to maintain type safety.
+- Regularly update this document with new learnings and best practices.
+
+## Future Considerations
+- Explore further integration with Shadcn components for consistent UI styling.
+- Consider implementing more advanced state management solutions if needed.
+- Continuously refactor and improve code based on new insights and requirements.
+
+---
+
+This document will be updated as new learnings and best practices are identified during the development process. 

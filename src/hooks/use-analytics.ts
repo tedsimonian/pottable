@@ -25,5 +25,3 @@ export const useAnalytics = () => {
 
   return { captureEvent };
 };
-
-export default useAnalytics;
