@@ -32,7 +32,7 @@ export const SignInCard = (props: SignInCardProps) => {
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Login with your Discord account</CardDescription>
+          <CardDescription>Login with your Github account</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-6">

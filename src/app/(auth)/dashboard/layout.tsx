@@ -1,7 +1,10 @@
 import type React from "react";
-import { DashboardSidebar } from "~/components/dashboard/siderbar";
-import { DashboardHeader } from "~/components/dashboard/header";
-import { SidebarProvider } from "~/components/ui/sidebar";
+import { AppSidebar } from "~/components/navigation/app-sidebar";
+import { SiteHeader } from "~/components/navigation/site-header";
+import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
+
+export const iframeHeight = "800px";
+export const description = "A sidebar with a header and a search form.";
 
 export default function DashboardLayout({
   children,
@@ -9,16 +12,16 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full flex-col bg-white">
-        <DashboardHeader />
-        <div className="relative flex w-full flex-1">
-          <DashboardSidebar />
-          <main className="w-full flex-1 overflow-y-auto">
-            <div className="mx-auto max-w-7xl p-3 md:p-6">{children}</div>
-          </main>
+    <div className="[--header-height:calc(theme(spacing.14))]">
+      <SidebarProvider className="flex flex-col">
+        <SiteHeader />
+        <div className="flex flex-1">
+          <AppSidebar />
+          <SidebarInset>
+            <div className="@container/main">{children}</div>
+          </SidebarInset>
         </div>
-      </div>
-    </SidebarProvider>
+      </SidebarProvider>
+    </div>
   );
 }

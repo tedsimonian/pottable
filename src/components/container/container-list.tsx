@@ -1,9 +1,5 @@
 import React from "react";
 import { useContainer } from "~/hooks/use-container";
-import { type RouterOutputs } from "~/trpc/react";
-
-// Define the type for container data
-type Container = RouterOutputs["container"]["read"]["data"];
 
 const ContainerList = () => {
   const { fetchContainer } = useContainer();
