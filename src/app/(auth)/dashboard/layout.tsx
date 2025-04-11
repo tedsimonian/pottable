@@ -1,10 +1,7 @@
-import type React from "react";
 import { AppSidebar } from "~/components/navigation/app-sidebar";
 import { SiteHeader } from "~/components/navigation/site-header";
-import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 
-export const iframeHeight = "800px";
-export const description = "A sidebar with a header and a search form.";
+import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 
 export default function DashboardLayout({
   children,
@@ -13,14 +10,12 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="[--header-height:calc(theme(spacing.14))]">
-      <SidebarProvider className="flex flex-col">
-        <SiteHeader />
-        <div className="flex flex-1">
-          <AppSidebar />
-          <SidebarInset>
-            <div className="@container/main">{children}</div>
-          </SidebarInset>
-        </div>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{children}</div>
+        </SidebarInset>
       </SidebarProvider>
     </div>
   );
