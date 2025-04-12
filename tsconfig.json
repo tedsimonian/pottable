@@ -38,7 +38,11 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "prettier.config.mjs",
+    "postcss.config.mjs",
+    "eslint.config.mjs",
+    "src/env.js"
   ],
   "exclude": ["node_modules"]
 }
