@@ -14,7 +14,7 @@ export default function DashboardLayout({
         <AppSidebar />
         <SidebarInset>
           <SiteHeader />
-          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">{children}</div>
+          <div className="sm:p-6 lg:p-8">{children}</div>
         </SidebarInset>
       </SidebarProvider>
     </div>

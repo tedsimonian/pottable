@@ -57,7 +57,7 @@ export default async function RootLayout(props: RootLayoutProps) {
       </head>
       <body
         className={cn(
-          "bg-background overscroll-none font-sans antialiased",
+          "bg-background h-full w-full overscroll-none font-sans antialiased",
           activeThemeValue ? `theme-${activeThemeValue}` : "",
           isScaled ? "theme-scaled" : "",
           inter.variable,

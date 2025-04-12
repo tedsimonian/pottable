@@ -8,6 +8,7 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
+import type { User } from "better-auth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {
@@ -25,14 +26,16 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "~/components/ui/sidebar";
-import { authClient } from "~/lib/auth-client";
 import { getInitials } from "~/lib/utils";
 import { SignOutLink } from "../auth/sign-out-link";
 
-export const NavUser = () => {
+type NavUserProps = {
+  user: User;
+};
+
+export const NavUser = (props: NavUserProps) => {
+  const { user } = props;
   const { isMobile } = useSidebar();
-  const { data: session } = authClient.useSession();
-  const { user } = session ?? {};
 
   return (
     <SidebarMenu>

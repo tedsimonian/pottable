@@ -9,14 +9,24 @@ import {
 } from "~/components/ui/sidebar";
 import { Logo } from "../common/logo";
 import { companyName } from "~/lib/constants";
+import { getInternalRoute } from "~/lib/internal-routes";
+import { useRouter } from "next/navigation";
 
-export function LogoSidebar() {
+export const LogoSidebar = () => {
+  const router = useRouter();
+  const path = getInternalRoute("dashboard", null);
+
+  const handleClick = () => {
+    router.push(path);
+  };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton
           size="lg"
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
+          onClick={handleClick}
         >
           <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
             <Logo />
@@ -28,4 +38,4 @@ export function LogoSidebar() {
       </SidebarMenuItem>
     </SidebarMenu>
   );
-}
+};

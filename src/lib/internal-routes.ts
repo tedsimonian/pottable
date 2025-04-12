@@ -3,10 +3,23 @@ export const ROUTES = {
   home: "/",
   dashboard: "/dashboard",
   not_found: "/not-found",
+  // Auth routes
   sign_in: "/sign-in",
   sign_up: "/sign-up",
-  view_garden: "/gardens/:id",
-  edit_garden: "/gardens/:id/edit",
+  // Garden routes
+  view_all_gardens: "/gardens",
+  view_garden: "/garden/:id",
+  edit_garden: "/garden/:id/edit",
+  create_garden: "/garden/create",
+  // Container routes
+  view_all_containers: "/containers",
+  view_containers: "/garden/:id/containers",
+  view_container: "/garden/:id/containers/:containerId",
+  edit_container: "/garden/:id/containers/:containerId/edit",
+  create_container: "/garden/:id/containers/create",
+  // Tool routes
+  view_calendar: "/calendar",
+  view_tasks: "/tasks",
 } as const;
 
 // Type for route names
@@ -22,20 +35,46 @@ type RouteParams = EnsureAllRoutes<{
   home: null;
   dashboard: null;
   not_found: null;
+  // Auth routes
   sign_in: null;
   sign_up: null;
+  // Garden routes
+  view_all_gardens: null;
   view_garden: { id: string };
   edit_garden: { id: string };
+  create_garden: null;
+  // Container routes
+  view_all_containers: null;
+  view_containers: { gardenId: string };
+  view_container: { gardenId: string; containerId: string };
+  edit_container: { gardenId: string; containerId: string };
+  create_container: { gardenId: string };
+  // Tool routes
+  view_calendar: null;
+  view_tasks: null;
 }>;
 
 type RouteQueries = EnsureAllRoutes<{
   home: null;
   dashboard: null;
   not_found: null;
+  // Auth routes
   sign_in: { redirect_url?: string };
   sign_up: null;
+  // Garden routes
+  view_all_gardens: null;
   view_garden: null;
   edit_garden: null;
+  create_garden: null;
+  // Container routes
+  view_all_containers: null;
+  view_containers: { gardenId: string };
+  view_container: { gardenId: string; containerId: string };
+  edit_container: { gardenId: string; containerId: string };
+  create_container: { gardenId: string };
+  // Tool routes
+  view_calendar: null;
+  view_tasks: null;
 }>;
 
 // Create the Routes type using the ROUTES keys
