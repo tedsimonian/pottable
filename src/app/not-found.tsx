@@ -1,12 +1,18 @@
 "use client";
 
-import { HomeIcon } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 import { Button } from "~/components/ui/button";
-import { InternalLink } from "~/components/common/internal-link";
 
 export default function NotFoundPage() {
+  const router = useRouter();
+
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
     <div className="from-background to-muted/20 flex min-h-screen flex-col items-center justify-center bg-gradient-to-b px-4 text-center">
       <motion.div
@@ -51,10 +57,10 @@ export default function NotFoundPage() {
           className="flex flex-col gap-2 sm:flex-row sm:justify-center"
         >
           <Button variant="default" asChild className="gap-2">
-            <InternalLink path="home" params={null}>
-              <HomeIcon className="h-4 w-4" />
-              Back to home
-            </InternalLink>
+            <Button onClick={handleGoBack}>
+              <ArrowLeft className="h-4 w-4" />
+              Go Back
+            </Button>
           </Button>
         </motion.div>
       </motion.div>

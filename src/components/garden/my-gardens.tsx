@@ -2,58 +2,7 @@
 
 import { GardenCard } from "./garden-card";
 
-// Mock data for gardens
-const mockGardens = [
-  {
-    id: "garden-1",
-    name: "My Balcony Garden",
-    description:
-      "A small garden on my east-facing balcony with morning sun and afternoon shade.",
-    gardenType: "balcony",
-    sunExposure: "partial",
-    waterAccess: "easy",
-    windExposure: "moderate",
-    soilType: "potting",
-    spaceWidth: 3,
-    spaceLength: 5,
-    isShared: false,
-    createdAt: "2023-05-15",
-    plotsCount: 3,
-    activeCrops: 2,
-  },
-  {
-    id: "garden-2",
-    name: "Indoor Herbs",
-    description: "Kitchen windowsill herb collection with good natural light.",
-    gardenType: "windowsill",
-    sunExposure: "partial",
-    waterAccess: "easy",
-    windExposure: "protected",
-    soilType: "potting",
-    spaceWidth: 2,
-    spaceLength: 0.5,
-    isShared: false,
-    createdAt: "2023-06-01",
-    plotsCount: 2,
-    activeCrops: 2,
-  },
-  {
-    id: "garden-3",
-    name: "Backyard Vegetable Garden",
-    description: "Larger garden with raised beds for vegetables and herbs.",
-    gardenType: "backyard",
-    sunExposure: "full",
-    waterAccess: "moderate",
-    windExposure: "moderate",
-    soilType: "garden",
-    spaceWidth: 10,
-    spaceLength: 15,
-    isShared: true,
-    createdAt: "2023-04-10",
-    plotsCount: 4,
-    activeCrops: 4,
-  },
-];
+import mockGardens from "~/lib/mock-data/gardens.json";
 
 export const MyGardens = () => {
   return (

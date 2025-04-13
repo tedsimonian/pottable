@@ -1,3 +1,5 @@
+import "server-only";
+
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import type { BetterAuthOptions } from "better-auth";
 import { createAuthMiddleware } from "better-auth/plugins";

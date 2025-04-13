@@ -1,9 +1,10 @@
 "use client";
 
-import { GalleryVerticalEnd } from "lucide-react";
+import { Leaf } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 import { SignInCard } from "~/components/auth/sign-in-card";
+import { InternalLink } from "~/components/common/internal-link";
 import { companyName } from "~/lib/constants";
 
 export default function SignInPage() {
@@ -14,14 +15,18 @@ export default function SignInPage() {
     : null;
 
   return (
-    <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+    <div className="flex min-h-full w-full items-center justify-center p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="#" className="flex items-center gap-2 self-center font-medium">
+        <InternalLink
+          path="home"
+          params={null}
+          className="flex items-center gap-2 self-center font-medium"
+        >
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-            <GalleryVerticalEnd className="size-4" />
+            <Leaf className="size-4" />
           </div>
           {companyName}
-        </a>
+        </InternalLink>
         <SignInCard redirectTo={redirectUrl} />
       </div>
     </div>

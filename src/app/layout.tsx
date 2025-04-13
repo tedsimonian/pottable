@@ -10,9 +10,9 @@ import { PostHogProvider } from "~/providers/posthog-provider";
 import { ThemeProvider } from "~/providers/theme-provider";
 import { ActiveThemeProvider } from "~/providers/active-theme-provider";
 import { META_THEME_COLORS } from "~/hooks/use-meta-color";
+import { cn } from "~/lib/utils";
 
 import "~/styles/globals.css";
-import { cn } from "~/lib/utils";
 
 export const metadata: Metadata = {
   title: "Pottable - AI-Powered Gardening Assistant",

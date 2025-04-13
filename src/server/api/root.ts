@@ -1,3 +1,4 @@
+import "server-only";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { postRouter } from "~/server/api/routers/post";
 import { authRouter } from "~/server/api/routers/auth";

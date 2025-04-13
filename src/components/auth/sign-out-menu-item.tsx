@@ -1,20 +1,22 @@
 "use client";
 
+import { useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 
-import { Button } from "../ui/button";
+import { DropdownMenuItem } from "~/components/ui/dropdown-menu";
 
 import { useAnalytics } from "~/hooks";
 import { authClient } from "~/lib/auth-client";
 import { getInternalRoute } from "~/lib/internal-routes";
 
-export const SignOutLink = () => {
+export const SignOutMenuItem = () => {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
 
   const { captureEvent } = useAnalytics();
 
-  const handleSignOut = async () => {
+  const handleSignOut = useCallback(async () => {
     try {
       await authClient.signOut({
         fetchOptions: {
@@ -31,16 +33,16 @@ export const SignOutLink = () => {
     } catch (error) {
       console.error("Failed to sign out:", error);
     }
-  };
+  }, [captureEvent, router, session?.user.id]);
 
   return (
-    <Button
-      disabled={isPending}
+    <DropdownMenuItem
       onClick={handleSignOut}
-      variant="ghost"
-      className="p-0 font-normal"
+      disabled={isPending}
+      className="cursor-pointer"
     >
-      Sign Out
-    </Button>
+      <LogOut />
+      {"Sign Out"}
+    </DropdownMenuItem>
   );
 };

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { getInternalRoute, type Routes } from "~/lib/internal-routes";
 
-type InternalLinkPath = keyof Routes;
+export type InternalLinkPath = keyof Routes;
 
 type InternalLinkProps<TPath extends InternalLinkPath> = {
   path: TPath;

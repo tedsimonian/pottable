@@ -32,6 +32,13 @@ const config: NextConfig = {
   },
   // This is required to support PostHog trailing slash API requests
   skipTrailingSlashRedirect: true,
+  // We disable these because we will have our CI run the checks so our deployment doesn't fail due to linting and type errors.
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default config;
