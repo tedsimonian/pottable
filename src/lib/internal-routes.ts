@@ -19,6 +19,7 @@ export const ROUTES = {
   create_container: "/garden/:id/containers/create",
   // Tool routes
   view_calendar: "/calendar",
+  // Task routes
   view_tasks: "/tasks",
 } as const;
 
@@ -51,6 +52,7 @@ type RouteParams = EnsureAllRoutes<{
   create_container: { gardenId: string };
   // Tool routes
   view_calendar: null;
+  // Task routes
   view_tasks: null;
 }>;
 
@@ -74,6 +76,7 @@ type RouteQueries = EnsureAllRoutes<{
   create_container: { gardenId: string };
   // Tool routes
   view_calendar: null;
+  // Task routes
   view_tasks: null;
 }>;
 

@@ -2,7 +2,7 @@ import "server-only";
 
 import { PostHog } from "posthog-node";
 
-import { type VALID_ANALYTIC_EVENTS } from "~/types";
+import { type VALID_ANALYTIC_EVENTS } from "~/types/analytics";
 import { env } from "~/env";
 
 export const PostHogClient = () => {

@@ -1,7 +1,7 @@
 import { type CaptureOptions } from "posthog-js";
 import { usePostHog } from "posthog-js/react";
 
-import { type VALID_ANALYTIC_EVENTS } from "~/types";
+import { type VALID_ANALYTIC_EVENTS } from "~/types/analytics";
 
 /**
  * A hook to capture events with PostHog

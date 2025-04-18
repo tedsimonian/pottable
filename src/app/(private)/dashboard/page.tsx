@@ -4,6 +4,7 @@ import { InternalLink } from "~/components/common/internal-link";
 import { SectionHeading } from "~/components/common/section-heading";
 import { CurrentWeatherWidget } from "~/components/dashboard/current-weather-widget";
 import { GardenListWidget } from "~/components/dashboard/garden-list-widget";
+import { TaskListWidget } from "~/components/dashboard/task-list-widget";
 import { Button } from "~/components/ui/button";
 
 export default function DashboardPage() {
@@ -27,7 +28,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           {/* Gardens takes 2/3 width on small screens and up */}
           <div className="h-full sm:col-span-2">
-            <GardenListWidget />
+            <TaskListWidget />
           </div>
 
           {/* Weather takes 1/3 width on small screens and up */}
@@ -37,7 +38,9 @@ export default function DashboardPage() {
         </div>
 
         {/* Second row: Tasks at full width */}
-        <div className="w-full">{/* <TasksListWidget /> */}</div>
+        <div className="w-full">
+          <GardenListWidget maxGardens={3} />
+        </div>
       </div>
     </div>
   );
