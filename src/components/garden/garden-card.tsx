@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FlowerIcon, Sun, Droplet, Ruler, Users } from "lucide-react";
+import { FlowerIcon, MapPin, Ruler } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -18,23 +18,10 @@ import {
 } from "../common/ellipsis-dropdown-menu";
 import { InternalLink } from "../common/internal-link";
 
+import type { Garden } from "~/generated/prisma-client-types";
+
 type GardenCardProps = {
-  garden: {
-    id: string;
-    name: string;
-    description: string;
-    gardenType: string;
-    sunExposure: string;
-    waterAccess: string;
-    windExposure: string;
-    soilType: string;
-    spaceWidth: number;
-    spaceLength: number;
-    isShared: boolean;
-    plotsCount: number;
-    activeCrops: number;
-    createdAt: string;
-  };
+  garden: Garden;
 };
 
 export const GardenCard = (props: GardenCardProps) => {
@@ -60,7 +47,7 @@ export const GardenCard = (props: GardenCardProps) => {
       link: {
         path: "edit_garden" as const,
         params: {
-          id: garden.id,
+          id: garden.id.toString(),
         },
       },
     },
@@ -69,7 +56,7 @@ export const GardenCard = (props: GardenCardProps) => {
       text: "Delete",
       className: "text-destructive",
       button: {
-        onClick: (data) => handleDeleteClick(data.id),
+        onClick: (data) => handleDeleteClick(data.id.toString()),
         confirmation: {
           enabled: true,
           title: "Delete Garden",
@@ -89,71 +76,64 @@ export const GardenCard = (props: GardenCardProps) => {
   ] satisfies ActionType<typeof garden>[];
 
   return (
-    <Card key={garden.id} className="flex h-full flex-col overflow-hidden p-0">
-      <CardHeader className="p-6">
+    <Card className="flex h-full flex-col overflow-hidden p-0">
+      <CardHeader className="space-y-2 pt-6">
         <CardTitle className="text-primary flex items-center justify-between truncate font-medium">
           {garden.name}
-          <div className="flex items-center justify-between">
-            <EllipsisDropdownMenu data={garden} actions={gardenCardActions} />
-          </div>
+          <EllipsisDropdownMenu data={garden} actions={gardenCardActions} />
         </CardTitle>
-        <CardDescription className="text-muted-foreground line-clamp-2 text-sm">
-          {garden.description}
+        <CardDescription className="text-muted-foreground line-clamp-2 min-h-[2.5rem] text-sm">
+          {garden.description ?? "No description provided"}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 p-6">
-        <div className="flex h-full flex-col gap-2">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="outline" className="flex items-center gap-1">
-              <FlowerIcon className="h-3 w-3" />
-              {garden.gardenType.charAt(0).toUpperCase() +
-                garden.gardenType.slice(1)}
-            </Badge>
 
-            <Badge variant="outline" className="flex items-center gap-1">
-              <Sun className="h-3 w-3 text-yellow-500" />
-              {garden.sunExposure === "full"
-                ? "Full Sun"
-                : garden.sunExposure === "partial"
-                  ? "Partial Sun"
-                  : "Shade"}
-            </Badge>
+      <CardContent className="flex flex-1 flex-col gap-2">
+        <div className="flex min-h-[2rem] flex-wrap gap-2">
+          <Badge variant="outline" className="flex items-center gap-1">
+            <FlowerIcon className="h-3 w-3" />
+            {garden.gardenType
+              ? garden.gardenType.charAt(0).toUpperCase() +
+                garden.gardenType.slice(1)
+              : "No Type"}
+          </Badge>
 
-            <Badge variant="outline" className="flex items-center gap-1">
-              <Ruler className="h-3 w-3" />
-              {garden.spaceWidth} × {garden.spaceLength} ft
-            </Badge>
+          <Badge variant="outline" className="flex items-center gap-1">
+            <MapPin className="h-3 w-3" />
+            {garden.location ?? "No Location"}
+          </Badge>
 
-            {garden.isShared && (
-              <Badge variant="outline" className="flex items-center gap-1">
-                <Users className="h-3 w-3" />
-                Shared
-              </Badge>
-            )}
+          <Badge variant="outline" className="flex items-center gap-1">
+            <Ruler className="h-3 w-3" />
+            {garden.sizeSqFeet
+              ? `${garden.sizeSqFeet.toString()} sq ft`
+              : "No Size"}
+          </Badge>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div className="flex items-center gap-2 rounded-md border p-3">
+            <FlowerIcon className="text-primary h-4 w-4" />
+            <div className="text-sm">
+              <span className="font-medium">0</span> Containers
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex items-center gap-2 rounded-md border p-2">
-              <FlowerIcon className="text-primary h-4 w-4" />
-              <div className="text-sm">
-                <span className="font-medium">{garden.plotsCount}</span> Plots
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 rounded-md border p-2">
-              <Droplet className="h-4 w-4 text-blue-500" />
-              <div className="text-sm">
-                <span className="font-medium">{garden.activeCrops}</span> Crops
-              </div>
+          <div className="flex items-center gap-2 rounded-md border p-3">
+            <FlowerIcon className="h-4 w-4 text-green-500" />
+            <div className="text-sm">
+              <span className="font-medium">0</span> Crops
             </div>
           </div>
         </div>
       </CardContent>
 
       <CardFooter className="bg-muted/50 p-6">
-        <div className="flex w-full justify-between">
+        <div className="flex w-full items-center justify-between gap-4">
           <Button variant="default" size="sm" asChild>
-            <InternalLink path="view_garden" params={{ id: garden.id }}>
+            <InternalLink
+              path="view_garden"
+              params={{ id: garden.id.toString() }}
+            >
               View Garden
             </InternalLink>
           </Button>
@@ -161,9 +141,9 @@ export const GardenCard = (props: GardenCardProps) => {
           <Button variant="ghost" size="sm" asChild>
             <InternalLink
               path="create_container"
-              params={{ gardenId: garden.id }}
+              params={{ gardenId: garden.id.toString() }}
             >
-              Add Plot
+              Add Container
             </InternalLink>
           </Button>
         </div>

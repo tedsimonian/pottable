@@ -23,6 +23,7 @@ import {
   getPriorityColor,
   type TaskCategory,
   type TaskPriority,
+  TASK_STATUS,
 } from "~/lib/tasks";
 import { cn } from "~/lib/utils";
 
@@ -56,17 +57,29 @@ export const TaskListWidget = (props: TaskListWidgetProps) => {
     localStorage.setItem("gardenTasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const handleToggleComplete = (id: string) => {
+  const handleToggleComplete = (taskId: number) => {
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task,
+        task.id === taskId
+          ? {
+              ...task,
+              status:
+                task.status === TASK_STATUS.COMPLETED
+                  ? TASK_STATUS.ACTIVE
+                  : TASK_STATUS.COMPLETED,
+              dateCompleted:
+                task.status === TASK_STATUS.COMPLETED ? null : new Date(),
+            }
+          : task,
       ),
     );
   };
 
   // Filter and sort tasks based on the active tab
   const getFilteredTasks = () => {
-    const filteredTasks = [...tasks].filter((task) => !task.completed);
+    const filteredTasks = [...tasks].filter(
+      (task) => task.status !== TASK_STATUS.COMPLETED,
+    );
 
     if (activeTab === "priority") {
       // Sort by priority (high → medium → low)
@@ -80,11 +93,11 @@ export const TaskListWidget = (props: TaskListWidgetProps) => {
         (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority],
       );
     } else if (activeTab === "date") {
-      // Sort by due date (if available)
+      // Sort by end date (if available)
       filteredTasks.sort((a, b) => {
-        if (!a.dueDate) return 1;
-        if (!b.dueDate) return -1;
-        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+        if (!a.endDate) return 1;
+        if (!b.endDate) return -1;
+        return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
       });
     } else if (activeTab === "category") {
       // Group by category
@@ -105,7 +118,9 @@ export const TaskListWidget = (props: TaskListWidgetProps) => {
   };
 
   const displayTasks = getFilteredTasks();
-  const totalActiveTasks = tasks.filter((task) => !task.completed).length;
+  const totalActiveTasks = tasks.filter(
+    (task) => task.status !== TASK_STATUS.COMPLETED,
+  ).length;
 
   return (
     <div className={cn("space-y-4", className)}>
@@ -178,7 +193,7 @@ export const TaskListWidget = (props: TaskListWidgetProps) => {
 
 type TaskListProps = {
   tasks: Task[];
-  onToggleComplete: (id: string) => void;
+  onToggleComplete: (id: number) => void;
 };
 
 const TaskList = (props: TaskListProps) => {
@@ -199,6 +214,7 @@ const TaskList = (props: TaskListProps) => {
         const categoryColor = getCategoryColor(task.category);
         const PriorityIcon = getPriorityIcon(task.priority);
         const priorityColor = getPriorityColor(task.priority);
+        const isCompleted = task.status === TASK_STATUS.COMPLETED;
 
         return (
           <li
@@ -211,13 +227,13 @@ const TaskList = (props: TaskListProps) => {
               className="text-primary hover:text-primary hover:bg-primary/10 h-6 w-6"
               onClick={() => onToggleComplete(task.id)}
             >
-              {task.completed ? (
+              {isCompleted ? (
                 <CheckCircle className="h-4 w-4" />
               ) : (
                 <Circle className="h-4 w-4" />
               )}
               <span className="sr-only">
-                {task.completed ? "Mark as incomplete" : "Mark as complete"}
+                {isCompleted ? "Mark as incomplete" : "Mark as complete"}
               </span>
             </Button>
 
@@ -244,9 +260,9 @@ const TaskList = (props: TaskListProps) => {
                   <PriorityIcon className="h-3 w-3" />
                   <span className="truncate">{task.priority}</span>
                 </Badge>
-                {task.dueDate && (
+                {task.endDate && (
                   <span className="text-muted-foreground truncate text-xs">
-                    {new Date(task.dueDate).toLocaleDateString()}
+                    {new Date(task.endDate).toLocaleDateString()}
                   </span>
                 )}
               </div>

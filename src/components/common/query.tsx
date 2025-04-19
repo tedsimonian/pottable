@@ -49,7 +49,7 @@ export const Query = <T,>({
   }
 
   // Show no data state
-  if (!data) {
+  if (!data || (Array.isArray(data) && data.length === 0)) {
     return (
       <div className={cn("w-full", className)}>
         {fallbackComponent ?? (

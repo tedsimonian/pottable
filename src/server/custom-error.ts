@@ -16,9 +16,21 @@ export const ERROR_CONFIG = {
     code: "INTERNAL_SERVER_ERROR",
     message: "Failed to delete garden. Double check the garden status.",
   },
+  GARDEN_UPDATE_FAILED: {
+    code: "INTERNAL_SERVER_ERROR",
+    message: "Failed to update garden. Please try again.",
+  },
   GARDEN_NOT_FOUND: {
     code: "NOT_FOUND",
     message: "Garden not found.",
+  },
+  GARDEN_UNAUTHORIZED: {
+    code: "NOT_FOUND",
+    message: "Garden not found or unauthorized",
+  },
+  DATABASE_ERROR: {
+    code: "INTERNAL_SERVER_ERROR",
+    message: "Database error occurred",
   },
 } satisfies Record<string, ErrorDetails>;
 

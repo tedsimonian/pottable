@@ -5,9 +5,11 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { GardenCard } from "~/components/garden/garden-card";
 import { InternalLink } from "../common/internal-link";
+import { Query } from "../common/query";
+import { EmptyGarden } from "../garden/empty-garden";
 
-import mockGardens from "~/lib/mock-data/gardens.json";
 import { cn } from "~/lib/utils";
+import { useMyGardens } from "~/hooks";
 
 type GardenListWidgetProps = {
   maxGardens?: number;
@@ -17,7 +19,7 @@ type GardenListWidgetProps = {
 export const GardenListWidget = (props: GardenListWidgetProps) => {
   const { maxGardens = 2, className } = props;
 
-  const filteredGardens = mockGardens.slice(0, maxGardens);
+  const { gardens, isLoading, error } = useMyGardens();
 
   return (
     <div className={cn("space-y-4", className)}>
@@ -30,12 +32,20 @@ export const GardenListWidget = (props: GardenListWidgetProps) => {
           </InternalLink>
         </Button>
       </div>
-
-      <div className={`grid gap-4 sm:grid-cols-${maxGardens}`}>
-        {filteredGardens.map((garden) => (
-          <GardenCard key={garden.id} garden={garden} />
-        ))}
-      </div>
+      <Query
+        data={gardens}
+        loading={isLoading}
+        error={error}
+        fallbackComponent={<EmptyGarden />}
+      >
+        {(data) => (
+          <div className={`grid gap-4 sm:grid-cols-${maxGardens}`}>
+            {data.slice(0, maxGardens).map((garden) => (
+              <GardenCard key={garden.id} garden={garden} />
+            ))}
+          </div>
+        )}
+      </Query>
     </div>
   );
 };
