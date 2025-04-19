@@ -103,3 +103,23 @@ export const getBaseUrl = () => {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   return `http://localhost:${process.env.PORT ?? 3000}`;
 };
+
+/**
+ * Convert a snake case or underscore case string to title case
+ * @param str - The string to convert
+ * @param capitalizeAll - Whether to capitalize all words or just the first
+ * @example "IS_CHARACTER" -> "Is Character" or "Is character"
+ * @returns The converted string
+ */
+export const toTitleCase = (str: string, capitalizeAll = true): string => {
+  return str
+    .toLowerCase()
+    .split(/[_\s]+/)
+    .map((word, index) => {
+      if (capitalizeAll || index === 0) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }
+      return word;
+    })
+    .join(" ");
+};

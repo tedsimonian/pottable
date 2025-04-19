@@ -47,13 +47,6 @@ yarn-error.log*
 .env
 .env.local
 
-# Added by Claude Task Master
-# Logs
-logs
-*.log
-dev-debug.log
-# Dependency directories
-node_modules/
 # Environment variables
 # Editor directories and files
 .vscode

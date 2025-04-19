@@ -1,11 +1,15 @@
-import type { TaskCategory, TaskPriority } from "~/lib/tasks";
+import type { Task as PrismaTask } from "~/generated/prisma-client-types";
 
-export type Task = {
-  id: string;
-  title: string;
+import {
+  type TaskCategory,
+  type TaskPriority,
+  type TaskStatus,
+  type TaskDifficulty,
+} from "~/lib/tasks";
+
+export type Task = PrismaTask & {
   category: TaskCategory;
   priority: TaskPriority;
-  completed: boolean;
-  dueDate?: string;
-  createdAt: string;
+  status: TaskStatus;
+  difficulty: TaskDifficulty;
 };

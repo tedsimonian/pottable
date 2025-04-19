@@ -6,7 +6,7 @@ export default function TasksPage() {
     <div className="">
       <SectionHeading title="My Tasks" description="Manage your tasks" />
       <div className="mt-6">
-        <MyTasks />
+        <MyTasks userId={"user-1"} />
       </div>
     </div>
   );

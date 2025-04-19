@@ -40,7 +40,7 @@ export const Header = () => {
               <InternalLink
                 path="home"
                 params={null}
-                className="flex items-center gap-2 text-lg font-medium"
+                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <Home className="h-5 w-5" />
                 Home
@@ -48,7 +48,7 @@ export const Header = () => {
               <InternalLink
                 path="home"
                 params={null}
-                className="flex items-center gap-2 text-lg font-medium"
+                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <Layout className="h-5 w-5" />
                 Garden Planner
@@ -56,7 +56,7 @@ export const Header = () => {
               <InternalLink
                 path="home"
                 params={null}
-                className="flex items-center gap-2 text-lg font-medium"
+                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <CheckSquare className="h-5 w-5" />
                 Tasks
@@ -64,7 +64,7 @@ export const Header = () => {
               <InternalLink
                 path="home"
                 params={null}
-                className="flex items-center gap-2 text-lg font-medium"
+                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <MessageSquare className="h-5 w-5" />
                 AI Assistant
@@ -75,7 +75,7 @@ export const Header = () => {
         <InternalLink
           path="home"
           params={null}
-          className="flex items-center gap-2 text-xl font-bold"
+          className="hover:text-primary flex items-center gap-2 text-xl font-bold"
         >
           <Leaf className="text-primary h-6 w-6" />
           <span>{companyName}</span>
@@ -84,28 +84,28 @@ export const Header = () => {
           <InternalLink
             path="home"
             params={null}
-            className="hover:text-primary-foreground text-sm font-medium transition-colors"
+            className="hover:text-primary text-sm font-medium transition-colors"
           >
             Home
           </InternalLink>
           <InternalLink
             path="home"
             params={null}
-            className="hover:text-primary-foreground text-sm font-medium transition-colors"
+            className="hover:text-primary text-sm font-medium transition-colors"
           >
             Garden Planner
           </InternalLink>
           <InternalLink
             path="home"
             params={null}
-            className="hover:text-primary-foreground text-sm font-medium transition-colors"
+            className="hover:text-primary text-sm font-medium transition-colors"
           >
             Tasks
           </InternalLink>
           <InternalLink
             path="home"
             params={null}
-            className="hover:text-primary-foreground text-sm font-medium transition-colors"
+            className="hover:text-primary text-sm font-medium transition-colors"
           >
             AI Assistant
           </InternalLink>

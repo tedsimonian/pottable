@@ -23,11 +23,7 @@ export default async function middleware(request: NextRequest) {
     pathName.startsWith(route),
   );
 
-  const sessionCookie = getSessionCookie(request, {
-    // Optionally pass config if cookie name or prefix is customized in auth config.
-    cookieName: "session_token",
-    cookiePrefix: "better-auth",
-  });
+  const sessionCookie = getSessionCookie(request);
 
   // Allow public access to home page and other public routes
   if (!isPrivateRoute && !isAuthRoute) {

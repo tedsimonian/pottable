@@ -1,0 +1,1238 @@
+[
+  {
+    "commonName": "Tomato",
+    "scientificName": "Solanum lycopersicum",
+    "plantType": "vegetable",
+    "lifeCycle": "annual",
+    "growthHabit": "vine",
+    "edible": true,
+    "description": "Popular garden vegetable known for its juicy fruits",
+    "plantingInstructions": "Plant in spring after last frost, space 24-36 inches apart",
+    "careInstructions": "Regular watering, support with cage or stakes, prune suckers",
+    "daysToGerminationMin": 5,
+    "daysToGerminationMax": 10,
+    "daysToMaturityMin": 60,
+    "daysToMaturityMax": 80,
+    "harvestSeason": "summer",
+    "heightInchesMin": 36,
+    "heightInchesMax": 96,
+    "widthInchesMin": 24,
+    "widthInchesMax": 36,
+    "growingConditions": {
+      "minTemperatureF": 50,
+      "maxTemperatureF": 95,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 6.8,
+      "soilTypePreference": "well-draining, rich in organic matter",
+      "fertilizerNeeds": "regular feeding with balanced fertilizer",
+      "spacingInches": 24,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 5
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Start indoors 6-8 weeks before last frost"
+      },
+      {
+        "climateZone": "5",
+        "notes": "Plant outdoors after danger of frost has passed"
+      },
+      {
+        "climateZone": "6",
+        "notes": "Extended growing season possible"
+      }
+    ]
+  },
+  {
+    "commonName": "Basil",
+    "scientificName": "Ocimum basilicum",
+    "plantType": "herb",
+    "lifeCycle": "annual",
+    "growthHabit": "bushy",
+    "edible": true,
+    "description": "Aromatic herb essential in many cuisines",
+    "plantingInstructions": "Sow seeds 1/4 inch deep, thin to 12 inches apart",
+    "careInstructions": "Regular pruning promotes bushiness, pinch flower buds",
+    "daysToGerminationMin": 5,
+    "daysToGerminationMax": 10,
+    "daysToMaturityMin": 30,
+    "daysToMaturityMax": 60,
+    "harvestSeason": "summer",
+    "heightInchesMin": 12,
+    "heightInchesMax": 24,
+    "widthInchesMin": 12,
+    "widthInchesMax": 18,
+    "growingConditions": {
+      "minTemperatureF": 50,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.5,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "light feeding monthly",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Grow as indoor herb or summer annual"
+      },
+      {
+        "climateZone": "10",
+        "notes": "Can grow year-round"
+      }
+    ]
+  },
+  {
+    "commonName": "Bell Pepper",
+    "scientificName": "Capsicum annuum",
+    "plantType": "vegetable",
+    "lifeCycle": "annual",
+    "growthHabit": "bushy",
+    "edible": true,
+    "description": "Sweet peppers that mature from green to red",
+    "plantingInstructions": "Start indoors 8-10 weeks before last frost",
+    "careInstructions": "Regular watering, support heavy fruit set",
+    "daysToGerminationMin": 8,
+    "daysToGerminationMax": 14,
+    "daysToMaturityMin": 60,
+    "daysToMaturityMax": 90,
+    "harvestSeason": "summer",
+    "heightInchesMin": 18,
+    "heightInchesMax": 30,
+    "widthInchesMin": 12,
+    "widthInchesMax": 24,
+    "growingConditions": {
+      "minTemperatureF": 55,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "regular balanced fertilizer",
+      "spacingInches": 18,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 3
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Start indoors early spring"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Can grow fall crop"
+      }
+    ]
+  },
+  {
+    "commonName": "Strawberry",
+    "scientificName": "Fragaria × ananassa",
+    "plantType": "fruit",
+    "lifeCycle": "perennial",
+    "growthHabit": "spreading",
+    "edible": true,
+    "description": "Sweet berries perfect for containers or gardens",
+    "plantingInstructions": "Plant in spring, space 12-18 inches apart",
+    "careInstructions": "Remove runners unless propagating, mulch well",
+    "daysToGerminationMin": 7,
+    "daysToGerminationMax": 14,
+    "daysToMaturityMin": 90,
+    "daysToMaturityMax": 120,
+    "harvestSeason": "spring",
+    "heightInchesMin": 8,
+    "heightInchesMax": 12,
+    "widthInchesMin": 12,
+    "widthInchesMax": 24,
+    "growingConditions": {
+      "minTemperatureF": 20,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 5.5,
+      "soilPhMax": 6.8,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "balanced fertilizer in spring and after fruiting",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 8,
+      "minContainerVolumeGallons": 2
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Winter protection needed"
+      },
+      {
+        "climateZone": "8",
+        "notes": "Ever-bearing varieties best"
+      }
+    ]
+  },
+  {
+    "commonName": "Lettuce",
+    "scientificName": "Lactuca sativa",
+    "plantType": "vegetable",
+    "lifeCycle": "annual",
+    "growthHabit": "head-forming",
+    "edible": true,
+    "description": "Cool-season crop perfect for salads",
+    "plantingInstructions": "Direct sow seeds 1/4 inch deep",
+    "careInstructions": "Keep soil consistently moist, harvest outer leaves",
+    "daysToGerminationMin": 2,
+    "daysToGerminationMax": 8,
+    "daysToMaturityMin": 45,
+    "daysToMaturityMax": 65,
+    "harvestSeason": "spring",
+    "heightInchesMin": 6,
+    "heightInchesMax": 12,
+    "widthInchesMin": 6,
+    "widthInchesMax": 12,
+    "growingConditions": {
+      "minTemperatureF": 40,
+      "maxTemperatureF": 75,
+      "sunlightNeeds": "partial sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "light feeding",
+      "spacingInches": 6,
+      "containerSuitable": true,
+      "minContainerDepthInches": 4,
+      "minContainerVolumeGallons": 0.5
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Spring and fall crop"
+      },
+      {
+        "climateZone": "7",
+        "notes": "Winter crop possible"
+      }
+    ]
+  },
+  {
+    "commonName": "Cucumber",
+    "scientificName": "Cucumis sativus",
+    "plantType": "vegetable",
+    "lifeCycle": "annual",
+    "growthHabit": "vine",
+    "edible": true,
+    "description": "Refreshing summer vegetable, great for containers",
+    "plantingInstructions": "Plant after soil warms, provide trellis support",
+    "careInstructions": "Regular watering, train vines on support",
+    "daysToGerminationMin": 3,
+    "daysToGerminationMax": 10,
+    "daysToMaturityMin": 50,
+    "daysToMaturityMax": 70,
+    "harvestSeason": "summer",
+    "heightInchesMin": 12,
+    "heightInchesMax": 72,
+    "widthInchesMin": 12,
+    "widthInchesMax": 24,
+    "growingConditions": {
+      "minTemperatureF": 60,
+      "maxTemperatureF": 90,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "high",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "regular balanced fertilizer",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 5
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Plant after all frost danger"
+      },
+      {
+        "climateZone": "10",
+        "notes": "Can grow spring and fall crops"
+      }
+    ]
+  },
+  {
+    "commonName": "Mint",
+    "scientificName": "Mentha spicata",
+    "plantType": "herb",
+    "lifeCycle": "perennial",
+    "growthHabit": "spreading",
+    "edible": true,
+    "description": "Vigorous herb with aromatic leaves",
+    "plantingInstructions": "Plant in containers to control spread",
+    "careInstructions": "Regular pruning, contain spreading",
+    "daysToGerminationMin": 10,
+    "daysToGerminationMax": 15,
+    "daysToMaturityMin": 40,
+    "daysToMaturityMax": 60,
+    "harvestSeason": "spring",
+    "heightInchesMin": 12,
+    "heightInchesMax": 24,
+    "widthInchesMin": 18,
+    "widthInchesMax": 36,
+    "growingConditions": {
+      "minTemperatureF": 30,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "partial sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "moist, rich",
+      "fertilizerNeeds": "light feeding",
+      "spacingInches": 18,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Dies back in winter, returns in spring"
+      },
+      {
+        "climateZone": "9",
+        "notes": "May need afternoon shade"
+      }
+    ]
+  },
+  {
+    "commonName": "Rosemary",
+    "scientificName": "Rosmarinus officinalis",
+    "plantType": "herb",
+    "lifeCycle": "perennial",
+    "growthHabit": "upright",
+    "edible": true,
+    "description": "Aromatic Mediterranean herb with needle-like leaves",
+    "plantingInstructions": "Start from cuttings or young plants, space 24-36 inches apart",
+    "careInstructions": "Well-draining soil, avoid overwatering, prune to shape",
+    "daysToGerminationMin": 14,
+    "daysToGerminationMax": 21,
+    "daysToMaturityMin": 90,
+    "daysToMaturityMax": 180,
+    "harvestSeason": "year-round",
+    "heightInchesMin": 24,
+    "heightInchesMax": 48,
+    "widthInchesMin": 24,
+    "widthInchesMax": 36,
+    "growingConditions": {
+      "minTemperatureF": 20,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "low",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "well-draining, sandy",
+      "fertilizerNeeds": "light feeding in spring",
+      "spacingInches": 24,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 2
+    },
+    "climateZones": [
+      {
+        "climateZone": "7",
+        "notes": "Evergreen in mild climates"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Protect from afternoon sun in hot climates"
+      }
+    ]
+  },
+  {
+    "commonName": "Cherry Tomato",
+    "scientificName": "Solanum lycopersicum var. cerasiforme",
+    "plantType": "vegetable",
+    "lifeCycle": "annual",
+    "growthHabit": "vine",
+    "edible": true,
+    "description": "Small, sweet tomatoes perfect for containers",
+    "plantingInstructions": "Plant deeply, up to first leaves",
+    "careInstructions": "Regular pruning of suckers, consistent watering",
+    "daysToGerminationMin": 5,
+    "daysToGerminationMax": 10,
+    "daysToMaturityMin": 50,
+    "daysToMaturityMax": 65,
+    "harvestSeason": "summer",
+    "heightInchesMin": 36,
+    "heightInchesMax": 72,
+    "widthInchesMin": 18,
+    "widthInchesMax": 24,
+    "growingConditions": {
+      "minTemperatureF": 50,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 6.8,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "regular balanced feeding",
+      "spacingInches": 18,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 3
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Start indoors 6 weeks before last frost"
+      },
+      {
+        "climateZone": "10",
+        "notes": "Can grow year-round with protection"
+      }
+    ]
+  },
+  {
+    "commonName": "Bush Bean",
+    "scientificName": "Phaseolus vulgaris",
+    "plantType": "vegetable",
+    "lifeCycle": "annual",
+    "growthHabit": "bushy",
+    "edible": true,
+    "description": "Compact, productive snap beans",
+    "plantingInstructions": "Direct sow 1 inch deep, 4 inches apart",
+    "careInstructions": "Regular harvesting promotes production",
+    "daysToGerminationMin": 7,
+    "daysToGerminationMax": 14,
+    "daysToMaturityMin": 50,
+    "daysToMaturityMax": 65,
+    "harvestSeason": "summer",
+    "heightInchesMin": 18,
+    "heightInchesMax": 24,
+    "widthInchesMin": 12,
+    "widthInchesMax": 18,
+    "growingConditions": {
+      "minTemperatureF": 60,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "well-draining, rich",
+      "fertilizerNeeds": "moderate nitrogen at planting",
+      "spacingInches": 4,
+      "containerSuitable": true,
+      "minContainerDepthInches": 8,
+      "minContainerVolumeGallons": 2
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Plant after all frost danger"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Can succession plant for extended harvest"
+      }
+    ]
+  },
+  {
+    "commonName": "Dwarf Lemon Tree",
+    "scientificName": "Citrus × limon",
+    "plantType": "fruit",
+    "lifeCycle": "perennial",
+    "growthHabit": "tree",
+    "edible": true,
+    "description": "Compact citrus tree perfect for containers",
+    "plantingInstructions": "Plant in well-draining citrus mix",
+    "careInstructions": "Regular feeding, protect from cold",
+    "daysToGerminationMin": 14,
+    "daysToGerminationMax": 21,
+    "daysToMaturityMin": 240,
+    "daysToMaturityMax": 365,
+    "harvestSeason": "winter",
+    "heightInchesMin": 36,
+    "heightInchesMax": 72,
+    "widthInchesMin": 24,
+    "widthInchesMax": 48,
+    "growingConditions": {
+      "minTemperatureF": 35,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "well-draining citrus mix",
+      "fertilizerNeeds": "regular citrus fertilizer",
+      "spacingInches": 48,
+      "containerSuitable": true,
+      "minContainerDepthInches": 16,
+      "minContainerVolumeGallons": 10
+    },
+    "climateZones": [
+      {
+        "climateZone": "8",
+        "notes": "Bring indoors during winter"
+      },
+      {
+        "climateZone": "10",
+        "notes": "Can grow outdoors year-round"
+      }
+    ]
+  },
+  {
+    "commonName": "Marigold",
+    "scientificName": "Tagetes patula",
+    "plantType": "flower",
+    "lifeCycle": "annual",
+    "growthHabit": "bushy",
+    "edible": false,
+    "description": "Bright flowers that help deter garden pests",
+    "plantingInstructions": "Direct sow or transplant 6-8 inches apart",
+    "careInstructions": "Deadhead spent blooms, moderate watering",
+    "daysToGerminationMin": 5,
+    "daysToGerminationMax": 10,
+    "daysToMaturityMin": 45,
+    "daysToMaturityMax": 50,
+    "harvestSeason": "summer",
+    "heightInchesMin": 6,
+    "heightInchesMax": 12,
+    "widthInchesMin": 6,
+    "widthInchesMax": 8,
+    "growingConditions": {
+      "minTemperatureF": 40,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.5,
+      "soilTypePreference": "well-draining",
+      "fertilizerNeeds": "light feeding monthly",
+      "spacingInches": 8,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 0.5
+    },
+    "climateZones": [
+      {
+        "climateZone": "2",
+        "notes": "Plant after last frost"
+      },
+      {
+        "climateZone": "11",
+        "notes": "Can bloom year-round"
+      }
+    ]
+  },
+  {
+    "commonName": "Dwarf Sunflower",
+    "scientificName": "Helianthus annuus",
+    "plantType": "flower",
+    "lifeCycle": "annual",
+    "growthHabit": "upright",
+    "edible": true,
+    "description": "Compact sunflowers perfect for containers",
+    "plantingInstructions": "Direct sow 1/2 inch deep",
+    "careInstructions": "Support may be needed, protect from strong winds",
+    "daysToGerminationMin": 7,
+    "daysToGerminationMax": 14,
+    "daysToMaturityMin": 50,
+    "daysToMaturityMax": 65,
+    "harvestSeason": "summer",
+    "heightInchesMin": 24,
+    "heightInchesMax": 36,
+    "widthInchesMin": 12,
+    "widthInchesMax": 18,
+    "growingConditions": {
+      "minTemperatureF": 45,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.5,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "balanced fertilizer monthly",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 3
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Plant after frost danger"
+      },
+      {
+        "climateZone": "10",
+        "notes": "Can plant fall crop"
+      }
+    ]
+  },
+  {
+    "commonName": "Thai Basil",
+    "scientificName": "Ocimum basilicum var. thyrsiflora",
+    "plantType": "herb",
+    "lifeCycle": "annual",
+    "growthHabit": "bushy",
+    "edible": true,
+    "description": "Aromatic herb with distinctive anise flavor",
+    "plantingInstructions": "Start indoors or direct sow after frost",
+    "careInstructions": "Pinch flower buds to promote leaf growth",
+    "daysToGerminationMin": 5,
+    "daysToGerminationMax": 10,
+    "daysToMaturityMin": 60,
+    "daysToMaturityMax": 90,
+    "harvestSeason": "summer",
+    "heightInchesMin": 12,
+    "heightInchesMax": 18,
+    "widthInchesMin": 12,
+    "widthInchesMax": 15,
+    "growingConditions": {
+      "minTemperatureF": 50,
+      "maxTemperatureF": 90,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "light feeding monthly",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Grow as summer annual"
+      },
+      {
+        "climateZone": "10",
+        "notes": "Can grow year-round"
+      }
+    ]
+  },
+  {
+    "commonName": "Dwarf Blueberry",
+    "scientificName": "Vaccinium corymbosum",
+    "plantType": "fruit",
+    "lifeCycle": "perennial",
+    "growthHabit": "bushy",
+    "edible": true,
+    "description": "Compact blueberry variety perfect for containers",
+    "plantingInstructions": "Plant in acidic soil mix, mulch well",
+    "careInstructions": "Regular watering, protect from birds",
+    "daysToGerminationMin": 30,
+    "daysToGerminationMax": 90,
+    "daysToMaturityMin": 730,
+    "daysToMaturityMax": 1095,
+    "harvestSeason": "summer",
+    "heightInchesMin": 24,
+    "heightInchesMax": 36,
+    "widthInchesMin": 24,
+    "widthInchesMax": 36,
+    "growingConditions": {
+      "minTemperatureF": -20,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 4.5,
+      "soilPhMax": 5.5,
+      "soilTypePreference": "acidic, well-draining",
+      "fertilizerNeeds": "acid-loving plant fertilizer",
+      "spacingInches": 36,
+      "containerSuitable": true,
+      "minContainerDepthInches": 16,
+      "minContainerVolumeGallons": 5
+    },
+    "climateZones": [
+      {
+        "climateZone": "5",
+        "notes": "Winter hardy with protection"
+      },
+      {
+        "climateZone": "8",
+        "notes": "Provide afternoon shade in hot climates"
+      }
+    ]
+  },
+  {
+    "commonName": "Thyme",
+    "scientificName": "Thymus vulgaris",
+    "plantType": "herb",
+    "lifeCycle": "perennial",
+    "growthHabit": "spreading",
+    "edible": true,
+    "description": "Low-growing aromatic herb with tiny leaves",
+    "plantingInstructions": "Space 12 inches apart, plant in spring",
+    "careInstructions": "Trim regularly, avoid overwatering",
+    "daysToGerminationMin": 14,
+    "daysToGerminationMax": 21,
+    "daysToMaturityMin": 75,
+    "daysToMaturityMax": 90,
+    "harvestSeason": "year-round",
+    "heightInchesMin": 6,
+    "heightInchesMax": 12,
+    "widthInchesMin": 12,
+    "widthInchesMax": 18,
+    "growingConditions": {
+      "minTemperatureF": 20,
+      "maxTemperatureF": 90,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "low",
+      "soilPhMin": 6.0,
+      "soilPhMax": 8.0,
+      "soilTypePreference": "well-draining, sandy",
+      "fertilizerNeeds": "minimal",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "5",
+        "notes": "Evergreen in mild winters"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Provide afternoon shade in hot climates"
+      }
+    ]
+  },
+  {
+    "commonName": "Dwarf Sweet Pea",
+    "scientificName": "Lathyrus odoratus",
+    "plantType": "flower",
+    "lifeCycle": "annual",
+    "growthHabit": "climbing",
+    "edible": false,
+    "description": "Fragrant climbing flowers perfect for containers",
+    "plantingInstructions": "Soak seeds overnight before planting",
+    "careInstructions": "Provide support, regular deadheading",
+    "daysToGerminationMin": 10,
+    "daysToGerminationMax": 21,
+    "daysToMaturityMin": 60,
+    "daysToMaturityMax": 70,
+    "harvestSeason": "spring",
+    "heightInchesMin": 24,
+    "heightInchesMax": 36,
+    "widthInchesMin": 12,
+    "widthInchesMax": 18,
+    "growingConditions": {
+      "minTemperatureF": 40,
+      "maxTemperatureF": 75,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.5,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "balanced fertilizer monthly",
+      "spacingInches": 6,
+      "containerSuitable": true,
+      "minContainerDepthInches": 8,
+      "minContainerVolumeGallons": 2
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Plant in early spring"
+      },
+      {
+        "climateZone": "8",
+        "notes": "Can plant for fall bloom"
+      }
+    ]
+  },
+  {
+    "commonName": "Dwarf Carrot",
+    "scientificName": "Daucus carota",
+    "plantType": "vegetable",
+    "lifeCycle": "biennial",
+    "growthHabit": "root",
+    "edible": true,
+    "description": "Short, sweet carrots ideal for containers",
+    "plantingInstructions": "Sow thinly, cover lightly with soil",
+    "careInstructions": "Keep soil moist, thin to 3 inches apart",
+    "daysToGerminationMin": 14,
+    "daysToGerminationMax": 21,
+    "daysToMaturityMin": 55,
+    "daysToMaturityMax": 70,
+    "harvestSeason": "spring",
+    "heightInchesMin": 8,
+    "heightInchesMax": 12,
+    "widthInchesMin": 3,
+    "widthInchesMax": 4,
+    "growingConditions": {
+      "minTemperatureF": 40,
+      "maxTemperatureF": 75,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 6.8,
+      "soilTypePreference": "loose, sandy, deep",
+      "fertilizerNeeds": "low nitrogen, high potassium",
+      "spacingInches": 3,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 2
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Spring and fall crop"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Winter crop"
+      }
+    ]
+  },
+  {
+    "commonName": "Oregano",
+    "scientificName": "Origanum vulgare",
+    "plantType": "herb",
+    "lifeCycle": "perennial",
+    "growthHabit": "spreading",
+    "edible": true,
+    "description": "Essential Mediterranean herb",
+    "plantingInstructions": "Space 12 inches apart, plant in spring",
+    "careInstructions": "Trim regularly, well-draining soil",
+    "daysToGerminationMin": 7,
+    "daysToGerminationMax": 14,
+    "daysToMaturityMin": 80,
+    "daysToMaturityMax": 90,
+    "harvestSeason": "summer",
+    "heightInchesMin": 12,
+    "heightInchesMax": 18,
+    "widthInchesMin": 12,
+    "widthInchesMax": 24,
+    "growingConditions": {
+      "minTemperatureF": 20,
+      "maxTemperatureF": 90,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "low",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "well-draining",
+      "fertilizerNeeds": "minimal",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Dies back in winter"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Evergreen in mild climates"
+      }
+    ]
+  },
+  {
+    "commonName": "Dwarf Lavender",
+    "scientificName": "Lavandula angustifolia 'Munstead'",
+    "plantType": "herb",
+    "lifeCycle": "perennial",
+    "growthHabit": "bushy",
+    "edible": true,
+    "description": "Compact aromatic herb with purple flowers",
+    "plantingInstructions": "Space 18 inches apart, plant in spring",
+    "careInstructions": "Prune after flowering, avoid overwatering",
+    "daysToGerminationMin": 14,
+    "daysToGerminationMax": 28,
+    "daysToMaturityMin": 90,
+    "daysToMaturityMax": 120,
+    "harvestSeason": "summer",
+    "heightInchesMin": 12,
+    "heightInchesMax": 18,
+    "widthInchesMin": 12,
+    "widthInchesMax": 18,
+    "growingConditions": {
+      "minTemperatureF": 15,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "low",
+      "soilPhMin": 6.5,
+      "soilPhMax": 7.5,
+      "soilTypePreference": "well-draining, sandy",
+      "fertilizerNeeds": "minimal",
+      "spacingInches": 18,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 2
+    },
+    "climateZones": [
+      {
+        "climateZone": "5",
+        "notes": "Protect in winter"
+      },
+      {
+        "climateZone": "8",
+        "notes": "Provide good air circulation"
+      }
+    ]
+  },
+  {
+    "commonName": "Kale",
+    "scientificName": "Brassica oleracea var. sabellica",
+    "plantType": "vegetable",
+    "lifeCycle": "biennial",
+    "growthHabit": "upright",
+    "edible": true,
+    "description": "Nutritious leafy green, cold hardy",
+    "plantingInstructions": "Direct sow or transplant 12 inches apart",
+    "careInstructions": "Regular watering, harvest outer leaves",
+    "daysToGerminationMin": 5,
+    "daysToGerminationMax": 8,
+    "daysToMaturityMin": 50,
+    "daysToMaturityMax": 65,
+    "harvestSeason": "fall",
+    "heightInchesMin": 12,
+    "heightInchesMax": 24,
+    "widthInchesMin": 12,
+    "widthInchesMax": 18,
+    "growingConditions": {
+      "minTemperatureF": 20,
+      "maxTemperatureF": 80,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.5,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "moderate nitrogen",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 12,
+      "minContainerVolumeGallons": 3
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Great fall/winter crop"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Best as winter crop"
+      }
+    ]
+  },
+  {
+    "commonName": "Alpine Strawberry",
+    "scientificName": "Fragaria vesca",
+    "plantType": "fruit",
+    "lifeCycle": "perennial",
+    "growthHabit": "compact",
+    "edible": true,
+    "description": "Small, sweet berries on compact plants",
+    "plantingInstructions": "Space 8-10 inches apart",
+    "careInstructions": "Regular watering, remove runners",
+    "daysToGerminationMin": 14,
+    "daysToGerminationMax": 28,
+    "daysToMaturityMin": 90,
+    "daysToMaturityMax": 120,
+    "harvestSeason": "summer",
+    "heightInchesMin": 6,
+    "heightInchesMax": 8,
+    "widthInchesMin": 8,
+    "widthInchesMax": 12,
+    "growingConditions": {
+      "minTemperatureF": 25,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "partial sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 5.5,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "balanced fertilizer monthly",
+      "spacingInches": 8,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Protect in winter"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Provide afternoon shade"
+      }
+    ]
+  },
+  {
+    "commonName": "Dwarf Bok Choy",
+    "scientificName": "Brassica rapa var. chinensis",
+    "plantType": "vegetable",
+    "lifeCycle": "annual",
+    "growthHabit": "compact",
+    "edible": true,
+    "description": "Quick-growing Asian green",
+    "plantingInstructions": "Direct sow, thin to 6 inches apart",
+    "careInstructions": "Keep soil moist, harvest whole plant",
+    "daysToGerminationMin": 4,
+    "daysToGerminationMax": 7,
+    "daysToMaturityMin": 30,
+    "daysToMaturityMax": 45,
+    "harvestSeason": "spring",
+    "heightInchesMin": 6,
+    "heightInchesMax": 8,
+    "widthInchesMin": 6,
+    "widthInchesMax": 8,
+    "growingConditions": {
+      "minTemperatureF": 40,
+      "maxTemperatureF": 75,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "high",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.5,
+      "soilTypePreference": "rich, moist",
+      "fertilizerNeeds": "moderate nitrogen",
+      "spacingInches": 6,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "4",
+        "notes": "Spring and fall crop"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Winter crop"
+      }
+    ]
+  },
+  {
+    "commonName": "Cilantro",
+    "scientificName": "Coriandrum sativum",
+    "plantType": "herb",
+    "lifeCycle": "annual",
+    "growthHabit": "upright",
+    "edible": true,
+    "description": "Fresh herb used in many cuisines",
+    "plantingInstructions": "Direct sow, succession plant",
+    "careInstructions": "Regular water, harvest frequently",
+    "daysToGerminationMin": 7,
+    "daysToGerminationMax": 14,
+    "daysToMaturityMin": 30,
+    "daysToMaturityMax": 45,
+    "harvestSeason": "spring",
+    "heightInchesMin": 12,
+    "heightInchesMax": 24,
+    "widthInchesMin": 6,
+    "widthInchesMax": 12,
+    "growingConditions": {
+      "minTemperatureF": 40,
+      "maxTemperatureF": 75,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.2,
+      "soilPhMax": 6.8,
+      "soilTypePreference": "well-draining",
+      "fertilizerNeeds": "light feeding",
+      "spacingInches": 6,
+      "containerSuitable": true,
+      "minContainerDepthInches": 8,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Spring and fall crop"
+      },
+      {
+        "climateZone": "10",
+        "notes": "Winter crop"
+      }
+    ]
+  },
+  {
+    "commonName": "Jade Plant",
+    "scientificName": "Crassula ovata",
+    "plantType": "succulent",
+    "lifeCycle": "perennial",
+    "growthHabit": "bushy",
+    "edible": false,
+    "description": "Popular succulent with thick, oval leaves",
+    "plantingInstructions": "Plant in cactus mix, avoid overwatering",
+    "careInstructions": "Minimal water, bright indirect light",
+    "daysToGerminationMin": 14,
+    "daysToGerminationMax": 21,
+    "daysToMaturityMin": 180,
+    "daysToMaturityMax": 365,
+    "harvestSeason": "year-round",
+    "heightInchesMin": 12,
+    "heightInchesMax": 36,
+    "widthInchesMin": 12,
+    "widthInchesMax": 24,
+    "growingConditions": {
+      "minTemperatureF": 40,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "bright indirect",
+      "waterNeeds": "low",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "well-draining cactus mix",
+      "fertilizerNeeds": "minimal",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "10",
+        "notes": "Can grow outdoors year-round"
+      },
+      {
+        "climateZone": "11",
+        "notes": "Protect from intense afternoon sun"
+      }
+    ]
+  },
+  {
+    "commonName": "French Breakfast Radish",
+    "scientificName": "Raphanus sativus",
+    "plantType": "vegetable",
+    "lifeCycle": "annual",
+    "growthHabit": "root",
+    "edible": true,
+    "description": "Quick-growing radish with elongated roots",
+    "plantingInstructions": "Direct sow, thin to 2 inches apart",
+    "careInstructions": "Keep soil moist, harvest when young",
+    "daysToGerminationMin": 3,
+    "daysToGerminationMax": 7,
+    "daysToMaturityMin": 21,
+    "daysToMaturityMax": 30,
+    "harvestSeason": "spring",
+    "heightInchesMin": 6,
+    "heightInchesMax": 8,
+    "widthInchesMin": 2,
+    "widthInchesMax": 3,
+    "growingConditions": {
+      "minTemperatureF": 40,
+      "maxTemperatureF": 75,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "loose, well-draining",
+      "fertilizerNeeds": "light feeding",
+      "spacingInches": 2,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "2",
+        "notes": "Spring and fall crop"
+      },
+      {
+        "climateZone": "10",
+        "notes": "Winter crop"
+      }
+    ]
+  },
+  {
+    "commonName": "Chives",
+    "scientificName": "Allium schoenoprasum",
+    "plantType": "herb",
+    "lifeCycle": "perennial",
+    "growthHabit": "clumping",
+    "edible": true,
+    "description": "Hardy herb with onion-flavored leaves",
+    "plantingInstructions": "Sow seeds or divide existing plants",
+    "careInstructions": "Regular trimming, divide every 3 years",
+    "daysToGerminationMin": 10,
+    "daysToGerminationMax": 14,
+    "daysToMaturityMin": 60,
+    "daysToMaturityMax": 90,
+    "harvestSeason": "spring",
+    "heightInchesMin": 12,
+    "heightInchesMax": 18,
+    "widthInchesMin": 6,
+    "widthInchesMax": 12,
+    "growingConditions": {
+      "minTemperatureF": -20,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.0,
+      "soilTypePreference": "rich, well-draining",
+      "fertilizerNeeds": "light feeding in spring",
+      "spacingInches": 6,
+      "containerSuitable": true,
+      "minContainerDepthInches": 6,
+      "minContainerVolumeGallons": 1
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Very cold hardy"
+      },
+      {
+        "climateZone": "9",
+        "notes": "May need afternoon shade"
+      }
+    ]
+  },
+  {
+    "commonName": "Dwarf Morning Glory",
+    "scientificName": "Convolvulus tricolor",
+    "plantType": "flower",
+    "lifeCycle": "annual",
+    "growthHabit": "trailing",
+    "edible": false,
+    "description": "Compact morning glory with bright flowers",
+    "plantingInstructions": "Direct sow after frost, or start indoors",
+    "careInstructions": "Regular deadheading, moderate water",
+    "daysToGerminationMin": 7,
+    "daysToGerminationMax": 14,
+    "daysToMaturityMin": 55,
+    "daysToMaturityMax": 70,
+    "harvestSeason": "summer",
+    "heightInchesMin": 12,
+    "heightInchesMax": 15,
+    "widthInchesMin": 18,
+    "widthInchesMax": 24,
+    "growingConditions": {
+      "minTemperatureF": 35,
+      "maxTemperatureF": 85,
+      "sunlightNeeds": "full sun",
+      "waterNeeds": "moderate",
+      "soilPhMin": 6.0,
+      "soilPhMax": 7.5,
+      "soilTypePreference": "well-draining",
+      "fertilizerNeeds": "monthly balanced feed",
+      "spacingInches": 12,
+      "containerSuitable": true,
+      "minContainerDepthInches": 8,
+      "minContainerVolumeGallons": 2
+    },
+    "climateZones": [
+      {
+        "climateZone": "3",
+        "notes": "Plant after last frost"
+      },
+      {
+        "climateZone": "9",
+        "notes": "Can bloom into fall"
+      }
+    ]
+  }
+]

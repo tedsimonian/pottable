@@ -26,7 +26,7 @@ tRPC enables end-to-end typesafe APIs in TypeScript applications. This guide cov
 - **Context**: Shared context between procedures
 - **Middleware**: Functions that run before procedures
 
-## Project Structure
+## Example Project Structure
 
 ```typescript
 src/

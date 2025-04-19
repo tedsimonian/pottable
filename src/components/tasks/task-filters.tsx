@@ -14,13 +14,23 @@ import {
 import { Badge } from "~/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
+import {
+  type TaskCategory,
+  type TaskPriority,
+  type TaskStatus,
+  TASK_CATEGORIES,
+  TASK_PRIORITIES,
+  TASK_STATUS,
+} from "~/lib/tasks";
+import { toTitleCase } from "~/lib/utils";
+
 interface TaskFiltersProps {
-  statusFilter: string;
-  onStatusFilterChange: (status: string) => void;
-  categoryFilter: string;
-  onCategoryFilterChange: (category: string) => void;
-  priorityFilter: string;
-  onPriorityFilterChange: (priority: string) => void;
+  statusFilter: TaskStatus | "ALL";
+  onStatusFilterChange: (status: TaskStatus | "ALL") => void;
+  categoryFilter: TaskCategory | "ALL";
+  onCategoryFilterChange: (category: TaskCategory | "ALL") => void;
+  priorityFilter: TaskPriority | "ALL";
+  onPriorityFilterChange: (priority: TaskPriority | "ALL") => void;
   activeFiltersCount: number;
 }
 
@@ -39,17 +49,34 @@ export function TaskFilters({
         <Tabs
           defaultValue="ALL"
           value={statusFilter}
-          onValueChange={onStatusFilterChange}
+          onValueChange={(value) =>
+            onStatusFilterChange(value as TaskStatus | "ALL")
+          }
         >
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger className="cursor-pointer" value="ALL">
-              All
+              {"All"}
             </TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="ACTIVE">
-              Active
+            <TabsTrigger className="cursor-pointer" value={TASK_STATUS.ACTIVE}>
+              {toTitleCase(TASK_STATUS.ACTIVE)}
             </TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="COMPLETED">
-              Completed
+            <TabsTrigger
+              className="cursor-pointer"
+              value={TASK_STATUS.IN_PROGRESS}
+            >
+              {toTitleCase(TASK_STATUS.IN_PROGRESS)}
+            </TabsTrigger>
+            <TabsTrigger
+              className="cursor-pointer"
+              value={TASK_STATUS.COMPLETED}
+            >
+              {toTitleCase(TASK_STATUS.COMPLETED)}
+            </TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value={TASK_STATUS.SKIPPED}>
+              {toTitleCase(TASK_STATUS.SKIPPED)}
+            </TabsTrigger>
+            <TabsTrigger className="cursor-pointer" value={TASK_STATUS.STALE}>
+              {toTitleCase(TASK_STATUS.STALE)}
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -63,7 +90,7 @@ export function TaskFilters({
               Category
               {categoryFilter !== "ALL" && (
                 <Badge variant="secondary" className="ml-1 font-normal">
-                  {categoryFilter}
+                  {toTitleCase(categoryFilter)}
                 </Badge>
               )}
               <ChevronDown className="h-4 w-4 opacity-50" />
@@ -78,36 +105,15 @@ export function TaskFilters({
             >
               All Categories
             </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={categoryFilter === "PLANTING"}
-              onCheckedChange={() => onCategoryFilterChange("PLANTING")}
-            >
-              Planting
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={categoryFilter === "WATERING"}
-              onCheckedChange={() => onCategoryFilterChange("WATERING")}
-            >
-              Watering
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={categoryFilter === "PRUNING"}
-              onCheckedChange={() => onCategoryFilterChange("PRUNING")}
-            >
-              Pruning
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={categoryFilter === "HARVESTING"}
-              onCheckedChange={() => onCategoryFilterChange("HARVESTING")}
-            >
-              Harvesting
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={categoryFilter === "MAINTENANCE"}
-              onCheckedChange={() => onCategoryFilterChange("MAINTENANCE")}
-            >
-              Maintenance
-            </DropdownMenuCheckboxItem>
+            {Object.values(TASK_CATEGORIES).map((category) => (
+              <DropdownMenuCheckboxItem
+                key={category}
+                checked={categoryFilter === category}
+                onCheckedChange={() => onCategoryFilterChange(category)}
+              >
+                {toTitleCase(category)}
+              </DropdownMenuCheckboxItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -120,7 +126,7 @@ export function TaskFilters({
               Priority
               {priorityFilter !== "ALL" && (
                 <Badge variant="secondary" className="ml-1 font-normal">
-                  {priorityFilter}
+                  {toTitleCase(priorityFilter)}
                 </Badge>
               )}
               <ChevronDown className="h-4 w-4 opacity-50" />
@@ -135,24 +141,15 @@ export function TaskFilters({
             >
               All Priorities
             </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={priorityFilter === "LOW"}
-              onCheckedChange={() => onPriorityFilterChange("LOW")}
-            >
-              Low
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={priorityFilter === "MEDIUM"}
-              onCheckedChange={() => onPriorityFilterChange("MEDIUM")}
-            >
-              Medium
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={priorityFilter === "HIGH"}
-              onCheckedChange={() => onPriorityFilterChange("HIGH")}
-            >
-              High
-            </DropdownMenuCheckboxItem>
+            {Object.values(TASK_PRIORITIES).map((priority) => (
+              <DropdownMenuCheckboxItem
+                key={priority}
+                checked={priorityFilter === priority}
+                onCheckedChange={() => onPriorityFilterChange(priority)}
+              >
+                {toTitleCase(priority)}
+              </DropdownMenuCheckboxItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

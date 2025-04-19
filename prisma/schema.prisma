@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma-client-types"
 }
 
 datasource db {
@@ -10,16 +11,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User authentication and profile information
 model User {
-  id            String    @id
+  // Unique identifier for the user
+  id            String         @id
+  // User's full name
   name          String
+  // User's email address, must be unique
   email         String
+  // Whether the email has been verified
   emailVerified Boolean
+  // Optional URL to user's profile image
   image         String?
+  // When the user account was created
   createdAt     DateTime
+  // Last time the user profile was updated
   updatedAt     DateTime
+  // Active sessions for this user
   sessions      Session[]
+  // Connected authentication accounts
   accounts      Account[]
+  // Gardens owned by this user
+  gardens       Garden[]
+  // Garden actions performed by this user
+  gardenActions GardenAction[]
+
+  // Task relationships
+  tasks              Task[]              @relation("CreatedTasks")
+  taskNotes          TaskNote[]
+  taskCompletionLogs TaskCompletionLog[]
+  taskNotifications  TaskNotification[]
 
   @@unique([email])
   @@map("user")
@@ -70,11 +91,693 @@ model Verification {
   @@map("verification")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// Gardens Table - Represents a physical garden space with its basic properties
+// A garden can be outdoor, indoor, balcony, etc. and contains multiple containers
+model Garden {
+  // Unique identifier for the garden
+  id                 Int                @id @default(autoincrement()) @map("garden_id")
+  // Reference to the garden owner
+  user               User               @relation(fields: [userId], references: [id])
+  userId             String             @map("user_id")
+  // Display name for the garden
+  name               String             @db.VarChar(100)
+  // Physical location of the garden
+  location           String?            @db.VarChar(200)
+  // Size of the garden in square feet
+  sizeSqFeet         Decimal?           @map("size_sq_feet") @db.Decimal(10, 2)
+  // Type of garden (outdoor, indoor, balcony, etc.)
+  gardenType         String?            @map("garden_type") @db.VarChar(50)
+  // Detailed description of the garden
+  description        String?            @db.Text
+  // When the garden was created
+  createdAt          DateTime           @default(now()) @map("created_at")
+  // Last time the garden was updated
+  updatedAt          DateTime           @default(now()) @updatedAt @map("updated_at")
+  // Environmental conditions for this garden
+  conditions         GardenCondition[]
+  // Containers placed in this garden
+  containers         Container[]
+  // Actions/operations performed in this garden
+  gardenActions      GardenAction[]
+  // Seasonal planting plans for this garden
+  seasonalPlans      SeasonalPlan[]
+  // History of containers that were previously in this garden
+  previousContainers ContainerHistory[] @relation("PreviousGardenContainer")
+  // History of containers that were moved to this garden
+  newContainers      ContainerHistory[] @relation("NewGardenContainer")
 
-  @@index([name])
+  tasks Task[]
+
+  @@index([userId])
+}
+
+// Garden Environmental Conditions - Tracks environmental conditions for each garden
+// Includes climate zone, sunlight, temperature, humidity, and other environmental factors
+model GardenCondition {
+  // Unique identifier for the condition record
+  id               Int      @id @default(autoincrement()) @map("condition_id")
+  // Reference to the associated garden
+  garden           Garden   @relation(fields: [gardenId], references: [id], onDelete: Cascade)
+  gardenId         Int      @map("garden_id")
+  // USDA hardiness zone or similar
+  climateZone      String?  @map("climate_zone") @db.VarChar(50)
+  // Amount of sun exposure (full sun, partial shade, etc.)
+  sunlightExposure String?  @map("sunlight_exposure") @db.VarChar(50)
+  // Average temperature in Fahrenheit
+  avgTemperatureF  Decimal? @map("avg_temperature_f") @db.Decimal(5, 2)
+  // Average humidity percentage
+  humidityPct      Int?     @map("humidity_pct")
+  // Type of soil in the garden
+  soilType         String?  @map("soil_type") @db.VarChar(50)
+  // Annual rainfall in inches
+  annualRainfall   Decimal? @map("annual_rainfall") @db.Decimal(10, 2)
+  // Additional environmental notes
+  additionalNotes  String?  @map("additional_notes")
+  // When the condition record was created
+  createdAt        DateTime @default(now()) @map("created_at")
+  // Last time conditions were updated
+  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([gardenId])
+}
+
+// Container Types Reference Table - Defines different types of containers (pot, raised bed, trough, etc.)
+// Includes typical dimensions and descriptions for each type
+model ContainerType {
+  // Unique identifier for the container type
+  id                Int         @id @default(autoincrement()) @map("type_id")
+  // Name of the container type (pot, raised bed, etc.)
+  name              String      @db.VarChar(100)
+  // Detailed description of the container type
+  description       String?
+  // Standard dimensions for this type of container
+  typicalDimensions String?     @map("typical_dimensions")
+  // Containers of this type
+  containers        Container[]
+}
+
+// Containers Table - Represents physical containers within gardens
+// Tracks container dimensions, position, material, and other physical properties
+model Container {
+  // Unique identifier for the container
+  id                 Int                @id @default(autoincrement()) @map("container_id")
+  // Reference to the garden this container is in
+  garden             Garden             @relation(fields: [gardenId], references: [id], onDelete: Cascade)
+  gardenId           Int                @map("garden_id")
+  // Type of container (from ContainerType)
+  containerType      ContainerType      @relation(fields: [containerTypeId], references: [id])
+  containerTypeId    Int                @map("container_type_id")
+  // Display name for the container
+  name               String?            @db.VarChar(100)
+  // Material the container is made of
+  material           String?            @db.VarChar(50)
+  // Physical dimensions
+  widthInches        Decimal?           @map("width_inches") @db.Decimal(10, 2)
+  lengthInches       Decimal?           @map("length_inches") @db.Decimal(10, 2)
+  heightInches       Decimal?           @map("height_inches") @db.Decimal(10, 2)
+  diameterInches     Decimal?           @map("diameter_inches") @db.Decimal(10, 2)
+  // Volume capacity in gallons
+  volumeGallons      Decimal?           @map("volume_gallons") @db.Decimal(10, 2)
+  // Position coordinates in the garden
+  positionX          Decimal?           @map("position_x") @db.Decimal(10, 2)
+  positionY          Decimal?           @map("position_y") @db.Decimal(10, 2)
+  // Soil characteristics
+  soilType           String?            @map("soil_type") @db.VarChar(100)
+  drainageQuality    String?            @map("drainage_quality") @db.VarChar(50)
+  // Additional notes about the container
+  notes              String?
+  // When the container was added
+  createdAt          DateTime           @default(now()) @map("created_at")
+  // Last time container was updated
+  updatedAt          DateTime           @default(now()) @updatedAt @map("updated_at")
+  // Plants currently in this container
+  containerPlants    ContainerPlant[]
+  // Actions performed on this container
+  gardenActions      GardenAction[]
+  // History of container movements
+  containerHistory   ContainerHistory[] @relation("ContainerToHistory")
+  previousContainers ContainerHistory[] @relation("ContainerToPrevious")
+  // Planned future plantings
+  plannedPlantings   PlannedPlanting[]
+
+  tasks Task[]
+
+  @@index([gardenId])
+  @@index([containerTypeId])
+}
+
+// Plant Catalog - Master list of available plants that can be grown
+// Contains basic plant information, growth characteristics, and care requirements
+model PlantCatalog {
+  // Unique identifier for the plant
+  id                   Int                    @id @default(autoincrement()) @map("plant_id")
+  // Common/familiar name of the plant
+  commonName           String                 @map("common_name") @db.VarChar(100)
+  // Scientific/botanical name
+  scientificName       String?                @map("scientific_name") @db.VarChar(100)
+  // Category of plant (vegetable, herb, flower, tree, etc.)
+  plantType            String?                @map("plant_type") @db.VarChar(50)
+  // Plant lifecycle (annual, perennial, biennial)
+  lifeCycle            String?                @map("life_cycle") @db.VarChar(50)
+  // Growth pattern (climbing, bushy, trailing, etc.)
+  growthHabit          String?                @map("growth_habit") @db.VarChar(50)
+  // Whether the plant produces edible parts
+  edible               Boolean                @default(false)
+  // General description of the plant
+  description          String?
+  // How to plant and establish
+  plantingInstructions String?                @map("planting_instructions")
+  // Ongoing maintenance instructions
+  careInstructions     String?                @map("care_instructions")
+  // Minimum days until germination
+  daysToGerminationMin Int?                   @map("days_to_germination_min")
+  // Maximum days until germination
+  daysToGerminationMax Int?                   @map("days_to_germination_max")
+  // Minimum days until harvest
+  daysToMaturityMin    Int?                   @map("days_to_maturity_min")
+  // Maximum days until harvest
+  daysToMaturityMax    Int?                   @map("days_to_maturity_max")
+  // Best season for harvesting
+  harvestSeason        String?                @map("harvest_season") @db.VarChar(50)
+  // Minimum mature height in inches
+  heightInchesMin      Decimal?               @map("height_inches_min") @db.Decimal(10, 2)
+  // Maximum mature height in inches
+  heightInchesMax      Decimal?               @map("height_inches_max") @db.Decimal(10, 2)
+  // Minimum spread/width in inches
+  widthInchesMin       Decimal?               @map("width_inches_min") @db.Decimal(10, 2)
+  // Maximum spread/width in inches
+  widthInchesMax       Decimal?               @map("width_inches_max") @db.Decimal(10, 2)
+  // When the plant was added to catalog
+  createdAt            DateTime               @default(now()) @map("created_at")
+  // Last time plant info was updated
+  updatedAt            DateTime               @default(now()) @updatedAt @map("updated_at")
+  // Detailed growing requirements
+  growingConditions    PlantGrowingCondition?
+  // Compatible climate zones
+  climateZones         PlantClimateZone[]
+  // Available varieties of this plant
+  varieties            PlantVariety[]
+  // Plants that grow well with this one
+  companions           PlantCompanion[]       @relation("PlantToCompanions")
+  // Plants this one grows well with
+  companionTo          PlantCompanion[]       @relation("CompanionToPlant")
+  // Actual plantings of this plant
+  containerPlants      ContainerPlant[]
+  // Future planned plantings
+  plannedPlantings     PlannedPlanting[]
+}
+
+// Plant Growing Conditions - Detailed growing requirements for each plant
+// Includes temperature ranges, sunlight needs, soil preferences, and container compatibility
+model PlantGrowingCondition {
+  // Unique identifier for growing conditions
+  id                        Int          @id @default(autoincrement()) @map("condition_id")
+  // Reference to the plant
+  plant                     PlantCatalog @relation(fields: [plantId], references: [id], onDelete: Cascade)
+  plantId                   Int          @unique @map("plant_id")
+  // Minimum temperature tolerance (°F)
+  minTemperatureF           Int?         @map("min_temperature_f")
+  // Maximum temperature tolerance (°F)
+  maxTemperatureF           Int?         @map("max_temperature_f")
+  // Light requirements
+  sunlightNeeds             String?      @map("sunlight_needs") @db.VarChar(50)
+  // Watering frequency needs
+  waterNeeds                String?      @map("water_needs") @db.VarChar(50)
+  // Minimum soil pH level
+  soilPhMin                 Decimal?     @map("soil_ph_min") @db.Decimal(4, 2)
+  // Maximum soil pH level
+  soilPhMax                 Decimal?     @map("soil_ph_max") @db.Decimal(4, 2)
+  // Preferred soil composition
+  soilTypePreference        String?      @map("soil_type_preference") @db.VarChar(100)
+  // Fertilization requirements
+  fertilizerNeeds           String?      @map("fertilizer_needs") @db.VarChar(100)
+  // Recommended spacing between plants
+  spacingInches             Decimal?     @map("spacing_inches") @db.Decimal(10, 2)
+  // Whether plant can grow in containers
+  containerSuitable         Boolean      @default(true) @map("container_suitable")
+  // Minimum container depth needed
+  minContainerDepthInches   Decimal?     @map("min_container_depth_inches") @db.Decimal(10, 2)
+  // Minimum container volume needed
+  minContainerVolumeGallons Decimal?     @map("min_container_volume_gallons") @db.Decimal(10, 2)
+}
+
+// Plant Climate Compatibility - Maps plants to compatible climate zones
+// Helps users determine which plants can grow in their climate
+model PlantClimateZone {
+  // Unique identifier for climate zone entry
+  id          Int          @id @default(autoincrement())
+  // Reference to the plant
+  plant       PlantCatalog @relation(fields: [plantId], references: [id], onDelete: Cascade)
+  plantId     Int          @map("plant_id")
+  // Climate zone identifier (e.g., USDA zone)
+  climateZone String       @map("climate_zone") @db.VarChar(50)
+  // Additional zone-specific notes
+  notes       String?
+
+  @@index([plantId])
+}
+
+// Plant Varieties - Specific varieties of plants in the catalog
+// Includes unique characteristics and care needs for each variety
+model PlantVariety {
+  // Unique identifier for the variety
+  id                Int               @id @default(autoincrement()) @map("variety_id")
+  // Reference to the parent plant
+  plant             PlantCatalog      @relation(fields: [plantId], references: [id], onDelete: Cascade)
+  plantId           Int               @map("plant_id")
+  // Name of this specific variety
+  varietyName       String            @map("variety_name") @db.VarChar(100)
+  // Detailed description of the variety
+  description       String?
+  // Special characteristics of this variety
+  specificTraits    String?           @map("specific_traits")
+  // Special care requirements
+  specificCareNeeds String?           @map("specific_care_needs")
+  // URL to variety image
+  imageUrl          String?           @map("image_url") @db.VarChar(255)
+  // Actual plantings of this variety
+  containerPlants   ContainerPlant[]
+  // Planned future plantings
+  plannedPlantings  PlannedPlanting[]
+
+  @@index([plantId])
+}
+
+// Plant Companion Relationships - Tracks which plants grow well together
+// Defines beneficial, harmful, or neutral relationships between plants
+model PlantCompanion {
+  // Unique identifier for companion relationship
+  id                Int          @id @default(autoincrement()) @map("companion_id")
+  // First plant in the relationship
+  plant             PlantCatalog @relation("PlantToCompanions", fields: [plantId], references: [id], onDelete: Cascade)
+  plantId           Int          @map("plant_id")
+  // Second plant in the relationship
+  companionPlant    PlantCatalog @relation("CompanionToPlant", fields: [companionPlantId], references: [id], onDelete: Cascade)
+  companionPlantId  Int          @map("companion_plant_id")
+  // Type of relationship (beneficial, harmful, neutral)
+  relationshipType  String       @map("relationship_type") @db.VarChar(50)
+  // Description of how plants affect each other
+  effectDescription String?      @map("effect_description")
+
+  @@index([plantId])
+  @@index([companionPlantId])
+}
+
+// Plants/Crops in Containers - Actual plantings of specific plants in containers
+// Tracks the lifecycle of plants from planting through harvest
+model ContainerPlant {
+  // Unique identifier for the planting
+  id                  Int                    @id @default(autoincrement()) @map("container_plant_id")
+  // Container this plant is growing in
+  container           Container              @relation(fields: [containerId], references: [id], onDelete: Cascade)
+  containerId         Int                    @map("container_id")
+  // Reference to plant type from catalog
+  plant               PlantCatalog           @relation(fields: [plantId], references: [id])
+  plantId             Int                    @map("plant_id")
+  // Specific variety being grown
+  variety             PlantVariety?          @relation(fields: [varietyId], references: [id])
+  varietyId           Int?                   @map("variety_id")
+  // Number of plants in this planting
+  quantity            Decimal?               @db.Decimal(10, 2)
+  // Date when planted
+  plantDate           DateTime               @map("plant_date") @db.Date
+  // Growth stage when planted
+  initialStage        String                 @map("initial_stage") @db.VarChar(50)
+  // Current growth stage
+  currentStage        String                 @map("current_stage") @db.VarChar(50)
+  // Plant status (active, harvested, failed, etc.)
+  status              String                 @default("active") @db.VarChar(50)
+  // Position coordinates in container
+  positionX           Decimal?               @map("position_x") @db.Decimal(10, 2)
+  positionY           Decimal?               @map("position_y") @db.Decimal(10, 2)
+  // Projected harvest date
+  expectedHarvestDate DateTime?              @map("expected_harvest_date") @db.Date
+  // Additional planting notes
+  notes               String?
+  // When planting was recorded
+  createdAt           DateTime               @default(now()) @map("created_at")
+  // Last time planting was updated
+  updatedAt           DateTime               @default(now()) @updatedAt @map("updated_at")
+  // Growth stage history
+  growthStages        PlantGrowthStage[]
+  // Actions performed on this plant
+  gardenActions       GardenAction[]
+  // Harvest records
+  harvests            Harvest[]
+  // Movement history between containers
+  movementHistory     PlantMovementHistory[]
+
+  tasks Task[]
+
+  @@index([containerId])
+  @@index([plantId])
+  @@index([varietyId])
+}
+
+// Plant Growth Stages Tracking - Records progression through growth stages
+// Documents plant development with optional photos
+model PlantGrowthStage {
+  // Unique identifier for growth stage record
+  id               Int            @id @default(autoincrement()) @map("stage_id")
+  // Reference to the planted plant
+  containerPlant   ContainerPlant @relation(fields: [containerPlantId], references: [id], onDelete: Cascade)
+  containerPlantId Int            @map("container_plant_id")
+  // Name of growth stage
+  stageName        String         @map("stage_name") @db.VarChar(50)
+  // When plant entered this stage
+  startDate        DateTime       @map("start_date") @db.Date
+  // When plant completed this stage
+  endDate          DateTime?      @map("end_date") @db.Date
+  // Additional stage notes
+  notes            String?
+  // Photo documentation URL
+  imageUrl         String?        @map("image_url") @db.VarChar(255)
+
+  @@index([containerPlantId])
+}
+
+// Action Types Reference Table - Defines types of garden actions/operations
+// Categories include maintenance, harvest, planting, etc.
+model ActionType {
+  // Unique identifier for action type
+  id          Int            @id @default(autoincrement()) @map("action_type_id")
+  // Name of the action type
+  name        String         @db.VarChar(100)
+  // Detailed description of action
+  description String?
+  // Action category (maintenance, harvest, etc.)
+  category    String?        @db.VarChar(50)
+  // Instances of this action type
+  actions     GardenAction[]
+}
+
+// Actions/Operations Log - Records all garden activities
+// Tracks maintenance, harvesting, and other operations with optional ratings
+model GardenAction {
+  // Unique identifier for action record
+  id               Int             @id @default(autoincrement()) @map("action_id")
+  // Type of action performed
+  actionType       ActionType      @relation(fields: [actionTypeId], references: [id])
+  actionTypeId     Int             @map("action_type_id")
+  // User who performed the action
+  user             User            @relation(fields: [userId], references: [id])
+  userId           String          @map("user_id")
+  // Garden where action was performed
+  garden           Garden?         @relation(fields: [gardenId], references: [id], onDelete: SetNull)
+  gardenId         Int?            @map("garden_id")
+  // Container involved in action
+  container        Container?      @relation(fields: [containerId], references: [id], onDelete: SetNull)
+  containerId      Int?            @map("container_id")
+  // Specific plant involved in action
+  containerPlant   ContainerPlant? @relation(fields: [containerPlantId], references: [id], onDelete: SetNull)
+  containerPlantId Int?            @map("container_plant_id")
+  // When action was performed
+  actionDate       DateTime        @map("action_date")
+  // Amount involved in action
+  quantity         Decimal?        @db.Decimal(10, 2)
+  // Unit of measurement
+  unit             String?         @db.VarChar(50)
+  // Additional action notes
+  notes            String?
+  // Rating of action success (1-5)
+  successRating    Int?            @map("success_rating")
+  // When action was recorded
+  createdAt        DateTime        @default(now()) @map("created_at")
+
+  @@index([actionTypeId])
+  @@index([userId])
+  @@index([gardenId])
+  @@index([containerId])
+  @@index([containerPlantId])
+}
+
+// Harvests - Records of plant harvests
+// Tracks harvest quantity, quality, and documentation
+model Harvest {
+  // Unique identifier for harvest record
+  id               Int            @id @default(autoincrement()) @map("harvest_id")
+  // Plant that was harvested
+  containerPlant   ContainerPlant @relation(fields: [containerPlantId], references: [id], onDelete: Cascade)
+  containerPlantId Int            @map("container_plant_id")
+  // When harvest occurred
+  harvestDate      DateTime       @map("harvest_date") @db.Date
+  // Amount harvested
+  quantity         Decimal?       @db.Decimal(10, 2)
+  // Unit of measurement
+  unit             String?        @db.VarChar(50)
+  // Quality rating of harvest (1-5)
+  qualityRating    Int?           @map("quality_rating")
+  // Additional harvest notes
+  notes            String?
+  // Photo of harvest
+  imageUrl         String?        @map("image_url") @db.VarChar(255)
+
+  @@index([containerPlantId])
+}
+
+// Container History - Tracks container movements between gardens
+// Maintains history of container relocations with reasons
+model ContainerHistory {
+  // Unique identifier for history record
+  id                  Int        @id @default(autoincrement()) @map("history_id")
+  // Container that was moved
+  container           Container  @relation("ContainerToHistory", fields: [containerId], references: [id], onDelete: Cascade)
+  containerId         Int        @map("container_id")
+  // Previous container if transplanted
+  previousContainer   Container? @relation("ContainerToPrevious", fields: [previousContainerId], references: [id])
+  previousContainerId Int?       @map("previous_container_id")
+  // Garden container came from
+  previousGarden      Garden?    @relation("PreviousGardenContainer", fields: [previousGardenId], references: [id], onDelete: SetNull)
+  previousGardenId    Int?       @map("previous_garden_id")
+  // Garden container moved to
+  newGarden           Garden?    @relation("NewGardenContainer", fields: [newGardenId], references: [id], onDelete: SetNull)
+  newGardenId         Int?       @map("new_garden_id")
+  // When move occurred
+  moveDate            DateTime   @map("move_date")
+  // Reason for moving
+  reason              String?
+
+  @@index([containerId])
+  @@index([previousGardenId])
+  @@index([newGardenId])
+}
+
+// Plant Movement History - Tracks plant movements between containers
+// Records plant condition before and after moves
+model PlantMovementHistory {
+  // Unique identifier for movement record
+  id                   Int            @id @default(autoincrement()) @map("movement_id")
+  // Plant that was moved
+  containerPlant       ContainerPlant @relation(fields: [containerPlantId], references: [id], onDelete: Cascade)
+  containerPlantId     Int            @map("container_plant_id")
+  // Container plant came from
+  previousContainerId  Int?           @map("previous_container_id")
+  // Container plant moved to
+  newContainerId       Int?           @map("new_container_id")
+  // When move occurred
+  moveDate             DateTime       @map("move_date")
+  // Reason for moving
+  reason               String?
+  // Plant health before move
+  plantConditionBefore String?        @map("plant_condition_before") @db.VarChar(50)
+  // Plant health after move
+  plantConditionAfter  String?        @map("plant_condition_after") @db.VarChar(50)
+
+  @@index([containerPlantId])
+}
+
+// Seasonal Plans - Garden planning by season
+// Helps organize planting schedules and garden layouts
+model SeasonalPlan {
+  // Unique identifier for plan
+  id          Int               @id @default(autoincrement()) @map("plan_id")
+  // Garden being planned
+  garden      Garden            @relation(fields: [gardenId], references: [id], onDelete: Cascade)
+  gardenId    Int               @map("garden_id")
+  // Season for the plan
+  season      String            @db.VarChar(50)
+  // Year of the plan
+  year        Int
+  // Plan details
+  description String?
+  // When plan was created
+  createdAt   DateTime          @default(now()) @map("created_at")
+  // Last time plan was updated
+  updatedAt   DateTime          @default(now()) @updatedAt @map("updated_at")
+  // Planned plantings in this plan
+  plantings   PlannedPlanting[]
+
+  @@index([gardenId])
+}
+
+// Planned Plantings - Future planting intentions
+// Links plants to containers with planned dates and quantities
+model PlannedPlanting {
+  // Unique identifier for planned planting
+  id          Int           @id @default(autoincrement()) @map("planned_planting_id")
+  // Seasonal plan this belongs to
+  plan        SeasonalPlan  @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId      Int           @map("plan_id")
+  // Container to plant in
+  container   Container     @relation(fields: [containerId], references: [id], onDelete: Cascade)
+  containerId Int           @map("container_id")
+  // Plant to be planted
+  plant       PlantCatalog  @relation(fields: [plantId], references: [id])
+  plantId     Int           @map("plant_id")
+  // Specific variety to plant
+  variety     PlantVariety? @relation(fields: [varietyId], references: [id])
+  varietyId   Int?          @map("variety_id")
+  // When to plant
+  plannedDate DateTime?     @map("planned_date") @db.Date
+  // Number of plants to plant
+  quantity    Decimal?      @db.Decimal(10, 2)
+  // Additional planting notes
+  notes       String?
+  // Plan status (planned, completed, cancelled)
+  status      String        @default("planned") @db.VarChar(50)
+
+  @@index([planId])
+  @@index([containerId])
+  @@index([plantId])
+  @@index([varietyId])
+}
+
+
+// Main Tasks model
+model Task {
+  id               Int            @id @default(autoincrement()) @map("task_id")
+  title            String         @db.VarChar(200)
+  description      String
+  status           String         @default("PENDING")
+  category         String
+  priority         String         @default("MEDIUM")
+  difficulty       String         @default("MODERATE")
+  estimatedMinutes Int?           @map("estimated_minutes")
+
+  // Time windows and deadlines
+  startDate     DateTime? @map("start_date")
+  endDate       DateTime  @map("end_date")
+  dateCompleted DateTime? @map("date_completed")
+
+  // Associations
+  user   User   @relation("CreatedTasks", fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  // Garden association (optional, as some tasks might be general)
+  garden   Garden? @relation(fields: [gardenId], references: [id])
+  gardenId Int?    @map("garden_id")
+
+  // Container association (optional)
+  container   Container? @relation(fields: [containerId], references: [id])
+  containerId Int?       @map("container_id")
+
+  // Plant association (optional)
+  containerPlant   ContainerPlant? @relation(fields: [containerPlantId], references: [id])
+  containerPlantId Int?            @map("container_plant_id")
+
+  // Metadata
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+  isRecurring Boolean  @default(false) @map("is_recurring")
+
+  // Relationships
+  parentTask        Task?                 @relation("TaskDependency", fields: [parentTaskId], references: [id])
+  parentTaskId      Int?                  @map("parent_task_id")
+  subtasks          Task[]                @relation("TaskDependency")
+  taskNotes         TaskNote[]
+  taskCompletionLog TaskCompletionLog[]
+  notifications     TaskNotification[]
+  prerequisites     TaskPrerequisite[]    @relation("DependentTask")
+  dependents        TaskPrerequisite[]    @relation("PrerequisiteTask")
+  recurringPattern  RecurringTaskPattern?
+
+  @@index([userId])
+  @@index([gardenId])
+  @@index([containerId])
+  @@index([containerPlantId])
+  @@index([parentTaskId])
+  @@index([status])
+  @@index([endDate])
+}
+
+// For storing task dependencies (one task depends on another)
+model TaskPrerequisite {
+  id                 Int      @id @default(autoincrement()) @map("prerequisite_id")
+  task               Task     @relation("DependentTask", fields: [taskId], references: [id], onDelete: Cascade)
+  taskId             Int      @map("task_id")
+  prerequisiteTask   Task     @relation("PrerequisiteTask", fields: [prerequisiteTaskId], references: [id], onDelete: Cascade)
+  prerequisiteTaskId Int      @map("prerequisite_task_id")
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  @@unique([taskId, prerequisiteTaskId])
+  @@index([taskId])
+  @@index([prerequisiteTaskId])
+}
+
+// Task notes added by users
+model TaskNote {
+  id        Int      @id @default(autoincrement()) @map("note_id")
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId    Int      @map("task_id")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @map("user_id")
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([taskId])
+  @@index([userId])
+}
+
+// Task completion history
+model TaskCompletionLog {
+  id               Int        @id @default(autoincrement()) @map("log_id")
+  task             Task       @relation(fields: [taskId], references: [id])
+  taskId           Int        @map("task_id")
+  user             User       @relation(fields: [userId], references: [id])
+  userId           String     @map("user_id")
+  status           String
+  completedAt      DateTime   @default(now()) @map("completed_at")
+  notes            String?
+  percentDone      Int?       @map("percent_done") // For partial completion tracking
+  timeSpentMinutes Int?       @map("time_spent_minutes")
+
+  @@index([taskId])
+  @@index([userId])
+  @@index([completedAt])
+}
+
+// For recurring tasks
+model RecurringTaskPattern {
+  id            Int       @id @default(autoincrement()) @map("pattern_id")
+  task          Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId        Int       @unique @map("task_id") // One-to-one with Task
+  frequency     String // DAILY, WEEKLY, MONTHLY, etc.
+  interval      Int       @default(1) // Every 1 day, 2 weeks, etc.
+  endAfterCount Int?      @map("end_after_count") // End after X occurrences
+  endByDate     DateTime? @map("end_by_date") // End by specific date
+  daysOfWeek    String?   @map("days_of_week") // For weekly recurrence (e.g., "1,3,5" for Mon,Wed,Fri)
+  dayOfMonth    Int?      @map("day_of_month") // For monthly recurrence
+  monthOfYear   Int?      @map("month_of_year") // For yearly recurrence
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
+
+  @@index([taskId])
+}
+
+// For task notifications
+model TaskNotification {
+  id        Int       @id @default(autoincrement()) @map("notification_id")
+  task      Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId    Int       @map("task_id")
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String    @map("user_id")
+  message   String
+  isRead    Boolean   @default(false) @map("is_read")
+  readAt    DateTime? @map("read_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@index([taskId])
+  @@index([userId])
+  @@index([isRead])
 }
