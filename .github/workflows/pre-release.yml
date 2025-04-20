@@ -1,4 +1,4 @@
-name: Process Changesets
+name: Pre-release
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   pre-release:
-    name: Pre-Release
+    name: Pre-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
