@@ -32,14 +32,22 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Create Release Pull Request
+        id: changesets
+        uses: changesets/action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Extract version
         id: extract_version
         uses: Saionaro/extract-package-version@v1.0.6
+        if: steps.changesets.outputs.hasChangesets == 'false'
 
       - name: Extract changelog
         run: |
           { awk '/^## [0-9]+\.[0-9]+\.[0-9]+/{ if (p) exit; p = 1; } !p' CHANGELOG.md; 
             awk '/^## [0-9]+\.[0-9]+\.[0-9]+/{ p++; if (p>1) exit } { if (p==1) print $0}' CHANGELOG.md; } > RELEASE.md
+        if: steps.changesets.outputs.hasChangesets == 'false'
 
       - name: Create draft release
         uses: ncipollo/release-action@v1
@@ -49,3 +57,4 @@ jobs:
           bodyFile: "RELEASE.md"
           commit: main
           tag: v${{ steps.extract_version.outputs.version }}
+        if: steps.changesets.outputs.hasChangesets == 'false'
