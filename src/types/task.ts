@@ -1,4 +1,4 @@
-import type { Task as PrismaTask } from "~/generated/prisma-client-types";
+import type { Task as PrismaTask } from "~/generated/prisma-client";
 
 import {
   type TaskCategory,

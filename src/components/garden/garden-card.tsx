@@ -18,7 +18,7 @@ import {
 } from "../common/ellipsis-dropdown-menu";
 import { InternalLink } from "../common/internal-link";
 
-import type { Garden } from "~/generated/prisma-client-types";
+import type { Garden } from "~/generated/prisma-client";
 
 type GardenCardProps = {
   garden: Garden;

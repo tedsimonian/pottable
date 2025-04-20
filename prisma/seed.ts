@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-import type { Prisma } from "~/generated/prisma-client-types";
+import type { Prisma } from "~/generated/prisma-client";
 
 import plantsCatalog from "./data/plants.json";
 
