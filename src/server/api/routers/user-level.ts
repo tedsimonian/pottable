@@ -2,9 +2,9 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { throwTRPCError } from "~/server/custom-error";
 import { addXpSchema } from "~/schemas/user-level";
 import type { DBSession } from "~/server/db";
-import type { ProgressLevel, USER_LEVELS } from "~/types/user-level";
+import type { ProgressLevel, UserLevels } from "~/types/user-level";
 
-export const PROGRESS_LEVELS: USER_LEVELS = {
+export const PROGRESS_LEVELS: UserLevels = {
   LEVEL_1: { level: 1, title: "Novice Gardener", totalXp: 0, currentXp: 0 },
   LEVEL_2: { level: 2, title: "Seed Sower", totalXp: 100, currentXp: 0 },
   LEVEL_3: { level: 3, title: "Sprout Tender", totalXp: 250, currentXp: 0 },
@@ -70,7 +70,7 @@ const levelUp = async (userId: string, db: DBSession) => {
   const nextLevel = currentLevel + 1;
 
   const nextLevelData =
-    PROGRESS_LEVELS[`LEVEL_${nextLevel}` as keyof USER_LEVELS];
+    PROGRESS_LEVELS[`LEVEL_${nextLevel}` as keyof UserLevels];
 
   if (!nextLevelData) {
     throwTRPCError("NOT_FOUND", "Next level data not found");

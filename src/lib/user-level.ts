@@ -9,6 +9,13 @@ export const getProgressFromXp = (currentXp: number, totalXp: number) => {
   return (currentXp / totalXp) * 100;
 };
 
+/**
++ * Format a level title by combining the level number and title.
++ *
++ * @param title - The title of the level.
++ * @param level - The level number.
++ * @returns The formatted level title.
++ */
 export const getFormattedLevelTitle = (title: string, level: number) => {
   return `Level ${level} - ${title}`;
 };

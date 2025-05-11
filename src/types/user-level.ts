@@ -5,7 +5,7 @@ export type ProgressLevel = {
   currentXp: number;
 };
 
-export type USER_LEVELS = {
+export type UserLevels = {
   LEVEL_1: ProgressLevel;
   LEVEL_2: ProgressLevel;
   LEVEL_3: ProgressLevel;

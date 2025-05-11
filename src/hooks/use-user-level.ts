@@ -5,6 +5,7 @@ export const useUserLevel = () => {
     data,
     isLoading: isLoadingLevel,
     error,
+    refetch,
   } = api.userLevel.getLevel.useQuery();
   const { mutate: addXp, isPending: isAddingXp } =
     api.userLevel.addXp.useMutation();
@@ -19,5 +20,6 @@ export const useUserLevel = () => {
     levelUp,
     isAddingXp,
     isLevelingUp,
+    refetch,
   };
 };
