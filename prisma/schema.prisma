@@ -744,7 +744,7 @@ model TaskCompletionLog {
   status           String
   completedAt      DateTime @default(now()) @map("completed_at")
   notes            String?
-  percentDone      Int?     @map("percent_done") // For partial completion tracking
+  percentDone      Int?     @default(0) @map("percent_done") // For partial completion tracking
   timeSpentMinutes Int?     @map("time_spent_minutes")
 
   @@index([taskId])

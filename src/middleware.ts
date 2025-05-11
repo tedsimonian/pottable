@@ -10,9 +10,18 @@ import {
 const authRoutes: Array<RoutePaths> = [ROUTES.sign_in, ROUTES.sign_up];
 const privateRoutes: Array<RoutePaths> = [
   ROUTES.dashboard,
-  ROUTES.view_all_gardens,
+  ROUTES.view_garden,
   ROUTES.view_calendar,
   ROUTES.view_tasks,
+  ROUTES.view_achievements,
+  ROUTES.view_plant_catalog,
+  ROUTES.view_garden_guide,
+  ROUTES.create_garden,
+  ROUTES.edit_garden,
+  ROUTES.view_containers,
+  ROUTES.view_container,
+  ROUTES.edit_container,
+  ROUTES.create_container,
 ];
 
 export default async function middleware(request: NextRequest) {
