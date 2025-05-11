@@ -1,10 +1,13 @@
 import React from "react";
 import { cn } from "~/lib/utils";
 
+import type { AppRouter } from "~/server/api";
+import type { TRPCClientErrorLike } from "@trpc/react-query";
+
 interface QueryProps<T> {
   data: T | undefined | null;
   loading: boolean;
-  error?: Error | null;
+  error?: Error | TRPCClientErrorLike<AppRouter> | null;
   children: (data: T) => React.ReactNode;
   loadingComponent?: React.ReactNode;
   errorComponent?: React.ReactNode;

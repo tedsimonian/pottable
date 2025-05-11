@@ -1,0 +1,26 @@
+[
+  {
+    "code": "THEME_NATURE",
+    "title": "Nature Theme",
+    "description": "Unlock a nature-inspired theme",
+    "type": "THEME",
+    "value": "nature",
+    "icon": "🌿"
+  },
+  {
+    "code": "FONT_GARDEN",
+    "title": "Garden Font",
+    "description": "Unlock a garden-themed font",
+    "type": "FONT",
+    "value": "garden",
+    "icon": "✒️"
+  },
+  {
+    "code": "ICON_SET_BOTANICAL",
+    "title": "Botanical Icons",
+    "description": "Unlock botanical-themed icons",
+    "type": "ICON",
+    "value": "botanical",
+    "icon": "🌺"
+  }
+]

@@ -1,7 +1,7 @@
 ---
 description: Authentication: Guidelines for implementing Better-Auth in Next.js applications
 globs: **/auth/**/*.ts, **/auth/**/*.tsx, **/pages/api/auth/**/*
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Better-Auth Implementation Guidelines

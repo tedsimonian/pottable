@@ -1,7 +1,7 @@
 ---
 description: React Hook Form: Guidelines and best practices for form handling with Next.js, ShadcnUI, and Zod
 globs: **/*.tsx, **/*.ts
-alwaysApply: false
+alwaysApply: true
 ---
 
 # React Hook Form Guidelines

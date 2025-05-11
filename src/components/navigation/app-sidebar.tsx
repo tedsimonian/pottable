@@ -13,10 +13,13 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "~/components/ui/sidebar";
+import UserLevelProgressSkeleton from "../game/user-level-progress-skeleton";
 import { getInternalRoute } from "~/lib/internal-routes";
 import { authClient } from "~/lib/auth-client";
 import { NavUserSkeleton } from "./nav-user-skeleton";
 import { Query } from "../common/query";
+import UserLevelProgress from "../game/user-level-progress";
+import { useUserLevel } from "~/hooks";
 
 const navGroups = [
   {
@@ -54,6 +57,7 @@ const navGroups = [
 export const AppSidebar = (props: React.ComponentProps<typeof Sidebar>) => {
   const { data: session } = authClient.useSession();
   const { user } = session ?? {};
+  const { userLevel, isLoading, error } = useUserLevel();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -64,6 +68,15 @@ export const AppSidebar = (props: React.ComponentProps<typeof Sidebar>) => {
         <NavMain groups={navGroups} />
       </SidebarContent>
       <SidebarFooter>
+        <Query
+          data={userLevel}
+          loading={isLoading}
+          error={error}
+          loadingComponent={<UserLevelProgressSkeleton />}
+          fallbackComponent={<UserLevelProgressSkeleton />}
+        >
+          {(userLevel) => <UserLevelProgress userLevel={userLevel} />}
+        </Query>
         <Query
           data={user}
           loading={false}

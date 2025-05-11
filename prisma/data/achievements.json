@@ -1,0 +1,262 @@
+[
+  {
+    "code": "FIRST_PLANT",
+    "title": "First Plant",
+    "description": "Plant your first crop",
+    "category": "PLANTING",
+    "xpReward": 100,
+    "icon": "🌱",
+    "requirements": {
+      "type": "PLANT_COUNT",
+      "count": 1
+    },
+    "isHidden": false
+  },
+  {
+    "code": "PLANTING_APPRENTICE",
+    "title": "Planting Apprentice",
+    "description": "Plant 10 different crops",
+    "category": "PLANTING",
+    "xpReward": 250,
+    "icon": "🌿",
+    "requirements": {
+      "type": "UNIQUE_PLANTS",
+      "count": 10
+    },
+    "isHidden": false
+  },
+  {
+    "code": "PLANTING_MASTER",
+    "title": "Planting Master",
+    "description": "Plant 50 different crops",
+    "category": "PLANTING",
+    "xpReward": 1000,
+    "icon": "🌳",
+    "requirements": {
+      "type": "UNIQUE_PLANTS",
+      "count": 50
+    },
+    "isHidden": false
+  },
+  {
+    "code": "FIRST_GARDEN",
+    "title": "First Garden",
+    "description": "Create your first garden",
+    "category": "GARDENING",
+    "xpReward": 150,
+    "icon": "🏡",
+    "requirements": {
+      "type": "GARDEN_COUNT",
+      "count": 1
+    },
+    "isHidden": false
+  },
+  {
+    "code": "GARDEN_MASTER",
+    "title": "Garden Master",
+    "description": "Create 5 different gardens",
+    "category": "GARDENING",
+    "xpReward": 500,
+    "icon": "🏆",
+    "requirements": {
+      "type": "GARDEN_COUNT",
+      "count": 5
+    },
+    "isHidden": false
+  },
+  {
+    "code": "GARDEN_EMPIRE",
+    "title": "Garden Empire",
+    "description": "Create 10 different gardens",
+    "category": "GARDENING",
+    "xpReward": 2000,
+    "icon": "👑",
+    "requirements": {
+      "type": "GARDEN_COUNT",
+      "count": 10
+    },
+    "isHidden": false
+  },
+  {
+    "code": "FIRST_HARVEST",
+    "title": "First Harvest",
+    "description": "Harvest your first crop",
+    "category": "HARVESTING",
+    "xpReward": 200,
+    "icon": "✂️",
+    "requirements": {
+      "type": "HARVEST_COUNT",
+      "count": 1
+    },
+    "isHidden": false
+  },
+  {
+    "code": "HARVEST_KING",
+    "title": "Harvest King",
+    "description": "Harvest 100 crops",
+    "category": "HARVESTING",
+    "xpReward": 1000,
+    "icon": "👑",
+    "requirements": {
+      "type": "HARVEST_COUNT",
+      "count": 100
+    },
+    "isHidden": false
+  },
+  {
+    "code": "HARVEST_EMPEROR",
+    "title": "Harvest Emperor",
+    "description": "Harvest 500 crops",
+    "category": "HARVESTING",
+    "xpReward": 5000,
+    "icon": "🌟",
+    "requirements": {
+      "type": "HARVEST_COUNT",
+      "count": 500
+    },
+    "isHidden": false
+  },
+  {
+    "code": "SEASONAL_PLANNER",
+    "title": "Seasonal Planner",
+    "description": "Create your first seasonal plan",
+    "category": "PLANNING",
+    "xpReward": 150,
+    "icon": "📅",
+    "requirements": {
+      "type": "SEASONAL_PLAN_COUNT",
+      "count": 1
+    },
+    "isHidden": false
+  },
+  {
+    "code": "MASTER_PLANNER",
+    "title": "Master Planner",
+    "description": "Create seasonal plans for all four seasons",
+    "category": "PLANNING",
+    "xpReward": 1000,
+    "icon": "📊",
+    "requirements": {
+      "type": "SEASONS_PLANNED",
+      "count": 4
+    },
+    "isHidden": false
+  },
+  {
+    "code": "CONTAINER_MASTER",
+    "title": "Container Master",
+    "description": "Use 5 different types of containers",
+    "category": "CONTAINERS",
+    "xpReward": 300,
+    "icon": "🏺",
+    "requirements": {
+      "type": "UNIQUE_CONTAINER_TYPES",
+      "count": 5
+    },
+    "isHidden": false
+  },
+  {
+    "code": "COMPANION_PLANTER",
+    "title": "Companion Planter",
+    "description": "Plant 5 different companion plant pairs",
+    "category": "PLANTING",
+    "xpReward": 400,
+    "icon": "🤝",
+    "requirements": {
+      "type": "COMPANION_PAIRS",
+      "count": 5
+    },
+    "isHidden": false
+  },
+  {
+    "code": "CLIMATE_EXPERT",
+    "title": "Climate Expert",
+    "description": "Grow plants in 3 different climate zones",
+    "category": "KNOWLEDGE",
+    "xpReward": 600,
+    "icon": "🌍",
+    "requirements": {
+      "type": "CLIMATE_ZONES",
+      "count": 3
+    },
+    "isHidden": false
+  },
+  {
+    "code": "TASK_MASTER",
+    "title": "Task Master",
+    "description": "Complete 100 garden tasks",
+    "category": "TASKS",
+    "xpReward": 800,
+    "icon": "✅",
+    "requirements": {
+      "type": "TASK_COMPLETION",
+      "count": 100
+    },
+    "isHidden": false
+  },
+  {
+    "code": "SECRET_GARDENER",
+    "title": "Secret Gardener",
+    "description": "Maintain a garden for 365 consecutive days",
+    "category": "DEDICATION",
+    "xpReward": 2000,
+    "icon": "🔒",
+    "requirements": {
+      "type": "CONSECUTIVE_DAYS",
+      "count": 365
+    },
+    "isHidden": true
+  },
+  {
+    "code": "NIGHT_OWL",
+    "title": "Night Owl",
+    "description": "Complete 10 tasks after sunset",
+    "category": "DEDICATION",
+    "xpReward": 500,
+    "icon": "🦉",
+    "requirements": {
+      "type": "NIGHT_TASKS",
+      "count": 10
+    },
+    "isHidden": true
+  },
+  {
+    "code": "EARLY_BIRD",
+    "title": "Early Bird",
+    "description": "Complete 10 tasks before sunrise",
+    "category": "DEDICATION",
+    "xpReward": 500,
+    "icon": "🐦",
+    "requirements": {
+      "type": "MORNING_TASKS",
+      "count": 10
+    },
+    "isHidden": true
+  },
+  {
+    "code": "WEATHER_WARRIOR",
+    "title": "Weather Warrior",
+    "description": "Complete tasks in 5 different weather conditions",
+    "category": "DEDICATION",
+    "xpReward": 1000,
+    "icon": "🌤️",
+    "requirements": {
+      "type": "WEATHER_CONDITIONS",
+      "count": 5
+    },
+    "isHidden": true
+  },
+  {
+    "code": "GARDEN_PHOTOGRAPHER",
+    "title": "Garden Photographer",
+    "description": "Take 50 photos of your plants",
+    "category": "DOCUMENTATION",
+    "xpReward": 400,
+    "icon": "📸",
+    "requirements": {
+      "type": "PLANT_PHOTOS",
+      "count": 50
+    },
+    "isHidden": false
+  }
+]

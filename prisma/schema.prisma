@@ -42,6 +42,12 @@ model User {
   taskCompletionLogs TaskCompletionLog[]
   taskNotifications  TaskNotification[]
 
+  // Gamification relationships
+  userLevel        UserLevel?
+  userAchievements UserAchievement[]
+  unlockedRewards  UnlockedReward[]
+  experienceLogs   ExperienceLog[]
+
   @@unique([email])
   @@map("user")
 }
@@ -642,17 +648,16 @@ model PlannedPlanting {
   @@index([varietyId])
 }
 
-
 // Main Tasks model
 model Task {
-  id               Int            @id @default(autoincrement()) @map("task_id")
-  title            String         @db.VarChar(200)
+  id               Int    @id @default(autoincrement()) @map("task_id")
+  title            String @db.VarChar(200)
   description      String
-  status           String         @default("PENDING")
+  status           String @default("PENDING")
   category         String
-  priority         String         @default("MEDIUM")
-  difficulty       String         @default("MODERATE")
-  estimatedMinutes Int?           @map("estimated_minutes")
+  priority         String @default("MEDIUM")
+  difficulty       String @default("MODERATE")
+  estimatedMinutes Int?   @map("estimated_minutes")
 
   // Time windows and deadlines
   startDate     DateTime? @map("start_date")
@@ -731,16 +736,16 @@ model TaskNote {
 
 // Task completion history
 model TaskCompletionLog {
-  id               Int        @id @default(autoincrement()) @map("log_id")
-  task             Task       @relation(fields: [taskId], references: [id])
-  taskId           Int        @map("task_id")
-  user             User       @relation(fields: [userId], references: [id])
-  userId           String     @map("user_id")
+  id               Int      @id @default(autoincrement()) @map("log_id")
+  task             Task     @relation(fields: [taskId], references: [id])
+  taskId           Int      @map("task_id")
+  user             User     @relation(fields: [userId], references: [id])
+  userId           String   @map("user_id")
   status           String
-  completedAt      DateTime   @default(now()) @map("completed_at")
+  completedAt      DateTime @default(now()) @map("completed_at")
   notes            String?
-  percentDone      Int?       @map("percent_done") // For partial completion tracking
-  timeSpentMinutes Int?       @map("time_spent_minutes")
+  percentDone      Int?     @map("percent_done") // For partial completion tracking
+  timeSpentMinutes Int?     @map("time_spent_minutes")
 
   @@index([taskId])
   @@index([userId])
@@ -780,4 +785,100 @@ model TaskNotification {
   @@index([taskId])
   @@index([userId])
   @@index([isRead])
+}
+
+// User Level and Experience Tracking
+model UserLevel {
+  id           Int      @id @default(autoincrement()) @map("level_id")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String   @unique @map("user_id")
+  currentLevel Int      @default(1) @map("current_level")
+  currentXp    Int      @default(0) @map("current_xp")
+  totalXp      Int      @default(0) @map("total_xp")
+  levelTitle   String   @default("Novice Gardener") @map("level_title") @db.VarChar(100)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@index([userId])
+}
+
+// Experience Log - Tracks XP gains and their sources
+model ExperienceLog {
+  id          Int      @id @default(autoincrement()) @map("xp_log_id")
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String   @map("user_id")
+  amount      Int      @map("amount")
+  source      String   @map("source") @db.VarChar(100) // e.g., "TASK_COMPLETION", "ACHIEVEMENT", "PLANT_HARVEST"
+  sourceId    Int?     @map("source_id") // ID of the related entity (task, achievement, etc.)
+  description String?  @map("description")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([source, sourceId])
+}
+
+// Achievement Definitions
+model Achievement {
+  id               Int               @id @default(autoincrement()) @map("achievement_id")
+  code             String            @unique @map("code") @db.VarChar(100)
+  title            String            @map("title") @db.VarChar(200)
+  description      String            @map("description")
+  category         String            @map("category") @db.VarChar(50)
+  xpReward         Int               @map("xp_reward")
+  icon             String?           @map("icon") @db.VarChar(100)
+  requirements     Json              @map("requirements") // Stores achievement criteria
+  isHidden         Boolean           @default(false) @map("is_hidden")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @default(now()) @updatedAt @map("updated_at")
+  userAchievements UserAchievement[]
+
+  @@index([code])
+  @@index([category])
+}
+
+// User Achievements - Tracks which achievements users have unlocked
+model UserAchievement {
+  id            Int         @id @default(autoincrement()) @map("user_achievement_id")
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String      @map("user_id")
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  achievementId Int         @map("achievement_id")
+  unlockedAt    DateTime    @default(now()) @map("unlocked_at")
+  progress      Json?       @map("progress") // Stores current progress for multi-step achievements
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@index([achievementId])
+}
+
+// Reward Definitions
+model Reward {
+  id              Int              @id @default(autoincrement()) @map("reward_id")
+  code            String           @unique @map("code") @db.VarChar(100)
+  title           String           @map("title") @db.VarChar(200)
+  description     String           @map("description")
+  type            String           @map("type") @db.VarChar(50) // e.g., "THEME", "ICON", "FONT"
+  value           String           @map("value") // e.g., theme name, icon set name, font name
+  icon            String?          @map("icon") @db.VarChar(100)
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @default(now()) @updatedAt @map("updated_at")
+  unlockedRewards UnlockedReward[]
+
+  @@index([code])
+  @@index([type])
+}
+
+// Unlocked Rewards - Tracks which rewards users have unlocked
+model UnlockedReward {
+  id         Int      @id @default(autoincrement()) @map("unlocked_reward_id")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String   @map("user_id")
+  reward     Reward   @relation(fields: [rewardId], references: [id], onDelete: Cascade)
+  rewardId   Int      @map("reward_id")
+  unlockedAt DateTime @default(now()) @map("unlocked_at")
+  isActive   Boolean  @default(false) @map("is_active")
+
+  @@unique([userId, rewardId])
+  @@index([userId])
+  @@index([rewardId])
 }

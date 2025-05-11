@@ -5,6 +5,7 @@ import { authRouter } from "~/server/api/routers/auth";
 import { gardenRouter } from "~/server/api/routers/garden";
 import { containerRouter } from "~/server/api/routers/container";
 import { cropRouter } from "~/server/api/routers/crop";
+import { userLevelRouter } from "~/server/api/routers/user-level";
 /**
  * This is the primary router for your server.
  *
@@ -15,6 +16,7 @@ export const appRouter = createTRPCRouter({
   garden: gardenRouter,
   container: containerRouter,
   crop: cropRouter,
+  userLevel: userLevelRouter,
 });
 
 // export type definition of API
