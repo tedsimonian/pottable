@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Calendar, Flower2, LayoutDashboard, ListTodo } from "lucide-react";
+import { Calendar, Flower2, ListTodo, Flower, Book, Medal } from "lucide-react";
 
 import { NavMain, type NavGroup } from "~/components/navigation/nav-main";
 import { NavUser } from "~/components/navigation/nav-user";
@@ -13,30 +13,23 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "~/components/ui/sidebar";
+import UserLevelProgressSkeleton from "../game/user-level-progress-skeleton";
+import UserLevelProgress from "../game/user-level-progress";
+import { Query } from "../common/query";
 import { getInternalRoute } from "~/lib/internal-routes";
 import { authClient } from "~/lib/auth-client";
 import { NavUserSkeleton } from "./nav-user-skeleton";
-import { Query } from "../common/query";
+import { useUserLevel } from "~/hooks";
 
 const navGroups = [
   {
     title: null,
     items: [
       {
-        title: "Dashboard",
+        title: "My Garden",
         url: getInternalRoute("dashboard", null),
-        icon: LayoutDashboard,
-      },
-      {
-        title: "My Gardens",
-        url: getInternalRoute("view_all_gardens", null),
         icon: Flower2,
       },
-    ],
-  },
-  {
-    title: "Tools",
-    items: [
       {
         title: "Calendar",
         url: getInternalRoute("view_calendar", null),
@@ -47,6 +40,26 @@ const navGroups = [
         url: getInternalRoute("view_tasks", null),
         icon: ListTodo,
       },
+      {
+        title: "Achievements",
+        url: getInternalRoute("view_achievements", null),
+        icon: Medal,
+      },
+    ],
+  },
+  {
+    title: "Tools",
+    items: [
+      {
+        title: "Plant Catalog",
+        url: getInternalRoute("view_plant_catalog", null),
+        icon: Flower,
+      },
+      {
+        title: "Garden Guide",
+        url: getInternalRoute("view_garden_guide", null),
+        icon: Book,
+      },
     ],
   },
 ] satisfies NavGroup[];
@@ -54,6 +67,7 @@ const navGroups = [
 export const AppSidebar = (props: React.ComponentProps<typeof Sidebar>) => {
   const { data: session } = authClient.useSession();
   const { user } = session ?? {};
+  const { userLevel, isLoading, error } = useUserLevel();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -64,6 +78,15 @@ export const AppSidebar = (props: React.ComponentProps<typeof Sidebar>) => {
         <NavMain groups={navGroups} />
       </SidebarContent>
       <SidebarFooter>
+        <Query
+          data={userLevel}
+          loading={isLoading}
+          error={error}
+          loadingComponent={<UserLevelProgressSkeleton />}
+          fallbackComponent={<UserLevelProgressSkeleton />}
+        >
+          {(userLevel) => <UserLevelProgress userLevel={userLevel} />}
+        </Query>
         <Query
           data={user}
           loading={false}

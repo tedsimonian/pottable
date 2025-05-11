@@ -1,7 +1,7 @@
 ---
 description: tRPC: Guidelines and best practices for implementing tRPC with T3 Stack
 globs: **/api/trpc/**/*.ts, **/server/**/*.ts, **/utils/api.ts
-alwaysApply: false
+alwaysApply: true
 ---
 
 # tRPC Implementation Guidelines

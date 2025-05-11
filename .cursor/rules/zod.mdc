@@ -1,7 +1,7 @@
 ---
 description: Zod: Guidelines and best practices for schema validation and type safety in TypeScript applications
 globs: **/*.ts, **/*.tsx
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Zod Guidelines and Best Practices

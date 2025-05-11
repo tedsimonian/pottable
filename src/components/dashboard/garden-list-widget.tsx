@@ -26,7 +26,7 @@ export const GardenListWidget = (props: GardenListWidgetProps) => {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">My Gardens</h2>
         <Button variant="outline" size="sm" asChild>
-          <InternalLink path="view_all_gardens" params={null}>
+          <InternalLink path="dashboard" params={null}>
             View All
             <ArrowRight className="ml-2 h-4 w-4" />
           </InternalLink>

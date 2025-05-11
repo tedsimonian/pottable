@@ -7,20 +7,23 @@ export const ROUTES = {
   sign_in: "/sign-in",
   sign_up: "/sign-up",
   // Garden routes
-  view_all_gardens: "/gardens",
-  view_garden: "/gardens/:id",
-  edit_garden: "/gardens/:id/edit",
-  create_garden: "/gardens/new",
+  view_garden: "/garden/:id",
+  edit_garden: "/garden/:id/edit",
+  create_garden: "/garden/new",
   // Container routes
-  view_all_containers: "/containers",
-  view_containers: "/gardens/:id/containers",
-  view_container: "/gardens/:id/containers/:containerId",
-  edit_container: "/gardens/:id/containers/:containerId/edit",
-  create_container: "/gardens/:id/containers/create",
-  // Tool routes
+  view_containers: "/garden/:id/containers",
+  view_container: "/garden/:id/containers/:containerId",
+  edit_container: "/garden/:id/containers/:containerId/edit",
+  create_container: "/garden/:id/containers/create",
+  // Calendar routes
   view_calendar: "/calendar",
   // Task routes
   view_tasks: "/tasks",
+  // Achievement routes
+  view_achievements: "/achievements",
+  // Tool routes
+  view_plant_catalog: "/plant-catalog",
+  view_garden_guide: "/garden-guide",
 } as const;
 
 // Type for route names
@@ -40,20 +43,23 @@ type RouteParams = EnsureAllRoutes<{
   sign_in: null;
   sign_up: null;
   // Garden routes
-  view_all_gardens: null;
   view_garden: { id: string };
   edit_garden: { id: string };
   create_garden: null;
   // Container routes
-  view_all_containers: null;
   view_containers: { gardenId: string };
   view_container: { gardenId: string; containerId: string };
   edit_container: { gardenId: string; containerId: string };
   create_container: { gardenId: string };
-  // Tool routes
+  // Calendar routes
   view_calendar: null;
   // Task routes
   view_tasks: null;
+  // Achievement routes
+  view_achievements: null;
+  // Tool routes
+  view_plant_catalog: null;
+  view_garden_guide: null;
 }>;
 
 type RouteQueries = EnsureAllRoutes<{
@@ -64,20 +70,23 @@ type RouteQueries = EnsureAllRoutes<{
   sign_in: { redirect_url?: string };
   sign_up: null;
   // Garden routes
-  view_all_gardens: null;
   view_garden: null;
   edit_garden: null;
   create_garden: null;
   // Container routes
-  view_all_containers: null;
   view_containers: { gardenId: string };
   view_container: { gardenId: string; containerId: string };
   edit_container: { gardenId: string; containerId: string };
   create_container: { gardenId: string };
-  // Tool routes
+  // Calendar routes
   view_calendar: null;
   // Task routes
   view_tasks: null;
+  // Achievement routes
+  view_achievements: null;
+  // Tool routes
+  view_plant_catalog: null;
+  view_garden_guide: null;
 }>;
 
 // Create the Routes type using the ROUTES keys

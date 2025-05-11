@@ -1,12 +1,13 @@
 ---
 description: Tailwind CSS and UI component best practices for modern web applications
 globs: **/*.css, **/*.tsx, **/*.jsx, tailwind.config.js, tailwind.config.ts
+alwaysApply: true
 ---
 
 # Tailwind CSS Best Practices
 
 ## Project Setup
-- Use proper Tailwind configuration
+- Use proper Tailwind configuration for v4
 - Configure theme extension properly
 - Set up proper purge configuration
 - Use proper plugin integration
