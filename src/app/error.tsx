@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { HomeIcon, RefreshCcw, ArrowLeft } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import { Button } from "~/components/ui/button";
 import { InternalLink } from "~/components/common/internal-link";
+import { ERROR_LOTTIE_URL } from "~/lib/constants";
 
 type ErrorProps = {
   error: Error & {
@@ -36,7 +38,14 @@ export default function ErrorPage(props: ErrorProps) {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="mx-auto w-full max-w-[200px]"
         >
-          <ErrorIllustration />
+          <DotLottieReact
+            src={ERROR_LOTTIE_URL}
+            autoplay
+            loop
+            renderConfig={{
+              autoResize: true,
+            }}
+          />
         </motion.div>
 
         <div className="space-y-3">
@@ -46,7 +55,7 @@ export default function ErrorPage(props: ErrorProps) {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-3xl font-bold tracking-tighter sm:text-4xl"
           >
-            Something went wrong
+            {"Something went wrong"}
           </motion.h1>
 
           <motion.p
@@ -55,8 +64,8 @@ export default function ErrorPage(props: ErrorProps) {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="text-muted-foreground"
           >
-            We apologize for the inconvenience. An unexpected error has
-            occurred.
+            {"We apologize for the inconvenience. An unexpected error has"}{" "}
+            <span className="text-primary">{"occurred."}</span>
           </motion.p>
 
           {error.digest && (
@@ -66,7 +75,7 @@ export default function ErrorPage(props: ErrorProps) {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="text-muted-foreground/70 text-sm"
             >
-              Error ID: {error.digest}
+              {"Error ID: "} {error.digest}
             </motion.p>
           )}
         </div>
@@ -79,12 +88,12 @@ export default function ErrorPage(props: ErrorProps) {
         >
           <Button onClick={reset} variant="default" className="gap-2">
             <RefreshCcw className="h-4 w-4" />
-            Try again
+            {"Try again"}
           </Button>
           <Button variant="outline" asChild className="gap-2">
             <InternalLink path="home" params={null}>
               <HomeIcon className="h-4 w-4" />
-              Back to home
+              {"Back to home"}
             </InternalLink>
           </Button>
           <Button
@@ -93,50 +102,10 @@ export default function ErrorPage(props: ErrorProps) {
             className="gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            Go back
+            {"Go back"}
           </Button>
         </motion.div>
       </motion.div>
     </div>
   );
 }
-
-const ErrorIllustration = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 500 500"
-      fill="none"
-      className="h-full w-full"
-    >
-      <motion.circle
-        cx="250"
-        cy="250"
-        r="200"
-        fill="currentColor"
-        fillOpacity="0.05"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      />
-      <motion.path
-        d="M316.667 183.333L183.333 316.667"
-        stroke="currentColor"
-        strokeWidth="20"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      />
-      <motion.path
-        d="M316.667 316.667L183.333 183.333"
-        stroke="currentColor"
-        strokeWidth="20"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-      />
-    </svg>
-  );
-};

@@ -22,7 +22,7 @@ export const Header = () => {
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle menu</span>
+              <span className="sr-only">{"Toggle menu"}</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-64">
@@ -43,7 +43,7 @@ export const Header = () => {
                 className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <Home className="h-5 w-5" />
-                Home
+                {"Home"}
               </InternalLink>
               <InternalLink
                 path="home"
@@ -51,7 +51,7 @@ export const Header = () => {
                 className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <Layout className="h-5 w-5" />
-                Garden Planner
+                {"Garden Planner"}
               </InternalLink>
               <InternalLink
                 path="home"
@@ -59,7 +59,7 @@ export const Header = () => {
                 className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <CheckSquare className="h-5 w-5" />
-                Tasks
+                {"Tasks"}
               </InternalLink>
               <InternalLink
                 path="home"
@@ -67,7 +67,7 @@ export const Header = () => {
                 className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <MessageSquare className="h-5 w-5" />
-                AI Assistant
+                {"AI Assistant"}
               </InternalLink>
             </nav>
           </SheetContent>
@@ -86,28 +86,28 @@ export const Header = () => {
             params={null}
             className="hover:text-primary text-sm font-medium transition-colors"
           >
-            Home
+            {"Home"}
           </InternalLink>
           <InternalLink
             path="home"
             params={null}
             className="hover:text-primary text-sm font-medium transition-colors"
           >
-            Garden Planner
+            {"Garden Planner"}
           </InternalLink>
           <InternalLink
             path="home"
             params={null}
             className="hover:text-primary text-sm font-medium transition-colors"
           >
-            Tasks
+            {"Tasks"}
           </InternalLink>
           <InternalLink
             path="home"
             params={null}
             className="hover:text-primary text-sm font-medium transition-colors"
           >
-            AI Assistant
+            {"AI Assistant"}
           </InternalLink>
         </nav>
         <div className="ml-auto flex items-center">
@@ -117,7 +117,7 @@ export const Header = () => {
               asChild
             >
               <InternalLink path="sign_in" params={null}>
-                Get Started
+                {"Get Started"}
               </InternalLink>
             </Button>
           </Protected.Unauthenticated>
@@ -127,7 +127,7 @@ export const Header = () => {
               asChild
             >
               <InternalLink path="dashboard" params={null}>
-                Dashboard
+                {"Dashboard"}
               </InternalLink>
             </Button>
           </Protected.Authenticated>

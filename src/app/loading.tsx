@@ -1,4 +1,5 @@
+import { LoadingOverlay } from "~/components/common/loading-overlay";
+
 export default function Loading() {
-  // Or a custom loading skeleton component
-  return <p>Loading...</p>;
+  return <LoadingOverlay>{"Loading..."}</LoadingOverlay>;
 }

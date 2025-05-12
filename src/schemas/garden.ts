@@ -1,4 +1,10 @@
 import { z } from "zod";
+import { GARDEN_TYPES } from "~/lib/garden";
+
+export const gardenTypeSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
 
 export const gardenSchema = z.object({
   id: z.number().optional(),
@@ -17,28 +23,31 @@ export const gardenIncludeSchema = z
   })
   .optional();
 
-export const gardenFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: "Garden name must be at least 2 characters" })
-    .max(100, { message: "Garden name cannot exceed 100 characters" }),
-  location: z
-    .string()
-    .max(200, { message: "Location cannot exceed 200 characters" })
-    .optional(),
-  sizeSqFeet: z
-    .string()
-    .optional()
-    .refine((val) => !val || !isNaN(Number.parseFloat(val)), {
-      message: "Size must be a valid number",
-    })
-    .transform((val) => (val ? Number.parseFloat(val) : undefined)),
-  gardenType: z
-    .string()
-    .max(50, { message: "Garden type cannot exceed 50 characters" })
-    .optional(),
-  description: z.string().optional(),
-});
+export const gardenFormSchema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .min(2, { message: "Garden name must be at least 2 characters" })
+      .max(100, { message: "Garden name cannot exceed 100 characters" }),
+    location: z
+      .string()
+      .trim()
+      .max(200, { message: "Location cannot exceed 200 characters" })
+      .optional(),
+    sizeSqFeet: z
+      .string()
+      .optional()
+      .refine((val) => !val || !isNaN(Number.parseFloat(val)), {
+        message: "Size must be a valid number",
+      })
+      .transform((val) => (val ? Number.parseFloat(val) : undefined)),
+    gardenType: z.enum(GARDEN_TYPES, {
+      message: "Invalid garden type selected",
+    }),
+    description: z.string().trim().optional(),
+  })
+  .strict();
 
 export type GardenCreateInput = z.infer<typeof gardenSchema>;
 export type GardenUpdateInput = z.infer<typeof gardenSchema>;

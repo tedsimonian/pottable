@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { FlowerIcon, MapPin, Ruler } from "lucide-react";
 
@@ -114,14 +116,14 @@ export const GardenCard = (props: GardenCardProps) => {
           <div className="flex items-center gap-2 rounded-md border p-3">
             <FlowerIcon className="text-primary h-4 w-4" />
             <div className="text-sm">
-              <span className="font-medium">0</span> Containers
+              <span className="font-medium">0</span> {"Containers"}
             </div>
           </div>
 
           <div className="flex items-center gap-2 rounded-md border p-3">
             <FlowerIcon className="h-4 w-4 text-green-500" />
             <div className="text-sm">
-              <span className="font-medium">0</span> Crops
+              <span className="font-medium">0</span> {"Crops"}
             </div>
           </div>
         </div>
@@ -134,7 +136,7 @@ export const GardenCard = (props: GardenCardProps) => {
               path="view_garden"
               params={{ id: garden.id.toString() }}
             >
-              View Garden
+              {"View Garden"}
             </InternalLink>
           </Button>
 
@@ -143,7 +145,7 @@ export const GardenCard = (props: GardenCardProps) => {
               path="create_container"
               params={{ gardenId: garden.id.toString() }}
             >
-              Add Container
+              {"Add Container"}
             </InternalLink>
           </Button>
         </div>

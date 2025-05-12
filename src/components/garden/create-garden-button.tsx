@@ -10,7 +10,7 @@ export const CreateGardenButton = () => {
     <Button asChild>
       <InternalLink path="create_garden" params={null}>
         <Plus className="mr-2 h-4 w-4" />
-        New Garden
+        {"New Garden"}
       </InternalLink>
     </Button>
   );

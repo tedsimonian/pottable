@@ -147,7 +147,7 @@ export const TaskItem = (props: TaskItemProps) => {
                   className="text-primary hover:text-primary hover:bg-primary/10"
                 >
                   <Edit className="h-4 w-4" />
-                  <span className="sr-only">Edit</span>
+                  <span className="sr-only">{"Edit"}</span>
                 </Button>
                 <Button
                   variant="ghost"
@@ -156,7 +156,7 @@ export const TaskItem = (props: TaskItemProps) => {
                   className="text-destructive hover:text-destructive hover:bg-destructive/10"
                 >
                   <X className="h-4 w-4" />
-                  <span className="sr-only">Delete</span>
+                  <span className="sr-only">{"Delete"}</span>
                 </Button>
               </div>
             </div>
@@ -191,7 +191,8 @@ export const TaskItem = (props: TaskItemProps) => {
               </Badge>
               {task.endDate && (
                 <span className="text-muted-foreground text-xs">
-                  Due: {new Date(task.endDate).toLocaleDateString()}
+                  {"Due: "}
+                  {new Date(task.endDate).toLocaleDateString()}
                 </span>
               )}
             </div>
@@ -283,11 +284,11 @@ export const TaskItem = (props: TaskItemProps) => {
               className="bg-primary hover:bg-primary/90"
             >
               <Save className="mr-2 h-4 w-4" />
-              Save
+              {"Save"}
             </Button>
             <Button variant="outline" onClick={handleCancel}>
               <X className="mr-2 h-4 w-4" />
-              Cancel
+              {"Cancel"}
             </Button>
           </div>
         </div>

@@ -128,7 +128,8 @@ export const MyTasks = ({ userId }: MyTasksProps) => {
     <Card className="flex h-full flex-col">
       <CardHeader className="text-primary">
         <div className="text-muted-foreground">
-          {tasks.filter((t) => t.status !== "COMPLETED").length} tasks remaining
+          {tasks.filter((t) => t.status !== "COMPLETED").length}{" "}
+          {"tasks remaining"}
         </div>
       </CardHeader>
       <CardContent className="mb-6 flex flex-col gap-8">

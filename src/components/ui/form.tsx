@@ -3,6 +3,7 @@
 import * as React from "react";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
+import type { z, ZodRawShape, ZodTypeAny } from "zod";
 import {
   Controller,
   FormProvider,
@@ -15,6 +16,7 @@ import {
 
 import { cn } from "~/lib/utils";
 import { Label } from "~/components/ui/label";
+import { useSchema } from "~/providers/form-schema-provider";
 
 const Form = FormProvider;
 
@@ -91,7 +93,11 @@ function FormLabel({
   className,
   ...props
 }: React.ComponentProps<typeof LabelPrimitive.Root>) {
-  const { error, formItemId } = useFormField();
+  const { error, formItemId, name } = useFormField();
+  const schema = useSchema();
+
+  // Check if the field is required based on the schema
+  const isRequired = schema && name ? isFieldRequired(schema, name) : false;
 
   return (
     <Label
@@ -100,7 +106,10 @@ function FormLabel({
       className={cn("data-[error=true]:text-destructive", className)}
       htmlFor={formItemId}
       {...props}
-    />
+    >
+      {props.children}
+      <FormLabelRequireSuffix isRequired={isRequired} />
+    </Label>
   );
 }
 
@@ -154,6 +163,76 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
       {body}
     </p>
   );
+}
+
+function FormLabelRequireSuffix({ isRequired }: { isRequired: boolean }) {
+  if (!isRequired) {
+    return null;
+  }
+
+  return (
+    <span className="text-muted-foreground data-[error=true]:text-destructive -ml-1 text-sm">
+      *
+    </span>
+  );
+}
+
+// Helper function to check if a field is required in the Zod schema
+function isFieldRequired(
+  schema: z.ZodObject<ZodRawShape>,
+  fieldName: string,
+): boolean {
+  try {
+    // Get the shape of the schema
+    const shape =
+      typeof schema._def.shape === "function"
+        ? schema._def.shape()
+        : schema._def.shape;
+
+    if (!shape) return false;
+
+    // Check if the field exists in the schema
+    if (!(fieldName in shape)) {
+      return false;
+    }
+
+    // Get the field's schema
+    const fieldSchema = shape[fieldName];
+    if (!fieldSchema) return false;
+
+    // Check if the field is optional
+    return !isOptionalField(fieldSchema);
+  } catch (error) {
+    console.error(`Error checking if field ${fieldName} is required:`, error);
+    return false;
+  }
+}
+
+// Helper function to determine if a field is optional
+function isOptionalField(fieldSchema: ZodTypeAny): boolean {
+  // If the field is wrapped with .optional()
+  if ((fieldSchema._def as { typeName?: string })?.typeName === "ZodOptional") {
+    return true;
+  }
+
+  // If the field is nullable but not optional
+  if ((fieldSchema._def as { typeName?: string })?.typeName === "ZodNullable") {
+    // Check the inner type
+    return isOptionalField(
+      (fieldSchema._def as { innerType: ZodTypeAny }).innerType,
+    );
+  }
+
+  // Other complex cases like union types that include undefined
+  if ((fieldSchema._def as { typeName?: string })?.typeName === "ZodUnion") {
+    return (fieldSchema._def as { options: ZodTypeAny[] }).options.some(
+      (option) =>
+        (option._def as { typeName?: string }).typeName === "ZodUndefined" ||
+        (option._def as { typeName?: string }).typeName === "ZodNull",
+    );
+  }
+
+  return false;
 }
 
 export {

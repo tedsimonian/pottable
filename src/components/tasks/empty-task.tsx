@@ -31,7 +31,7 @@ export const EmptyState = (props: EmptyStateProps) => {
         <Flower2 className="text-primary size-16" />
       </div>
       <h3 className="text-foreground mb-1 text-lg font-medium">
-        Your garden awaits
+        {"Your garden awaits"}
       </h3>
       <p className="text-muted-foreground max-w-sm">{message}</p>
     </div>

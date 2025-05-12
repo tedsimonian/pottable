@@ -123,3 +123,19 @@ export const toTitleCase = (str: string, capitalizeAll = true): string => {
     })
     .join(" ");
 };
+
+/**
+ * Get a greeting based on user name.
+ * If no name is provided, it will return a
+ * generic greeting.
+ *
+ * @param name - The name of the user
+ * @example "John Doe" -> "Weclome back, John Doe"
+ * @returns The greeting
+ */
+export const getGreeting = (name?: string | null) => {
+  if (!name) {
+    return "Welcome back, Gardener";
+  }
+  return `Welcome back, ${name}`;
+};

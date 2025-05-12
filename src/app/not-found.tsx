@@ -1,10 +1,12 @@
 "use client";
 
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { ArrowLeft } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "~/components/ui/button";
+import { NOT_FOUND_LOTTIE_URL } from "~/lib/constants";
 
 export default function NotFoundPage() {
   const router = useRouter();
@@ -27,17 +29,24 @@ export default function NotFoundPage() {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="mx-auto w-full max-w-[200px]"
         >
-          <NotFoundIllustration />
+          <DotLottieReact
+            src={NOT_FOUND_LOTTIE_URL}
+            autoplay
+            loop
+            renderConfig={{
+              autoResize: true,
+            }}
+          />
         </motion.div>
 
-        <div className="space-y-3">
+        <div className="z-50 -mt-10 space-y-3">
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-3xl font-bold tracking-tighter sm:text-4xl"
           >
-            Page not found
+            {"Page not found"}
           </motion.h1>
 
           <motion.p
@@ -46,7 +55,7 @@ export default function NotFoundPage() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="text-muted-foreground"
           >
-            Sorry, we couldn&apos;t find the page you&apos;re looking for.
+            {"Sorry, we couldn't find the page you're looking for."}
           </motion.p>
         </div>
 
@@ -59,62 +68,11 @@ export default function NotFoundPage() {
           <Button variant="default" asChild className="gap-2">
             <Button onClick={handleGoBack}>
               <ArrowLeft className="h-4 w-4" />
-              Go Back
+              {"Go Back"}
             </Button>
           </Button>
         </motion.div>
       </motion.div>
     </div>
-  );
-}
-
-function NotFoundIllustration() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 500 500"
-      fill="none"
-      className="h-full w-full"
-    >
-      <motion.circle
-        cx="250"
-        cy="250"
-        r="200"
-        fill="currentColor"
-        fillOpacity="0.05"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      />
-      <motion.path
-        d="M250 150V250L300 300"
-        stroke="currentColor"
-        strokeWidth="20"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      />
-      <motion.path
-        d="M175 350H325"
-        stroke="currentColor"
-        strokeWidth="20"
-        strokeLinecap="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
-      />
-      <motion.circle
-        cx="250"
-        cy="250"
-        r="130"
-        stroke="currentColor"
-        strokeWidth="20"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      />
-    </svg>
   );
 }

@@ -31,8 +31,8 @@ export const SignInCard = (props: SignInCardProps) => {
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Login with your Github account</CardDescription>
+          <CardTitle className="text-xl">{"Welcome back"}</CardTitle>
+          <CardDescription>{"Login with your Github account"}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-6">
@@ -43,15 +43,16 @@ export const SignInCard = (props: SignInCardProps) => {
                 onClick={handleGithubLogin}
               >
                 <Github />
-                Login with Github
+                {"Login with Github"}
               </Button>
             </div>
           </div>
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        {"By clicking continue, you agree to our"}{" "}
+        <a href="#">{"Terms of Service"}</a> {"and"}{" "}
+        <a href="#">{"Privacy Policy"}</a>.
       </div>
     </div>
   );

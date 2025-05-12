@@ -87,7 +87,7 @@ export function TaskFilters({
               variant="outline"
               className="flex items-center justify-start gap-1"
             >
-              Category
+              {"Category"}
               {categoryFilter !== "ALL" && (
                 <Badge variant="secondary" className="ml-1 font-normal">
                   {toTitleCase(categoryFilter)}
@@ -103,7 +103,7 @@ export function TaskFilters({
               checked={categoryFilter === "ALL"}
               onCheckedChange={() => onCategoryFilterChange("ALL")}
             >
-              All Categories
+              {"All Categories"}
             </DropdownMenuCheckboxItem>
             {Object.values(TASK_CATEGORIES).map((category) => (
               <DropdownMenuCheckboxItem
@@ -123,7 +123,7 @@ export function TaskFilters({
               variant="outline"
               className="flex items-center justify-start gap-1"
             >
-              Priority
+              {"Priority"}
               {priorityFilter !== "ALL" && (
                 <Badge variant="secondary" className="ml-1 font-normal">
                   {toTitleCase(priorityFilter)}
@@ -139,7 +139,7 @@ export function TaskFilters({
               checked={priorityFilter === "ALL"}
               onCheckedChange={() => onPriorityFilterChange("ALL")}
             >
-              All Priorities
+              {"All Priorities"}
             </DropdownMenuCheckboxItem>
             {Object.values(TASK_PRIORITIES).map((priority) => (
               <DropdownMenuCheckboxItem
@@ -165,7 +165,7 @@ export function TaskFilters({
           }}
           className="text-muted-foreground hover:text-foreground ml-auto"
         >
-          Clear filters
+          {"Clear filters"}
         </Button>
       )}
     </div>

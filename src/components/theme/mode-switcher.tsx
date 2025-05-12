@@ -29,7 +29,7 @@ export const ModeSwitcher = () => {
     >
       <SunIcon className="hidden [html.dark_&]:block" />
       <MoonIcon className="hidden [html.light_&]:block" />
-      <span className="sr-only">Toggle theme</span>
+      <span className="sr-only">{"Toggle theme"}</span>
     </Button>
   );
 };

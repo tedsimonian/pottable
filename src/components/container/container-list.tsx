@@ -5,15 +5,17 @@ const ContainerList = () => {
   const { fetchContainer } = useContainer();
   const { data, isLoading, error } = fetchContainer("container-id");
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading containers</div>;
+  if (isLoading) return <div>{"Loading..."}</div>;
+  if (error) return <div>{"Error loading containers"}</div>;
 
   return (
     <div>
       {data && data.success && (
         <div key={data.data.id}>
           <h3>{data.data.type}</h3>
-          <p>Volume: {data.data.volume}</p>
+          <p>
+            {"Volume: "} {data.data.volume}
+          </p>
           {/* Additional container details */}
         </div>
       )}

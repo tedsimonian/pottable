@@ -13,7 +13,9 @@ export const TasksWidget = () => {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium">Upcoming Tasks</CardTitle>
+        <CardTitle className="text-sm font-medium">
+          {"Upcoming Tasks"}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">

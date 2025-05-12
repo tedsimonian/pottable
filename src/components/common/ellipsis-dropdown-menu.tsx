@@ -121,7 +121,7 @@ export const EllipsisDropdownMenu = <T,>(
             className="h-8 w-8 flex-shrink-0 focus-visible:ring-0"
           >
             <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">More options</span>
+            <span className="sr-only">{"More options"}</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -186,7 +186,7 @@ export const EllipsisDropdownMenu = <T,>(
             {activeAction.button.confirmation.content}
             <AlertDialogFooter>
               <AlertDialogCancel className="focus-visible:ring-0">
-                Cancel
+                {"Cancel"}
               </AlertDialogCancel>
               {activeAction.button.confirmation.actions?.map((action) => (
                 <AlertDialogAction

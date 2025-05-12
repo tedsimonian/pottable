@@ -125,10 +125,10 @@ export const TaskListWidget = (props: TaskListWidgetProps) => {
   return (
     <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">My Tasks</h2>
+        <h2 className="text-xl font-semibold">{"My Tasks"}</h2>
         <Button variant="outline" size="sm" asChild>
           <InternalLink path="view_tasks" params={null}>
-            View All
+            {"View All"}
             <ArrowRight className="ml-2 h-4 w-4" />
           </InternalLink>
         </Button>
@@ -136,13 +136,13 @@ export const TaskListWidget = (props: TaskListWidgetProps) => {
       <Card className={cn("h-full w-full", className)}>
         <CardHeader>
           <CardTitle className="text-primary flex items-center justify-between truncate font-medium">
-            Garden Tasks
+            {"Garden Tasks"}
             <div className="flex items-center justify-between">
               <Badge
                 variant="outline"
                 className="bg-primary/20 text-primary border-primary/30"
               >
-                {totalActiveTasks} active
+                {totalActiveTasks} {"active"}
               </Badge>
             </div>
           </CardTitle>
@@ -156,13 +156,13 @@ export const TaskListWidget = (props: TaskListWidgetProps) => {
           >
             <TabsList className="mb-2 grid w-full grid-cols-3">
               <TabsTrigger className="cursor-pointer" value="priority">
-                Priority
+                {"Priority"}
               </TabsTrigger>
               <TabsTrigger className="cursor-pointer" value="date">
-                Due Date
+                {"Due Date"}
               </TabsTrigger>
               <TabsTrigger className="cursor-pointer" value="category">
-                Category
+                {"Category"}
               </TabsTrigger>
             </TabsList>
             <TabsContent value="priority" className="mt-0">
@@ -202,7 +202,7 @@ const TaskList = (props: TaskListProps) => {
   if (tasks.length === 0) {
     return (
       <div className="text-muted-foreground py-6 text-center text-sm">
-        No active tasks. Your garden is looking great!
+        {"No active tasks. Your garden is looking great!"}
       </div>
     );
   }

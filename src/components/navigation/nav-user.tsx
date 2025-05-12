@@ -42,6 +42,7 @@ export const NavUser = (props: NavUserProps) => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
+              tooltip="Profile Menu"
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
@@ -86,22 +87,22 @@ export const NavUser = (props: NavUserProps) => {
             <DropdownMenuGroup>
               <DropdownMenuItem className="cursor-pointer">
                 <Sparkles />
-                Upgrade to Pro
+                {"Upgrade to Pro"}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem className="cursor-pointer">
                 <BadgeCheck />
-                Account
+                {"Account"}
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <CreditCard />
-                Billing
+                {"Billing"}
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <Bell />
-                Notifications
+                {"Notifications"}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

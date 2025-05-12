@@ -3,7 +3,7 @@ import { Award } from "lucide-react";
 import { Progress } from "../ui/progress";
 import { Skeleton } from "../ui/skeleton";
 
-const UserLevelProgressSkeleton = () => {
+export const UserLevelProgressSkeleton = () => {
   return (
     <div className="mt-auto">
       <div className="bg-primary/15 border-primary/20 rounded-lg border p-4 shadow-sm">
@@ -17,5 +17,3 @@ const UserLevelProgressSkeleton = () => {
     </div>
   );
 };
-
-export default UserLevelProgressSkeleton;

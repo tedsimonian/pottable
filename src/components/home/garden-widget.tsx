@@ -6,7 +6,9 @@ export const GardenWidget = () => {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium">Garden Statistics</CardTitle>
+        <CardTitle className="text-sm font-medium">
+          {"Garden Statistics"}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -15,7 +17,7 @@ export const GardenWidget = () => {
               <Sprout className="h-5 w-5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm font-medium">Plants</p>
+              <p className="text-sm font-medium">{"Plants"}</p>
               <p className="text-2xl font-bold">12</p>
             </div>
           </div>
@@ -25,7 +27,7 @@ export const GardenWidget = () => {
               <Flower className="h-5 w-5 text-amber-600" />
             </div>
             <div>
-              <p className="text-sm font-medium">Varieties</p>
+              <p className="text-sm font-medium">{"Varieties"}</p>
               <p className="text-2xl font-bold">5</p>
             </div>
           </div>
@@ -35,8 +37,8 @@ export const GardenWidget = () => {
               <Droplet className="h-5 w-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm font-medium">Water Needs</p>
-              <p className="text-2xl font-bold">Medium</p>
+              <p className="text-sm font-medium">{"Water Needs"}</p>
+              <p className="text-2xl font-bold">{"Medium"}</p>
             </div>
           </div>
 
@@ -45,8 +47,8 @@ export const GardenWidget = () => {
               <Sun className="h-5 w-5 text-yellow-600" />
             </div>
             <div>
-              <p className="text-sm font-medium">Sun Exposure</p>
-              <p className="text-2xl font-bold">Full Sun</p>
+              <p className="text-sm font-medium">{"Sun Exposure"}</p>
+              <p className="text-2xl font-bold">{"Full Sun"}</p>
             </div>
           </div>
         </div>

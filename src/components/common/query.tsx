@@ -1,8 +1,9 @@
 import React from "react";
-import { cn } from "~/lib/utils";
-
-import type { AppRouter } from "~/server/api";
 import type { TRPCClientErrorLike } from "@trpc/react-query";
+
+import { LoadingAnimation } from "./loading-animation";
+import type { AppRouter } from "~/server/api";
+import { cn } from "~/lib/utils";
 
 interface QueryProps<T> {
   data: T | undefined | null;
@@ -25,20 +26,18 @@ export const Query = <T,>({
   fallbackComponent,
   className,
 }: QueryProps<T>) => {
-  // Show loading state
   if (loading) {
     return (
       <div className={cn("w-full", className)}>
         {loadingComponent ?? (
           <div className="flex items-center justify-center p-4">
-            <div className="border-primary h-6 w-6 animate-spin rounded-full border-2 border-t-transparent" />
+            <LoadingAnimation />
           </div>
         )}
       </div>
     );
   }
 
-  // Show error state
   if (error) {
     return (
       <div className={cn("w-full", className)}>
@@ -57,7 +56,7 @@ export const Query = <T,>({
       <div className={cn("w-full", className)}>
         {fallbackComponent ?? (
           <div className="text-muted-foreground flex items-center justify-center p-4">
-            <p>No data available</p>
+            <p>{"No data available"}</p>
           </div>
         )}
       </div>

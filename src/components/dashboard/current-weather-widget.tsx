@@ -16,7 +16,7 @@ export const CurrentWeatherWidget = () => {
   return (
     <Card className="bg-primary-foreground h-full w-full overflow-hidden border-none">
       <CardHeader>
-        <CardTitle className="text-primary">Local Weather</CardTitle>
+        <CardTitle className="text-primary">{"Local Weather"}</CardTitle>
         <CardDescription>{weatherData.location}</CardDescription>
       </CardHeader>
       <CardContent className="p-6">
@@ -24,14 +24,19 @@ export const CurrentWeatherWidget = () => {
           <div className="flex items-center gap-2">
             <Sun className="text-garden-yellow h-10 w-10" />
             <div className="text-3xl font-bold">
-              {weatherData.temperature}°F
+              {weatherData.temperature}
+              {"°F"}
             </div>
           </div>
           <div className="text-right">
             <div className="font-medium">{weatherData.condition}</div>
             <div className="text-muted-foreground flex items-center justify-end gap-1 text-sm">
               <Thermometer className="h-3 w-3" />
-              <span>Humidity: {weatherData.humidity}%</span>
+              <span>
+                {"Humidity: "}
+                {weatherData.humidity}
+                {"%"}
+              </span>
             </div>
           </div>
         </div>
@@ -51,7 +56,10 @@ export const CurrentWeatherWidget = () => {
                       : "text-gray-400"
                 }`}
               />
-              <span className="text-sm">{day.temp}°</span>
+              <span className="text-sm">
+                {day.temp}
+                {"°"}
+              </span>
             </div>
           ))}
         </div>

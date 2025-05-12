@@ -3,34 +3,38 @@
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
-import { GardenCard } from "~/components/garden/garden-card";
 import { InternalLink } from "../common/internal-link";
 import { Query } from "../common/query";
 import { EmptyGarden } from "../garden/empty-garden";
+import { GardenCard } from "../garden/garden-card";
 
 import { cn } from "~/lib/utils";
 import { useMyGardens } from "~/hooks";
 
-type GardenListWidgetProps = {
+type MyGardenWidgetProps = {
   maxGardens?: number;
   className?: string;
 };
 
-export const GardenListWidget = (props: GardenListWidgetProps) => {
+export const MyGardenWidget = (props: MyGardenWidgetProps) => {
   const { maxGardens = 2, className } = props;
 
   const { gardens, isLoading, error } = useMyGardens();
 
+  const hasGardens = gardens && gardens.length > 0;
+
   return (
     <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">My Gardens</h2>
-        <Button variant="outline" size="sm" asChild>
-          <InternalLink path="dashboard" params={null}>
-            View All
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </InternalLink>
-        </Button>
+        <h2 className="text-xl font-semibold">{"My Gardens"}</h2>
+        {hasGardens && (
+          <Button variant="outline" size="sm" asChild>
+            <InternalLink path="view_all_gardens" params={null}>
+              {"View All"}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </InternalLink>
+          </Button>
+        )}
       </div>
       <Query
         data={gardens}
@@ -39,7 +43,9 @@ export const GardenListWidget = (props: GardenListWidgetProps) => {
         fallbackComponent={<EmptyGarden />}
       >
         {(data) => (
-          <div className={`grid gap-4 sm:grid-cols-${maxGardens}`}>
+          <div
+            className={`grid gap-4 sm:grid-cols-1 md:grid-cols-${maxGardens} md:gap-6`}
+          >
             {data.slice(0, maxGardens).map((garden) => (
               <GardenCard key={garden.id} garden={garden} />
             ))}

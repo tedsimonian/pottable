@@ -9,18 +9,21 @@ export const Footer = () => {
         <div className="flex items-center gap-2">
           <Leaf className="text-primary h-5 w-5" />
           <span className="text-sm font-medium">
-            © 2025 {companyName}. All rights reserved.
+            {"© 2025 "}
+            {companyName}
+            {"."}
+            {" All rights reserved."}
           </span>
         </div>
         <nav className="flex gap-4 text-sm">
           <Link href="#" className="hover:text-primary text-gray-500">
-            Terms
+            {"Terms"}
           </Link>
           <Link href="#" className="hover:text-primary text-gray-500">
-            Privacy
+            {"Privacy"}
           </Link>
           <Link href="#" className="hover:text-primary text-gray-500">
-            Contact
+            {"Contact"}
           </Link>
         </nav>
       </div>

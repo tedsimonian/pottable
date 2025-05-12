@@ -1,7 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { Calendar, Flower2, ListTodo, Flower, Book, Medal } from "lucide-react";
+import {
+  Calendar,
+  Flower2,
+  ListTodo,
+  Flower,
+  Book,
+  Medal,
+  LayoutDashboard,
+} from "lucide-react";
 
 import { NavMain, type NavGroup } from "~/components/navigation/nav-main";
 import { NavUser } from "~/components/navigation/nav-user";
@@ -13,21 +21,27 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "~/components/ui/sidebar";
-import UserLevelProgressSkeleton from "../game/user-level-progress-skeleton";
-import UserLevelProgress from "../game/user-level-progress";
+
 import { Query } from "../common/query";
 import { getInternalRoute } from "~/lib/internal-routes";
 import { authClient } from "~/lib/auth-client";
 import { NavUserSkeleton } from "./nav-user-skeleton";
 import { useUserLevel } from "~/hooks";
+import { NavUserLevelProgressSkeleton } from "./nav-user-level-progress-skeleton";
+import { NavUserLevelProgress } from "./nav-user-level-progress";
 
 const navGroups = [
   {
     title: null,
     items: [
       {
-        title: "My Garden",
+        title: "Dashboard",
         url: getInternalRoute("dashboard", null),
+        icon: LayoutDashboard,
+      },
+      {
+        title: "My Gardens",
+        url: getInternalRoute("view_all_gardens", null),
         icon: Flower2,
       },
       {
@@ -82,10 +96,10 @@ export const AppSidebar = (props: React.ComponentProps<typeof Sidebar>) => {
           data={userLevel}
           loading={isLoading}
           error={error}
-          loadingComponent={<UserLevelProgressSkeleton />}
-          fallbackComponent={<UserLevelProgressSkeleton />}
+          loadingComponent={<NavUserLevelProgressSkeleton />}
+          fallbackComponent={<NavUserLevelProgressSkeleton />}
         >
-          {(userLevel) => <UserLevelProgress userLevel={userLevel} />}
+          {(userLevel) => <NavUserLevelProgress userLevel={userLevel} />}
         </Query>
         <Query
           data={user}

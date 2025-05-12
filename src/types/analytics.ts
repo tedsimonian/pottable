@@ -17,3 +17,11 @@ export type VALID_ANALYTIC_EVENTS = {
   };
   "user signed out": null | undefined;
 };
+
+export type Stat = {
+  label: string;
+  value: number;
+  icon: React.ReactNode;
+  color: string;
+  delay: number;
+};
