@@ -35,13 +35,7 @@ export const gardenFormSchema = z
       .trim()
       .max(200, { message: "Location cannot exceed 200 characters" })
       .optional(),
-    sizeSqFeet: z
-      .string()
-      .optional()
-      .refine((val) => !val || !isNaN(Number.parseFloat(val)), {
-        message: "Size must be a valid number",
-      })
-      .transform((val) => (val ? Number.parseFloat(val) : undefined)),
+    sizeSqFeet: z.number().nonnegative().optional(),
     gardenType: z.enum(GARDEN_TYPES, {
       message: "Invalid garden type selected",
     }),

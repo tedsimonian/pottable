@@ -1,3 +1,5 @@
+"use client";
+
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 import { LOADING_PLANT_LOTTIE_URL } from "~/lib/constants";

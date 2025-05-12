@@ -19,3 +19,31 @@ export const gardenTypeList = [
   { value: "rooftop", label: "Rooftop Garden" },
   { value: "vertical", label: "Vertical Garden" },
 ];
+
+export const GARDEN_STATUS_TYPES = {
+  HEALTHY: "healthy",
+  READY_TO_HARVEST: "ready-to-harvest",
+  NEEDS_WATERING: "needs-watering",
+  NEEDS_FERTILIZING: "needs-fertilizing",
+  NEEDS_PEST_CONTROL: "needs-pest-control",
+  NEEDS_PRUNING: "needs-pruning",
+  NEEDS_TREATMENT: "needs-treatment",
+  NEEDS_TRANSPLANTING: "needs-transplanting",
+  WITHERING: "withering",
+  DYING: "dying",
+  DEAD: "dead",
+} as const;
+
+export const gardenStatusList = {
+  [GARDEN_STATUS_TYPES.HEALTHY]: "Healthy",
+  [GARDEN_STATUS_TYPES.READY_TO_HARVEST]: "Ready to Harvest",
+  [GARDEN_STATUS_TYPES.NEEDS_WATERING]: "Needs Watering",
+  [GARDEN_STATUS_TYPES.NEEDS_FERTILIZING]: "Needs Fertilizing",
+  [GARDEN_STATUS_TYPES.NEEDS_PEST_CONTROL]: "Needs Pest Control",
+  [GARDEN_STATUS_TYPES.NEEDS_PRUNING]: "Needs Pruning",
+  [GARDEN_STATUS_TYPES.NEEDS_TREATMENT]: "Needs Treatment",
+  [GARDEN_STATUS_TYPES.NEEDS_TRANSPLANTING]: "Needs Transplanting",
+  [GARDEN_STATUS_TYPES.WITHERING]: "Withering",
+  [GARDEN_STATUS_TYPES.DYING]: "Dying",
+  [GARDEN_STATUS_TYPES.DEAD]: "Dead",
+} as const;

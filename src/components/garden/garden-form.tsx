@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -38,10 +39,12 @@ import { gardenFormSchema, type GardenFormValues } from "~/schemas/garden";
 import { useMyGardens } from "~/hooks";
 import { gardenTypeList } from "~/lib/garden";
 import { FormSchemaProvider } from "~/providers/form-schema-provider";
+import { getInternalRoute } from "~/lib/internal-routes";
 
 export const GardenForm = () => {
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
   const { createGarden, isCreating } = useMyGardens();
+  const router = useRouter();
 
   const form = useForm<GardenFormValues>({
     resolver: zodResolver(gardenFormSchema),
@@ -54,8 +57,10 @@ export const GardenForm = () => {
   });
 
   const onSubmit = async (values: GardenFormValues) => {
+    setIsSubmitSuccessful(true);
+
     try {
-      await createGarden({
+      const createdGarden = await createGarden({
         name: values.name,
         location: values.location,
         sizeSqFeet: values.sizeSqFeet,
@@ -63,18 +68,24 @@ export const GardenForm = () => {
         description: values.description,
       });
 
-      setIsSubmitSuccessful(true);
-      toast.success(`${values.name} has been successfully created.`);
-
-      // Reset form after 2 seconds
-      setTimeout(() => {
-        form.reset();
+      if (createdGarden?.data) {
+        toast.success(
+          `${createdGarden?.data.name} has been successfully created.`,
+        );
         setIsSubmitSuccessful(false);
-      }, 2000);
+        router.push(
+          getInternalRoute("view_garden", {
+            id: createdGarden.data.id.toString(),
+          }),
+        );
+      } else {
+        toast.error("Failed to create garden");
+      }
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "An unknown error occurred",
       );
+      setIsSubmitSuccessful(false);
     }
   };
 
@@ -138,7 +149,12 @@ export const GardenForm = () => {
                           type="number"
                           placeholder="100"
                           {...field}
-                          onChange={(e) => field.onChange(e.target.value)}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value === "" || !isNaN(Number(value))) {
+                              field.onChange(Number(value));
+                            }
+                          }}
                         />
                       </FormControl>
                       <FormMessage />

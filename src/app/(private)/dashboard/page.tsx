@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { InternalLink } from "~/components/common/internal-link";
 import { SectionHeading } from "~/components/common/section-heading";
 import { GardenStatsWidget } from "~/components/dashboard/garden-stats-widget";
+import { GardenTipWidget } from "~/components/dashboard/garden-tip-widget";
 import { MyGardenWidget } from "~/components/dashboard/my-garden-widget";
 import { Button } from "~/components/ui/button";
 
@@ -39,6 +40,9 @@ export default function DashboardPage() {
       </section>
       <section>
         <MyGardenWidget />
+      </section>
+      <section>
+        <GardenTipWidget />
       </section>
     </div>
   );
